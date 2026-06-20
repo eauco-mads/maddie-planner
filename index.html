@@ -339,15 +339,15 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
     <div class="aside-title" style="cursor:pointer" onclick="openTermModal('jyotish')">Vedic Chart <span style="font-size:0.55rem;color:var(--gold-light)">tap to learn</span></div>
     <table class="chart-table">
       <tr><td><span class="term-sidebar" onclick="openTermModal('lagna')">Rising</span></td><td>Cancer · <span class="term-sidebar" onclick="openTermModal('nakshatra')">Pushya</span></td></tr>
-      <tr><td>Sun</td><td>Libra · <span class="term-sidebar" onclick="openTermModal('houses')">4th</span> · Chitra</td></tr>
-      <tr><td>Moon ★</td><td>Taurus · 11th · <span class="term-sidebar" onclick="openTermModal('nakshatra')">Rohini</span></td></tr>
-      <tr><td>Mercury</td><td>Libra · 4th</td></tr>
-      <tr><td>Venus</td><td>Leo · 2nd · Uttara Phalguni</td></tr>
-      <tr><td>Mars</td><td>Scorpio · 5th · Jyeshtha</td></tr>
-      <tr><td>Jupiter</td><td>Taurus · 11th · Rohini</td></tr>
-      <tr><td>Saturn</td><td>Aries · 10th · Bharani</td></tr>
-      <tr><td><span class="term-sidebar" onclick="openTermModal('rahu')">Rahu</span></td><td>Leo · 2nd</td></tr>
-      <tr><td><span class="term-sidebar" onclick="openTermModal('ketu')">Ketu</span></td><td>Aquarius · 8th</td></tr>
+      <tr><td>Sun</td><td>Libra · <span class="term-sidebar" onclick="openTermModal('houses')">4th</span> · <span class="term-sidebar" onclick="openTermModal('nakshatra')">Chitra</span></td></tr>
+      <tr><td>Moon <span class="term-sidebar" onclick="openTermModal('exalted')">★</span></td><td>Taurus · <span class="term-sidebar" onclick="openTermModal('houses')">11th</span> · <span class="term-sidebar" onclick="openTermModal('nakshatra')">Rohini</span></td></tr>
+      <tr><td>Mercury</td><td>Libra · <span class="term-sidebar" onclick="openTermModal('houses')">4th</span></td></tr>
+      <tr><td>Venus</td><td>Leo · <span class="term-sidebar" onclick="openTermModal('houses')">2nd</span> · <span class="term-sidebar" onclick="openTermModal('nakshatra')">Uttara Phalguni</span></td></tr>
+      <tr><td>Mars</td><td>Scorpio · <span class="term-sidebar" onclick="openTermModal('houses')">5th</span> · <span class="term-sidebar" onclick="openTermModal('nakshatra')">Jyeshtha</span></td></tr>
+      <tr><td>Jupiter</td><td>Taurus · <span class="term-sidebar" onclick="openTermModal('houses')">11th</span> · <span class="term-sidebar" onclick="openTermModal('nakshatra')">Rohini</span></td></tr>
+      <tr><td>Saturn</td><td>Aries · <span class="term-sidebar" onclick="openTermModal('houses')">10th</span> · <span class="term-sidebar" onclick="openTermModal('nakshatra')">Bharani</span></td></tr>
+      <tr><td><span class="term-sidebar" onclick="openTermModal('rahu')">Rahu</span></td><td>Leo · <span class="term-sidebar" onclick="openTermModal('houses')">2nd</span></td></tr>
+      <tr><td><span class="term-sidebar" onclick="openTermModal('ketu')">Ketu</span></td><td>Aquarius · <span class="term-sidebar" onclick="openTermModal('houses')">8th</span></td></tr>
     </table>
     <hr class="div">
     <div class="dasha-card">
@@ -818,7 +818,6 @@ function planetDayFor(dateStr) {
 // ── BUILD TODAY CARD ─────────────────────────────────────────────────────────
 function buildTodayCard() {
   const card = document.getElementById('todayCard');
-  card.classList.add('visible');
   const pd = planetDayFor(todayStr);
   const tip = tipForDate(todayStr);
   const event = KEY_DATES[todayStr];
@@ -863,6 +862,8 @@ function showMonth(id) {
   document.querySelectorAll('.month-nav button').forEach(b => b.classList.toggle('active', b.dataset.id === id));
   const el = document.getElementById('m-'+id);
   if (el) el.classList.add('active');
+  const todayMo = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('todayCard').classList.toggle('visible', id === todayMo);
 }
 
 function toggleMobileInfo() {
