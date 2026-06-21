@@ -352,6 +352,11 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .wc-save-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); font-size: 0.68rem; border-radius: 6px; padding: 4px 12px; cursor: pointer; font-family: 'Lato', sans-serif; }
 /* ── STREAK ── */
 .streak-display { display: flex; align-items: center; gap: 10px; background: var(--green-bg); border-radius: 9px; padding: 9px 13px; margin-top: 10px; border: 1px solid var(--border-light); }
+.moon-phase-mini { font-size: 0.72rem; position: absolute; top: 3px; left: 4px; line-height: 1; pointer-events: none; }
+.moon-info-block { background: linear-gradient(135deg, #1a2a3a, #2a3a5a); border-radius: 10px; padding: 11px 14px; margin: 12px 0; color: #e8f0ff; }
+.moon-info-phase { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; margin-bottom: 4px; color: #b8d0f8; }
+.moon-info-sign { font-size: 0.7rem; color: #8aa8d8; margin-bottom: 5px; letter-spacing: 0.05em; }
+.moon-info-meaning { font-size: 0.74rem; color: #c8d8f0; line-height: 1.55; }
 .streak-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--green); font-weight: 300; line-height: 1; min-width: 28px; }
 .streak-text { font-size: 0.7rem; color: var(--text-dim); font-family: 'Lato', sans-serif; line-height: 1.45; }
 </style>
@@ -415,10 +420,10 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
     <hr class="div">
     <div class="aside-title" style="color:var(--green)">Western Chart</div>
     <div class="w-chart-note">
-      Rising: Leo 3°<br>
+      Rising: Aquarius<br>
       Sun: Libra 24°<br>
       Moon: Gemini 13°<br>
-      <span class="w-label">Tropical · Leo Rising · Placidus</span>
+      <span class="w-label">Tropical · Aquarius Rising · Placidus</span>
     </div>
     <hr class="div">
     <div class="aside-title" style="cursor:pointer" onclick="openTermModal('hd-overview')">Human Design <span style="font-size:0.55rem;color:var(--gold-light)">tap to learn</span></div>
@@ -512,7 +517,7 @@ const PLANET_DAYS = {
 const MONTHS = [
   { id:'2026-06', name:'June 2026', theme:'The Sage Arrives — Your Rising Year Begins', mantra:'"Something is expanding inside me that is real."',
     vedic:{ transits:['Jupiter ENTERS CANCER — 1st house (EXALTED — Hamsa Yoga activates)','Saturn in Pisces — 9th house','Rahu in Aquarius — 8th house','Ketu in Leo — 2nd house'], overview:'Jupiter entered Cancer around June 9–11, 2026 — and Cancer is your Rising sign. When the most benefic planet in Jyotish moves into your 1st house at its maximum strength (exaltation), the effect is personal, physical, and unmistakable. This is Hamsa Yoga: the yoga of the swan, of the sage, of the one who carries wisdom in how she moves through the world. The last ten days of June are the opening note of the most personally expansive year your chart has ever seen. Jupiter in the 1st house doesn\'t activate your career or your community first — it activates YOU. Your body, your presence, your sense of who you are. Something is different. You can feel it. Trust it.' },
-    western:{ note:'Summer Solstice June 20–21: the longest day of the year, a natural threshold point. In Western astrology your Leo Rising means the sun rules your 1st house (tropical) — the solstice carries personal identity energy. What were you beginning in December 2025? This month, those seeds surface. The solstice is one of the four most powerful seeding points of the year.' },
+    western:{ note:'Summer Solstice June 20–21: the longest day of the year, a natural threshold point. In Western astrology your Aquarius Rising places the Sun (in Gemini) in your tropical 5th house — creativity, joy, and self-expression. The solstice activates your creative voice and the spaces where you feel most alive. What are you ready to express and put into the world? The solstice is one of the four most powerful seeding points of the year.' },
     journal:'What do I sense is shifting in who I am right now — even if I cannot fully name it yet?',
     opportunities:['Feeling and naming what is expanding in your sense of self','Setting a personal intention for who you are becoming under Jupiter\'s year','Noticing how your presence lands differently in rooms you enter','Solstice threshold (~June 21) — one of the year\'s most powerful moments to set direction'],
     cautions:['This is a sensing month, not a forcing month — the energy is building, not boiling','Don\'t rush to act; Jupiter\'s exaltation in the 1st is about being, not just doing','Resist shrinking the expansion you\'re feeling into something more "realistic"'],
@@ -524,7 +529,7 @@ const MONTHS = [
   },
   { id:'2026-07', name:'July 2026', theme:'You Are the Door — Identity Expands', mantra:'"I allow myself to be seen in my fullness."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house (Hamsa Yoga fully active)','Saturn in Pisces — 9th house','Rahu in Aquarius — 8th house','Ketu in Leo — 2nd house','Full Moon Jul 10 in Sagittarius — 6th house','New Moon Jul 24 in Cancer — 1st house (★ seed your new identity)'], overview:'Jupiter fully settled in Cancer — your Rising sign — at its absolute maximum strength. The 1st house is the body, the presence, the face you show the world. With Jupiter exalted here for the next 12 months, you are in the most personally expansive year your chart has ever produced. The Jul 24 New Moon lands in Cancer (your 1st house) — the single most powerful moment this month to plant a seed for who you are becoming. Rahu in the 8th house adds depth, intensity, and the capacity to transform what was hidden into something visible. This month is not about doing more — it\'s about becoming more of who you already are.' },
-    western:{ note:'Your Leo Rising (tropical) means the Sun rules your tropical 1st house, and the sun is in Cancer this month — crossing into Leo in late July. The final week of July activates your Leo Rising directly. Something in your self-presentation or visibility becomes newly alive. This is not performance; this is arrival.' },
+    western:{ note:'Cancer season activates your tropical 6th house (Aquarius Rising): daily routines, health, and service. The most meaningful thing you can do this month is build daily practices that sustain what you\'re building. Late July the Sun enters Leo — your 7th house — and partnership energy begins to stir. What one-on-one connection feels most aligned with where you\'re going?' },
     journal:'Who am I becoming this year — and what part of the old self am I willing to release to make room for her?',
     opportunities:['New Moon Jul 24 in Cancer (1st house): plant the clearest, boldest identity seed of the year','Showing up more fully in spaces where you\'ve been quietly underplaying yourself','Allowing your physical presence and energy to carry your message before you speak','Deeper conversations with people who see who you\'re becoming'],
     cautions:['Rahu in 8th: depth is available, but guard against intensity-for-its-own-sake','This is not a "launch everything" month — it\'s a becoming month','Don\'t let comparison dim what\'s genuinely new in you right now'],
@@ -537,7 +542,7 @@ const MONTHS = [
   },
   { id:'2026-08', name:'August 2026', theme:'Eclipse Lights the Rising — You Are Seen', mantra:'"I receive what is already moving toward me."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house','Solar Eclipse ~Aug 12 in Cancer — 1st house (★ identity accelerator)','Lunar Eclipse ~Aug 28 in Aquarius — 8th house (★ depth + transformation)','Rahu-Moon Antardasha begins ~Aug 26','Full Moon Aug 9 in Aquarius — 8th house'], overview:'The solar eclipse lands in Cancer — your 1st house — while Jupiter is exalted there. A solar eclipse in your Rising sign is one of the most profound personal activations in Jyotish: it fast-forwards your identity, your body, your presence in the world. Who you have been becoming under Jupiter\'s exaltation gets suddenly, unmistakably visible. Rahu-Moon Antardasha also begins this month — a 17-month period where your exalted emotional intelligence becomes your primary navigation tool. The lunar eclipse in Aquarius (8th house) brings a deep completion: something that was hidden or unprocessed surfaces and is ready to be released.' },
-    western:{ note:'Leo season activates your tropical 1st house (Leo Rising) through August. Your desire to be seen, to express, to take up space is heightened and supported. This is not vanity — it is the natural expression of a rising year. Say yes to being visible this month.' },
+    western:{ note:'Leo season activates your tropical 7th house (Aquarius Rising): partnership, collaboration, and one-on-one relationships are highlighted. Who is most directly reflecting your growth back to you right now? Your desire for genuine partnership and being truly met is heightened this month. Be honest about which connections are aligned with who you\'re becoming.' },
     journal:'What is already in motion in my life that I have been afraid to fully acknowledge or receive?',
     opportunities:['Eclipse window: something in your identity or presence fast-forwards','Allowing yourself to be seen without minimizing what\'s there','Rahu-Moon beginning: your emotional knowing becomes your professional compass','Depth work — what has been hidden can now surface and be integrated'],
     cautions:['Eclipse window Aug 12–28: observe what arrives; do not force or resist','Lunar eclipse in 8th: release what surfaces — it was ready to go','No large financial or identity decisions made from overwhelm during eclipse window'],
@@ -550,7 +555,7 @@ const MONTHS = [
   },
   { id:'2026-09', name:'September 2026', theme:'Emotional Intelligence Becomes Your Compass', mantra:'"My feelings are not obstacles — they are information."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house','Rahu-Moon Antardasha fully active','Saturn in Pisces — 9th house','Full Moon Sep 7 in Aquarius — 8th house','New Moon Sep 21 in Virgo — 3rd house'], overview:'September belongs to the Rahu-Moon antardasha. Rahu is the great expander; your Moon is exalted in Taurus, conjunct Jupiter in your 11th house of community and abundance. Together, these two create a period where your emotional intelligence is not a soft skill — it is your sharpest strategic tool. September asks: what do you feel about the direction your life is taking? Not what do you think. What do you feel? Jupiter in your 1st house means your body knows. The Full Moon in Aquarius (8th house) on Sep 7 brings a depth revelation. The New Moon in Virgo (3rd house) on Sep 21 seeds new communication, new voice, new ways of articulating what you carry.' },
-    western:{ note:'Virgo season in your 2nd house (tropical Leo Rising). Your relationship with money, self-worth, and practical resources comes into focus. What does your financial life look like right now? What one thing, if tended with Virgo\'s precision, would change the most?' },
+    western:{ note:'Virgo season activates your tropical 8th house (Aquarius Rising): depth, transformation, shared resources, and what lies beneath the surface. What has been hidden or unprocessed that wants integration? Virgo\'s precision applied to the 8th house is powerful — an ideal month for honest financial review, depth conversations, and clarifying what truly needs to shift in your foundation.' },
     journal:'What is my emotional intelligence telling me about my direction right now that I haven\'t let myself fully hear?',
     opportunities:['Listening to what your body knows before you override it with logic','Rahu-Moon: community connections that feel genuinely emotional — not just strategic','New Moon Sep 21 in 3rd house: seed a new way of expressing yourself or communicating your work','Depth processing that converts what was buried into usable clarity'],
     cautions:['September can feel quietly intense — not dramatic, just deep','Resist rushing Rahu-Moon\'s emotional revelations into immediate decisions','This is not a high-output month; it is a high-discernment month'],
@@ -563,7 +568,7 @@ const MONTHS = [
   },
   { id:'2026-10', name:'October 2026', theme:'The Birthday Threshold — The Axis Shifts', mantra:'"I release the version of me that no longer fits."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house','Rahu-Moon Antardasha active','NODAL SHIFT ~Oct 2026: Rahu → Capricorn (7th house) / Ketu → Cancer (1st house)','Full Moon Oct 7 in Pisces — 9th house','New Moon Oct 21 in Libra — 4th house','★ BIRTHDAY: October 17 — Maddie turns 26'], overview:'October is the most complex and layered month of the calendar. Two major forces coincide: your 26th birthday on October 17, and the nodal axis shift that moves Ketu (spiritual release, past karma) into Cancer — your Rising sign. Ketu in the 1st house begins an 18-month period of identity dissolution and spiritual rebirth. Combined with Jupiter still exalted in Cancer, this creates an extraordinary tension: expansion and release simultaneously happening in the house of self. You are not losing yourself — you are becoming more essentially yourself by releasing what you\'ve been performing. This is the beginning of one of the most spiritually significant personal transits in your chart.' },
-    western:{ note:'Libra season: your tropical 3rd house (Leo Rising) is activated — communication, siblings, short journeys, local community. What message or voice is ready to go public? Mercury enters Scorpio, adding depth to everything you say and write. Your words carry more weight than usual this month.' },
+    western:{ note:'Libra season activates your tropical 9th house (Aquarius Rising): philosophy, higher learning, and your big worldview. What do you actually believe about where your life is going? Libra\'s quality here brings beauty and balance to your sense of purpose. Mercury enters Scorpio, adding depth and precision to how you articulate your philosophy and vision.' },
     journal:'What version of myself am I ready to release on my 26th birthday — and who am I underneath her?',
     opportunities:['Birthday threshold Oct 17: intentional release + intentional choosing of what comes next','Nodal shift: Rahu in Capricorn (7th house) — clarity about which partnerships are truly aligned','New Moon Oct 21 in Libra (4th house): seed beauty, harmony, and sanctuary in your inner world','Full Moon Oct 7 in Pisces (9th house): illuminates your philosophy, your spiritual path, your big vision'],
     cautions:['Ketu entering Cancer (1st house): identity may feel temporarily unclear — this is the process, not a problem','Nodal shifts create a week or two of adjustment — hold lightly during that window','Birthday month invitation: reflect more than you launch'],
@@ -576,7 +581,7 @@ const MONTHS = [
   },
   { id:'2026-11', name:'November 2026', theme:'Identity Dissolves Into Something Truer', mantra:'"What I am becoming cannot be named yet — and that is right."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house','Ketu in Cancer (1st house) — identity dissolution + spiritual rebirth begins','Rahu in Capricorn — 7th house','Mercury Retrograde ~Nov 9–29 in Scorpio–Libra (5th–4th houses sidereal)','Full Moon Nov 5 in Aries — 10th house (★ career + public self illuminated)','New Moon Nov 19 in Scorpio — 5th house'], overview:'Ketu in Cancer (your 1st house), now conjunct transiting Jupiter — this is the paradox at the heart of November: the planet of expansion and the planet of release, both in your Rising sign simultaneously. Jupiter says expand. Ketu says release. Together, they say: become more essentially yourself by releasing the self you\'ve been performing. Mercury Retrograde in your 5th house (creativity, self-expression) and 4th house (inner world) asks you to review how you\'ve been expressing yourself and what your inner foundation actually looks and feels like. The Full Moon Nov 5 in Aries (your 10th house) illuminates your career and public identity — what is becoming visible?' },
-    western:{ note:'Scorpio season activates your tropical 4th house (Leo Rising). Deep home, family, emotional foundation themes. What is the quality of your private life right now? The inner world is being asked to clarify. Mercury Rx in this area: review what your home environment reflects about your inner state.' },
+    western:{ note:'Scorpio season activates your tropical 10th house (Aquarius Rising): career, public reputation, and authority are in focus. What is becoming visible about your professional identity right now? Scorpio\'s depth here means what\'s rising is real and earned. Mercury Rx asks you to review how you\'ve been showing up publicly before making any major announcements. What does the world see in you that you haven\'t fully claimed yet?' },
     journal:'Who am I when I stop performing any version of myself — and what does that person actually want?',
     opportunities:['Full Moon Nov 5 in 10th house: something in your public identity or career becomes newly visible','Mercury Rx (5th house) — revisit a creative project or mode of expression that was set aside','Ketu in 1st: spiritual practices, time alone, releasing identities that no longer fit','Deep values review that makes December\'s direction crystal clear'],
     cautions:['NO major identity decisions or public launches during Mercury Rx (Nov 9–29)','Ketu in 1st can feel like quiet disorientation — this is the process, not a problem','Observe and feel more than you act. December will be sharper because of November\'s depth.'],
@@ -589,7 +594,7 @@ const MONTHS = [
   },
   { id:'2026-12', name:'December 2026', theme:'The Most Sacred Night — Full Moon on Your Moon', mantra:'"I am the thing I have been looking for."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house','Ketu in Cancer (1st house) + Jupiter — expansion through releasing','Rahu in Capricorn — 7th house','★ FULL MOON DEC 5 in Taurus — 11th house, ON YOUR NATAL MOON (Rohini 19°)','New Moon Dec 19 in Sagittarius — 6th house'], overview:'December 5, 2026 is the single most powerful lunar event in this entire planner. The Full Moon lands at approximately Taurus 18° sidereal — within one degree of your natal Moon at Rohini 19°1\'. This is a full moon directly on your natal Moon. In Jyotish, when a full moon lands on your natal Moon placement, it activates the full potential of that placement at maximum brightness. Your Moon is exalted in Taurus, in Rohini, in your 11th house of community and abundance. December 5 is a night to receive, to be witnessed, to let what has been building inside you be fully, luminously felt. Everything else in December orbits this date.' },
-    western:{ note:'Sagittarius season activates your tropical 5th house (Leo Rising): creativity, joy, romance, self-expression. The mood of December is not somber or heavy — it is expansive and celebratory, even in its depth. Allow yourself to feel the joy of what has been built this year.' },
+    western:{ note:'Sagittarius season activates your tropical 11th house (Aquarius Rising): community, friends, networks, and the income that flows through belonging. The mood of December is expansive and connective. Who are your people? What communities do you want to tend and celebrate before the year closes? Let the joy of belonging be part of how you receive what this year has built.' },
     journal:'What has been building inside me all year that I haven\'t let myself fully feel or receive yet?',
     opportunities:['Dec 5 Full Moon: the most powerful emotional and community activation of the year — be present for it','Let yourself be witnessed by people who love you — this is your 11th house moment','New Moon Dec 19 in Sagittarius (6th house): seed a new daily practice or health rhythm for 2027','Honest inventory of 2026: what has Jupiter\'s year in your Rising sign actually built?'],
     cautions:['December is for receiving and integrating, not for launching or announcing','The full moon on your natal Moon is powerful — honor it, don\'t perform it','Rahu in 7th: partnerships are in focus; be clear about which ones are genuinely aligned'],
@@ -602,7 +607,7 @@ const MONTHS = [
   },
   { id:'2027-01', name:'January 2027', theme:'The New Year Opens Under Rahu-Moon', mantra:'"I build from the inside out."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house (final months)','Ketu in Cancer (1st house) — identity refinement continues','Rahu-Moon Antardasha active','Rahu in Capricorn — 7th house','Full Moon Jan 3 in Gemini — 12th house','New Moon Jan 17 in Capricorn — 7th house'], overview:'January opens the new year with Jupiter still exalted in your Rising sign — but now in its final 6 months. The time of maximum personal expansion is not over, but you can begin to feel the season starting to shift. Rahu-Moon antardasha is deepening: your emotional intelligence is increasingly your most reliable guide. The Full Moon in Gemini (12th house) on Jan 3 asks for inner listening and release before the new year begins. The New Moon in Capricorn (7th house) on Jan 17 seeds partnerships, collaborations, and one-on-one relationships. Who are the right people to build the next chapter with?' },
-    western:{ note:'Capricorn season activates your tropical 6th house (Leo Rising). Your daily routines, health, and service are highlighted in January. What one daily practice, if you held it all year, would most support who you\'re becoming? Set it now while the year is fresh.' },
+    western:{ note:'Capricorn season activates your tropical 12th house (Aquarius Rising): inner preparation, retreat, and the spiritual foundation beneath everything. The new year begins in your 12th house — which means the real solar new year for you arrives when the Sun enters Aquarius in late January, moving into your Rising sign. Honor the inner world before the outer calendar takes over.' },
     journal:'What did 2026 build in me — and what does 2027 need to stand on?',
     opportunities:['New Moon Jan 17 in 7th house: seed the right partnership, collaboration, or one-on-one relationship','Rahu-Moon: emotional clarity about which directions feel genuinely alive vs. which ones you\'re doing from old habit','Strategic review of where your energy and resources are actually going','Building inner stability that can hold the expansion Jupiter is preparing to complete'],
     cautions:['January is for integration and planning, not big external pushes','Full Moon Jan 3 in 12th house: honor the inner life before the outer calendar starts','Resist manufacturing urgency — the season of acceleration is building naturally'],
@@ -615,7 +620,7 @@ const MONTHS = [
   },
   { id:'2027-02', name:'February 2027', theme:'Full Moon in Your Rising — The Body Remembers', mantra:'"My instincts are leading me to something real."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house (building toward exit)','Ketu in Cancer (1st house)','Rahu-Moon Antardasha deepening','★ FULL MOON FEB 2 in Cancer — 1st house (Rising sign illuminated)','Solar Eclipse ~Feb 6 in Capricorn — 7th house','Lunar Eclipse ~Feb 20 in Leo — 2nd house','New Moon Feb 16 in Aquarius — 8th house'], overview:'February holds two extraordinary lunar events for Maddie\'s chart. Feb 2 Full Moon in Cancer (your 1st house/Rising sign) — the luminous activation of your personal presence and identity at its fullest. This is the Moon in your Rising sign at full brightness. Then the eclipse season arrives: Solar Eclipse Feb 6 in Capricorn (7th house — partnerships reset), Lunar Eclipse Feb 20 in Leo (2nd house — wealth, self-worth, voice completes something). February is the month of full illumination followed by intentional reset. Ketu in your 1st house makes this a month of spiritual intensity — you are being stripped to your essence.' },
-    western:{ note:'Aquarius season activates your tropical 7th house (Leo Rising). Partnership clarity arrives. Who are you choosing to build with, and who have you outgrown? Eclipse energy makes the clear answers crystal clear. Trust what you know about your partnerships this month.' },
+    western:{ note:'Aquarius season activates your tropical 1st house — YOUR Rising sign. The Sun is in your Rising sign, which makes this the most personally activated solar month of the year in your Western chart. How you show up, how you present yourself, your self-expression all carry extra power this month. Eclipse energy amplifies this: the clear answers about who you are and what you\'re choosing become crystal clear. Trust what you know about yourself right now.' },
     journal:'What does my body know right now that my mind has been trying to override — about my path, my people, my purpose?',
     opportunities:['Full Moon Feb 2 in Cancer (1st house): receive the full illumination of who you are — let yourself be seen','Solar Eclipse Feb 6 in 7th house: partnerships reset — the right ones clarify, the misaligned ones become obvious','Lunar Eclipse Feb 20 in Leo (2nd house): a wealth, voice, or self-worth chapter completes — make room for what\'s next','Rahu-Moon deepening: trust the emotional data arriving this month, even when it\'s inconvenient'],
     cautions:['Eclipse window Feb 6–20: observe before making major partnership or financial decisions','Full Moon in 1st house + Ketu: spiritual intensity possible — honor it with space, not performance','The Leo 2nd-house eclipse may surface old patterns around self-worth — feel, don\'t fix'],
@@ -628,7 +633,7 @@ const MONTHS = [
   },
   { id:'2027-03', name:'March 2027', theme:'The Deep Refinement — Review Before You Rise', mantra:'"I am not behind. I am being prepared."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house (building toward exit in June)','Ketu in Cancer (1st house)','Rahu-Moon Antardasha active','Mercury Retrograde ~Mar 15–Apr 7 in Pisces–Aquarius (9th–8th houses sidereal)','Full Moon Mar 3 in Leo — 2nd house','New Moon Mar 17 in Pisces — 9th house'], overview:'Mercury Retrograde enters your 9th house (philosophy, higher learning, beliefs, dharma) and retreats into the 8th (depth, transformation, hidden knowledge). This retrograde asks: what do you actually believe about what\'s possible for you? What beliefs from earlier in your life are still quietly shaping your decisions? The Full Moon Mar 3 in Leo (2nd house) illuminates self-worth and wealth. The New Moon Mar 17 in Pisces (9th house) seeds a new philosophy or spiritual direction. Jupiter is still exalted in your 1st house but moving toward its June exit — these are precious final months of the most personally expansive year your chart will produce.' },
-    western:{ note:'Pisces season activates your tropical 8th house (Leo Rising). Depth, transformation, and the unseen are the themes. What have you been carrying in the hidden spaces that needs either integration or release? A good month for healing work, deep conversations, and honest self-inquiry.' },
+    western:{ note:'Pisces season activates your tropical 2nd house (Aquarius Rising): self-worth, money, and the resources you hold. Mercury Retrograde asks you to review and refine rather than push forward. What does your financial picture honestly look like right now? What do you believe you are worth? A good month for updating how you value yourself and clarifying what you truly own.' },
     journal:'What do I actually believe about what is possible for me — and is that belief serving me or limiting me?',
     opportunities:['Mercury Rx in 9th: revisit a belief, philosophy, or spiritual direction that needs updating','Full Moon Mar 3 in 2nd house: see clearly what you\'re worth and what your resources actually are','New Moon Mar 17 in 9th house: seed a new belief, a teacher, or a philosophical direction','Double down on what Jupiter\'s year has built — these are precious final months'],
     cautions:['Mercury Rx Mar 15–Apr 7: no new contracts, no major public announcements','This is a review-and-refine period, not a launch window','Don\'t let the retrograde\'s inner focus spiral into self-doubt'],
@@ -641,7 +646,7 @@ const MONTHS = [
   },
   { id:'2027-04', name:'April 2027', theme:'All Systems Go — The Gate Opens', mantra:'"What has been building is now ready to move."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house (final 3 months)','Ketu in Cancer (1st house)','Rahu-Moon Antardasha active','Mercury Retrograde ends April 7 — full forward motion returns','Full Moon Apr 2 in Virgo — 3rd house','New Moon Apr 16 in Aries — 10th house (★ career seed)'], overview:'Mercury Retrograde ends April 7. The brakes release. Jupiter in Cancer is in its final three months — there is a last-chance energy here, not of scarcity but of urgency and gift. What haven\'t you put into the world yet that you wanted to while Jupiter was in your Rising sign? April is the month to move it forward. The New Moon in Aries on Apr 16 lands in your 10th house of career — the most powerful career-seeding moment in this planner. What you plant here begins the public chapter.' },
-    western:{ note:'Aries season activates your tropical 9th house (Leo Rising). Expansion, philosophy, teaching, travel, and publishing are in the air. After months of depth and inward focus, April feels lighter and more directional. Let the Aries fire move you forward.' },
+    western:{ note:'Aries season activates your tropical 3rd house (Aquarius Rising): communication, your voice, local community, and putting your message into the world. After months of inward depth and refinement, April feels lighter and more directional. What do you want to say? What message is ready to go public? Let the Aries fire move your expression forward.' },
     journal:'What have I been waiting for permission to put into the world — and what if the permission was always mine to give?',
     opportunities:['Post-Mercury Rx launch window after April 7 — the most action-friendly window of the year','New Moon Apr 16 in Aries (10th house): the most powerful career-seeding moment of the planner — use it','Jupiter\'s final months in your 1st house: what have you been becoming that needs to now be expressed?','Visibility moves that feel aligned with who you\'ve become under Jupiter\'s year'],
     cautions:['Wait until April 7 (Mercury Rx ends) for any major announcements or contracts','Don\'t undervalue what you\'re offering — this is not a discounting moment','Ketu in 1st: act from authentic self, not from performance'],
@@ -654,7 +659,7 @@ const MONTHS = [
   },
   { id:'2027-05', name:'May 2027', theme:'The Community Seed — Income Through Belonging', mantra:'"My people are already here."',
     vedic:{ transits:['Jupiter EXALTED in Cancer — 1st house (final full month before exit)','Ketu in Cancer (1st house)','Rahu-Moon Antardasha active','Full Moon May 1 in Libra — 4th house','★ NEW MOON MAY 15 in Taurus — 11th house (community + income seed)','Full Moon May 31 in Scorpio — 5th house'], overview:'May holds the second most personally significant lunar event in this planner (after Dec 5): the New Moon on May 15 in Taurus, your 11th house of community, networks, and income — the same sign and house as your natal Moon and Jupiter conjunction. A new moon in your 11th house in the sign of your exalted Moon is a once-in-several-years event. What community do you want to build, belong to, or serve? What income stream runs through people rather than through you alone? Plant it here. Jupiter exits Cancer next month — this is also the last full month of Hamsa Yoga in your Rising sign. What do you want to harvest before the season turns?' },
-    western:{ note:'Taurus season activates your tropical 10th house (Leo Rising). Career, authority, and public reputation are at the forefront. What does the world now know about you that it didn\'t know in July 2026? May is the harvest month for everything Jupiter built in your identity over the past year.' },
+    western:{ note:'Taurus season activates your tropical 4th house (Aquarius Rising): home, roots, emotional foundation, and inner sanctuary. The beauty and groundedness of Taurus in your 4th house asks: what is the quality of your private world right now? What does your home environment reflect about where you actually are inside? Tend the inner sanctuary this month — it supports everything built outward.' },
     journal:'What community am I meant to build, serve, or belong to — and what does income look like when it flows through genuine belonging?',
     opportunities:['New Moon May 15 in Taurus (11th house): the single most powerful community and income seed of the year — use it','Full Moon May 1 in Libra (4th house): the inner sanctuary is illuminated; what is the state of your private life?','Full Moon May 31 in Scorpio (5th house): creative and expressive energy at full brightness','Jupiter\'s final month: consolidate what this extraordinary year has built in your sense of self'],
     cautions:['Jupiter exits Cancer in June — do not wait to initiate what you\'ve been wanting to seed in community','Not a time to start from scratch — a time to harvest and plant deliberately','Full Moon May 31 in 5th: Mars-ruled energy — watch for impulsiveness in creative decisions'],
@@ -667,7 +672,7 @@ const MONTHS = [
   },
   { id:'2027-06', name:'June 2027', theme:'Jupiter Moves — Wealth and Voice Activate', mantra:'"My voice is my wealth."',
     vedic:{ transits:['Jupiter exits Cancer → enters Leo (2nd house) ~late June/July','Ketu in Cancer (1st house) — identity refinement continues','Rahu-Moon Antardasha active','New Moon Jun 14 in Gemini — 12th house','Full Moon Jun 29 in Sagittarius — 6th house'], overview:'Jupiter leaves your Cancer Rising and enters Leo — your 2nd house of speech, wealth, self-worth, and your natal Rahu and Venus. Jupiter in the 2nd house is traditionally one of the strongest placements for material and financial expansion in Jyotish. Jupiter in Leo in your 2nd house joins your natal Rahu (soul hunger for wealth and visibility) and Venus (beauty, resources) — this combination activates the financial and expressive potential of your chart in a new way. The year of personal becoming now shifts into a year of wealth and voice. The New Moon Jun 14 in Gemini (12th house) asks for a final inner preparation before the shift. The Full Moon Jun 29 in Sagittarius (6th house) illuminates your daily life and health practices at the turn.' },
-    western:{ note:'Gemini season activates your tropical 11th house (Leo Rising). Community, networks, and income are highlighted in the Western chart as well. The alignment of Jupiter entering your 2nd house (Vedic) while Gemini season activates your 11th house (tropical) is a double abundance signal.' },
+    western:{ note:'Gemini season activates your tropical 5th house (Aquarius Rising): creativity, joy, self-expression, and play. The same creative energy that opened this planner in June 2026 returns — but you are a completely different person now. What do you want to create and express from the woman you\'ve become? Jupiter entering your 2nd house (Vedic) while creativity activates in your 5th house (Western) is a powerful signal: authentic expression creates wealth.' },
     journal:'What would I say, create, or express if I fully believed that my voice was a source of wealth?',
     opportunities:['Jupiter entering 2nd house: financial expansion through speech, expression, and authentic visibility','New Moon Jun 14 in 12th house: final inner preparation before the outer shift — what do you need to release?','Full Moon Jun 29 in 6th house: daily life and health at full brightness — what in your daily rhythm serves the new chapter?','Rahu in 7th house: partnerships that genuinely serve your dharma become more obvious'],
     cautions:['The sign change brings a shift in energy — give yourself the first week to feel the new tone before acting','Jupiter in 2nd activating natal Rahu: watch for the urge to accumulate rather than express — the 2nd house is voice first, wealth second','New Moon in 12th: honor the internal before the external'],
@@ -680,7 +685,7 @@ const MONTHS = [
   },
   { id:'2027-07', name:'July 2027', theme:'The New Chapter: Abundance Through Expression', mantra:'"I speak and the world reorganizes."',
     vedic:{ transits:['Jupiter in Leo — 2nd house (Rahu + Venus activated)','Rahu-Moon Antardasha continues','Ketu in Cancer (1st house) — identity refinement deepening','New Moon Jul 13 in Cancer — 1st house','Full Moon Jul 28 in Capricorn — 7th house'], overview:'Jupiter in Leo, your 2nd house of speech, wealth, and self-worth, conjuncting your natal Rahu and Venus. This is the first full month of Jupiter activating your greatest wealth signatures: natal Rahu (soul hunger for abundance and visibility) and natal Venus (resources, beauty, value). The message of this month is not subtle: express, and wealth follows. The New Moon Jul 13 in Cancer (your 1st house — Rising sign) completes the year\'s identity arc with a new beginning: a seed in the exact house where Jupiter spent the past 13 months. A year after the planner began, who have you become?' },
-    western:{ note:'Cancer season activates your tropical 12th house (Leo Rising). The inner world before the outer. Before the Leo season birthday in late July, there is a quiet invitation to integrate all that has been built. What have you learned about yourself in the past thirteen months that you want to carry forward consciously?' },
+    western:{ note:'Cancer season activates your tropical 6th house (Aquarius Rising): daily rhythms, health, body, and how you serve. You began this planner with Cancer season activating this same house — but you arrive here now with a completely different relationship to your daily life and body. What rhythms do you want to carry consciously into the next chapter? What daily practices supported you most this year?' },
     journal:'What has this year taught me about who I am — and who do I choose to be in the chapter that begins now?',
     opportunities:['Jupiter in Leo 2nd house: express your voice, raise your rates, let your authentic presence attract abundance','New Moon Jul 13 in Cancer (1st house): final identity seed of the planner — who are you now?','Rahu-Moon deepening: emotional intelligence as your most reliable business compass','Full Moon Jul 28 in Capricorn (7th house): see clearly who your real partners are'],
     cautions:['Jupiter activating natal Rahu in 2nd house: wealth and visibility hunger is heightened — choose aligned opportunities, not every opportunity','Don\'t undercharge in the excitement of feeling newly expanded','Full Moon in 7th: partnership clarity can feel sharp — trust what you see'],
@@ -845,11 +850,11 @@ const GLOSSARY = {
   jyotish:{ term:'Jyotish', also:'Vedic Astrology · "The Science of Light"', cat:'The Foundation',
     short:'The ancient Indian system of astrology — the primary system used in this planner.',
     def:'Jyotish (Sanskrit for "science of light") is the Indian tradition of astrology practiced for over 5,000 years. Unlike Western astrology, it uses the sidereal zodiac — calculated from the actual positions of the stars in the sky — rather than the tropical zodiac anchored to the seasons. Jyotish is known for its extraordinary precision in timing life events through the Dasha system, its nuanced understanding of karma, and its approach to the soul\'s journey across lifetimes.',
-    maddie:'Everything in this planner is read through Jyotish. Maddie\'s Cancer Rising, Libra Sun, Taurus Moon, and all house placements are sidereal (Vedic) positions — which is why they differ from the Western chart shown in the sidebar. Her Western chart shows Leo Rising; her Vedic chart shows Cancer Rising — same sky, two lenses, both revealing something real.' },
+    maddie:'Everything in this planner is read through Jyotish. Maddie\'s Cancer Rising, Libra Sun, Taurus Moon, and all house placements are sidereal (Vedic) positions — which is why they differ from the Western chart shown in the sidebar. Her Western chart shows Aquarius Rising; her Vedic chart shows Cancer Rising — same sky, two lenses, both revealing something real.' },
   ayanamsha:{ term:'Ayanamsha', also:'Lahiri Ayanamsha · The ~24° Sidereal Offset', cat:'The Foundation',
     short:'The calculated gap between the Vedic (sidereal) and Western (tropical) zodiacs — currently about 24°.',
     def:'Ayanamsha is the offset between the tropical zodiac (Western astrology, anchored to the equinoxes) and the sidereal zodiac (Vedic astrology, anchored to the fixed stars). Currently ~23°50\'. Because the Earth slowly wobbles on its axis over thousands of years (called precession), the two zodiacs drift apart at roughly 1° every 72 years. Lahiri Ayanamsha is the government-recognized calculation used in India and the most widely used in Jyotish worldwide. This is why the same planet appears in different signs depending on which system you\'re reading.',
-    maddie:'Maddie\'s Western chart shows Leo Rising at 3°. Subtract ~24° and you land in Cancer — her Vedic Rising sign. Her Western Sun is Libra 24° (tropical); her Vedic Sun is Libra (sidereal, since Libra only begins about 6° back from tropical Libra). The Moon is the most dramatic shift: Western chart shows Gemini 13°; Vedic shows Taurus — a completely different sign that better describes Maddie\'s deep emotional steadiness and beauty.' },
+    maddie:'Maddie\'s Western chart shows Aquarius Rising — her Western Sun is Libra 24° (tropical) and her Vedic Sun is Libra (sidereal). The Moon is the most dramatic shift between systems: Western shows Gemini 13°; Vedic shows Taurus — a completely different sign that better describes Maddie\'s deep emotional steadiness, beauty, and sensory richness. Her Vedic Rising (Cancer) reflects the sidereal calculation from her birth data, giving two complementary lenses on the same sky.' },
   'whole-sign':{ term:'Whole Sign Houses', also:'House System · Bhavas', cat:'The Foundation',
     short:'The house system where each whole zodiac sign = exactly one house of life experience.',
     def:'In Whole Sign Houses (the oldest and most widely used system in Jyotish), whatever sign was rising at the moment of birth becomes the entire 1st house. The next sign becomes the 2nd house, the next the 3rd, and so on around the wheel — 12 signs, 12 houses, clean boundaries. This differs from Western systems like Placidus, which divide houses based on exact degrees. Whole Sign Houses is considered especially effective for timing and karma analysis in Jyotish.',
@@ -897,7 +902,7 @@ const GLOSSARY = {
   'what-is-astrology':{ term:'What Is Astrology?', also:'The Language of the Sky · An Ancient Map', cat:'Astrology 101',
     short:'A system that maps planetary positions at the moment of your birth to reveal personality, timing, and soul purpose.',
     def:'Astrology is based on a profound idea: the sky at the exact moment of your birth carries meaningful information about who you are and the life you are here to live. Astrologers map the positions of planets against the zodiac — a symbolic wheel divided into 12 signs — and interpret how those positions shape personality, relationships, timing, and soul direction. There are two main systems: Western (tropical) astrology, anchored to the seasons (equinoxes), and Vedic (Jyotish) astrology, anchored to the fixed stars. Both are valid; they use slightly different calculations (~24° offset, called the Ayanamsha) and emphasize different things. This planner uses Jyotish as its primary system — which is why your rising sign and some placements may differ from what you\'ve read in magazine horoscopes. Astrology is not fate. It is a map of the terrain you were born into. What you do with that terrain is always your choice.',
-    maddie:'This planner is built around Maddie\'s Jyotish chart. Her Western tropical chart shows Leo Rising and Libra Sun. Her Vedic sidereal chart shows Cancer Rising — same sky, different calculation, different depth. Both lenses are included in this planner because they each illuminate something real. The Vedic chart is the primary navigation system; the Western note in each month adds a second perspective.' },
+    maddie:'This planner is built around Maddie\'s Jyotish chart. Her Western tropical chart shows Aquarius Rising and Libra Sun. Her Vedic sidereal chart shows Cancer Rising — same sky, different calculation, different depth. Both lenses are included in this planner because they each illuminate something real. The Vedic chart is the primary navigation system; the Western note in each month adds a second perspective.' },
   'zodiac-signs':{ term:'The 12 Zodiac Signs', also:'The Wheel of Life · Aries Through Pisces', cat:'Astrology 101',
     short:'The sky is divided into 12 equal sections of 30° each — every sign carries a distinct element, energy, and way of experiencing life.',
     def:'The zodiac is a 360° belt of sky divided into 12 signs. Each sign has: an Element (Fire: Aries, Leo, Sagittarius — bold, driven, expressive; Earth: Taurus, Virgo, Capricorn — grounded, practical, sensual; Air: Gemini, Libra, Aquarius — intellectual, relational, communicative; Water: Cancer, Scorpio, Pisces — emotional, intuitive, depth-oriented); a Modality (Cardinal: Aries, Cancer, Libra, Capricorn — initiate and begin; Fixed: Taurus, Leo, Scorpio, Aquarius — sustain and deepen; Mutable: Gemini, Virgo, Sagittarius, Pisces — adapt and complete); and a Ruling Planet. The sign a planet occupies colors HOW that planet expresses. Sun in Libra acts very differently than Sun in Aries. Moon in Taurus feels very differently than Moon in Gemini. Signs describe the style — not the area of life (that\'s what houses do).',
@@ -977,6 +982,73 @@ function getDayTodos(ds) {
   }
   return todos;
 }
+// ── MOON PHASE SYSTEM ────────────────────────────────────────────────────────
+// Each entry: [new-moon date string, tropical longitude of sun/moon at NM in degrees]
+const NM_ANCHORS = [
+  ['2026-06-25', 93],  // ~Cancer 3° tropical
+  ['2026-07-24',121],  // ~Leo 1°
+  ['2026-08-23',150],  // ~Virgo 0°
+  ['2026-09-21',178],  // ~Virgo 28°
+  ['2026-10-21',207],  // ~Libra 27°
+  ['2026-11-19',237],  // ~Scorpio 27°
+  ['2026-12-19',267],  // ~Sagittarius 27°
+  ['2027-01-17',297],  // ~Capricorn 27°
+  ['2027-02-16',327],  // ~Aquarius 27°
+  ['2027-03-17',356],  // ~Aries 26°
+  ['2027-04-16', 26],  // ~Aries 26°
+  ['2027-05-15', 54],  // ~Taurus 24°
+  ['2027-06-14', 83],  // ~Gemini 23°
+  ['2027-07-13',110],  // ~Cancer 21°
+];
+const ZODIAC_SIGNS_W = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const ZODIAC_SIGNS_V = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const MOON_SIGN_MEANINGS = {
+  Aries:   'Aries Moon — initiating, direct, fast energy. A day for starting, asserting, and taking action. Watch for impatience.',
+  Taurus:  'Taurus Moon — sensory, grounding, steady. This is your natal Moon sign: extra body wisdom and emotional richness available today. Rest, beauty, and abundance.',
+  Gemini:  'Gemini Moon — curious, social, communicative. Great for conversations, writing, and connecting ideas. Your mind is quick.',
+  Cancer:  'Cancer Moon — emotional, intuitive, home-oriented. This is your Vedic Rising sign: your intuition speaks loudly today. Nourish yourself.',
+  Leo:     'Leo Moon — expressive, generous, visible. A day for creative boldness, showing up, and being seen authentically.',
+  Virgo:   'Virgo Moon — precise, analytical, health-focused. A great day for refining systems, tending your body, and doing the detailed work.',
+  Libra:   'Libra Moon — relational, balanced, beauty-seeking. Your Vedic Sun sign Moon — a day for harmonizing, connecting, and creating beauty.',
+  Scorpio: 'Scorpio Moon — deep, transformative, intense. Your natal Mars sign Moon. A day for depth work, honest inquiry, and powerful focus.',
+  Sagittarius: 'Sagittarius Moon — expansive, optimistic, freedom-seeking. A day for big-picture thinking, philosophy, and forward momentum.',
+  Capricorn: 'Capricorn Moon — disciplined, ambitions, structured. A day for focused effort, career actions, and building something real.',
+  Aquarius: 'Aquarius Moon — innovative, community-minded, visionary. Your natal Ketu and Western Rising sign. A day for collective thinking, originality, and community connection.',
+  Pisces:  'Pisces Moon — dreamy, compassionate, spiritual. A day for rest, creativity, inner listening, and dissolving what no longer serves.'
+};
+const PHASE_NAMES = [
+  { max:1.8,   emoji:'🌑', name:'New Moon', meaning:'A reset point — seed an intention. This is a time of beginnings, quiet potential, and planting what you want to grow.' },
+  { max:7.4,   emoji:'🌒', name:'Waxing Crescent', meaning:'The seed stirs. Take first small actions toward what you set at the new moon. Build momentum gently.' },
+  { max:10.5,  emoji:'🌓', name:'First Quarter', meaning:'Action and decision point. A push of energy — challenges may arise, but they help you refine direction.' },
+  { max:14.5,  emoji:'🌔', name:'Waxing Gibbous', meaning:'Refinement before fullness. Keep building, editing, and preparing for what\'s about to fully arrive.' },
+  { max:16.5,  emoji:'🌕', name:'Full Moon', meaning:'Full illumination — what was planted becomes visible. Emotions and energy peak. Receive, celebrate, or release.' },
+  { max:21.8,  emoji:'🌖', name:'Waning Gibbous', meaning:'Integration and gratitude. Share what you\'ve learned. Harvest the insights from the full moon.' },
+  { max:25.3,  emoji:'🌗', name:'Last Quarter', meaning:'Release and let go. What no longer serves is ready to be released before the next new moon.' },
+  { max:29.5,  emoji:'🌘', name:'Balsamic Moon', meaning:'Deep rest before renewal. The quietest, most inward phase — surrender, rest, and prepare for the new cycle.' },
+];
+function getMoonData(dateStr){
+  const d = new Date(dateStr+'T12:00:00');
+  let best = null, bestDiff = Infinity;
+  for(const [nmDate] of NM_ANCHORS){
+    const nm = new Date(nmDate+'T00:00:00');
+    const diff = (d - nm)/86400000;
+    if(diff >= 0 && diff < bestDiff){ bestDiff = diff; best = [nmDate, NM_ANCHORS.find(x=>x[0]===nmDate)[1]]; }
+  }
+  if(!best) return null;
+  const daysSinceNM = bestDiff;
+  const synodic = 29.53;
+  const phase = daysSinceNM % synodic;
+  let phaseObj = PHASE_NAMES[PHASE_NAMES.length-1];
+  for(const p of PHASE_NAMES){ if(phase <= p.max){ phaseObj = p; break; } }
+  // Moon moves ~13.18°/day from NM position
+  const moonLonTrop = (best[1] + daysSinceNM * 13.18) % 360;
+  const moonLonVedic = ((moonLonTrop - 24) + 360) % 360;
+  const tropSign = ZODIAC_SIGNS_W[Math.floor(moonLonTrop/30)];
+  const vedSign  = ZODIAC_SIGNS_V[Math.floor(moonLonVedic/30)];
+  const meaning  = MOON_SIGN_MEANINGS[vedSign] || '';
+  return { emoji: phaseObj.emoji, phaseName: phaseObj.name, phaseMeaning: phaseObj.meaning, tropSign, vedSign, meaning };
+}
+
 function getMoodColor(s){ return['','#aab8c2','#7a9a9a','#3da8c8','#50A19F','#066664'][s]||''; }
 function getContentStreak(){
   let streak=0;
@@ -1197,7 +1269,9 @@ function buildCal(y,mo) {
     const noteDot = (!ev && hasNote) ? `<div class="note-dot"></div>` : '';
     const moodScore = parseInt(localStorage.getItem('mood-'+ds)||'0');
     const moodDot = moodScore ? `<div class="mood-dot-cal" style="background:${getMoodColor(moodScore)}"></div>` : '';
-    h+=`<div class="${cls}" ${todayId} id="cell-${ds}" onclick="openDayModal('${ds}')"><div class="num">${d}</div>${dot}${noteDot}${moodDot}</div>`;
+    const moonD = getMoonData(ds);
+    const moonMini = moonD ? `<div class="moon-phase-mini">${moonD.emoji}</div>` : '';
+    h+=`<div class="${cls}" ${todayId} id="cell-${ds}" onclick="openDayModal('${ds}')"><div class="num">${d}</div>${moonMini}${dot}${noteDot}${moodDot}</div>`;
   }
   h+='</div>';
   return h;
@@ -1433,6 +1507,15 @@ function openDayModal(ds){
     </div>
     ${guideHtml}`;
 
+  const moonData = getMoonData(ds);
+  const moonHtml = moonData ? `
+    <div class="moon-info-block">
+      <div class="moon-info-phase">${moonData.emoji} ${moonData.phaseName} · Moon in ${moonData.vedSign} <span style="opacity:0.5;font-size:0.65rem">(${moonData.tropSign} tropical)</span></div>
+      <div class="moon-info-sign">Vedic · Sidereal Position</div>
+      <div class="moon-info-meaning">${moonData.phaseMeaning}</div>
+      <div class="moon-info-meaning" style="margin-top:6px;border-top:1px solid rgba(255,255,255,0.1);padding-top:6px">${moonData.meaning}</div>
+    </div>` : '';
+
   const hdc = HD_CHECKINS[d.getDay()];
   const hdHtml = !isBirthday ? `<div class="hd-checkin"><div class="hd-checkin-title">${hdc.title}</div>${hdc.msg}</div>` : '';
 
@@ -1443,6 +1526,7 @@ function openDayModal(ds){
     </h3>
     ${!isBirthday?`<div class="modal-date-str" style="color:${pd.color};margin-bottom:8px">${pd.name}</div><div class="modal-guidance">${pd.msg}</div>`:'<div class="modal-date-str" style="text-align:center;margin-bottom:12px">'+fmt+'</div>'}
     ${dailySection}
+    ${moonHtml}
     ${countdownHtml}
     ${eventHtml}
     ${hdHtml}
