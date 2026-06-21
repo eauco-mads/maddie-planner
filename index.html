@@ -316,7 +316,44 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
   .overview-grid, .opp-caut, .daily-msg-grid { grid-template-columns: 1fr; }
   .cal-day { min-height: 36px; }
   main { padding: 14px; }
+  .win-challenge { grid-template-columns: 1fr; }
 }
+/* ── HD CHECK-IN ── */
+.hd-checkin { background: var(--pink-bg); border-left: 3px solid var(--pink); border-radius: 9px; padding: 12px 14px; margin: 12px 0; font-size: 0.78rem; color: var(--text-dim); line-height: 1.65; }
+.hd-checkin-title { font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: var(--pink); margin-bottom: 6px; }
+/* ── DAILY TO-DOS ── */
+.day-todos { margin: 14px 0 10px; }
+.day-todos-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+.day-todos-label { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); }
+.dtodo-progress-label { font-size: 0.67rem; color: var(--text-light); font-family: 'Lato', sans-serif; }
+.dtodo-progress-bar { height: 4px; background: var(--border-light); border-radius: 2px; margin-bottom: 9px; overflow: hidden; }
+.dtodo-progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--pink)); border-radius: 2px; transition: width 0.3s; }
+.dtodo-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 11px; background: var(--card); border-radius: 8px; margin-bottom: 5px; cursor: pointer; transition: all 0.15s; border: 1px solid var(--border-light); }
+.dtodo-item:first-of-type { border-color: var(--green); background: var(--green-bg); }
+.dtodo-item:hover { background: var(--green-bg); }
+.dtodo-item.done { opacity: 0.45; }
+.dtodo-item.done label { text-decoration: line-through; }
+.dtodo-item input[type=checkbox] { accent-color: var(--green); width: 15px; height: 15px; flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+.dtodo-item label { font-size: 0.76rem; color: var(--text-dim); line-height: 1.5; cursor: pointer; }
+/* ── MOOD TRACKER ── */
+.mood-section { margin: 14px 0 8px; }
+.mood-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-light); font-family: 'Lato', sans-serif; margin-bottom: 8px; }
+.mood-options { display: flex; gap: 6px; }
+.mood-btn { flex: 1; background: var(--surface); border: 2px solid var(--border-light); border-radius: 10px; padding: 7px 4px; text-align: center; cursor: pointer; transition: all 0.15s; font-size: 1.15rem; line-height: 1; }
+.mood-btn:hover { border-color: var(--pink); background: var(--pink-bg); }
+.mood-btn.selected { border-color: var(--green); background: var(--green-bg); transform: scale(1.06); }
+.mood-btn .mood-word { font-size: 0.58rem; color: var(--text-light); display: block; margin-top: 3px; font-family: 'Lato', sans-serif; }
+.mood-dot-cal { width: 7px; height: 7px; border-radius: 50%; position: absolute; bottom: 4px; right: 4px; }
+/* ── WIN / CHALLENGE ── */
+.win-challenge { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0 6px; }
+.wc-block label { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'Lato', sans-serif; color: var(--text-light); display: block; margin-bottom: 4px; }
+.wc-block textarea { width: 100%; background: var(--card); border: 1px solid var(--border-light); border-radius: 7px; padding: 7px 9px; font-size: 0.74rem; color: var(--text); font-family: 'Lato', sans-serif; resize: none; height: 58px; line-height: 1.4; }
+.wc-block textarea:focus { outline: none; border-color: var(--green); }
+.wc-save-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); font-size: 0.68rem; border-radius: 6px; padding: 4px 12px; cursor: pointer; font-family: 'Lato', sans-serif; }
+/* ── STREAK ── */
+.streak-display { display: flex; align-items: center; gap: 10px; background: var(--green-bg); border-radius: 9px; padding: 9px 13px; margin-top: 10px; border: 1px solid var(--border-light); }
+.streak-num { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--green); font-weight: 300; line-height: 1; min-width: 28px; }
+.streak-text { font-size: 0.7rem; color: var(--text-dim); font-family: 'Lato', sans-serif; line-height: 1.45; }
 </style>
 </head>
 <body>
@@ -701,6 +738,43 @@ const CHECKLIST = [
   { id:'c5', label:'Evening reflection — what did you feel today? What is your Moon telling you about tomorrow?' }
 ];
 
+const DOW_TODOS = {
+  0: ['Post content today ✓ — your consistency is your compound interest','Inner sanctuary: make one space feel intentionally beautiful and yours (Libra 4th house)','Generator rest day — only respond to what your body genuinely says yes to today','Sun in Libra: bring beauty into one interaction, creation, or environment','Evening: write what you want tomorrow to feel like before you close the day'],
+  1: ['Post content today ✓ — show up, even in a small way','Reach out to one person in your community who genuinely matters to you (Moon 11th house)','Emotional wave check-in: write where you are — high / middle / low — without judgment','Nourish your body with something real and sensory today (Taurus Moon exalted)','Abundance move: connect your work or offer to one person in your network today'],
+  2: ['Post content today ✓ — go deep, not wide','Mars Scorpio 5th: create something from the real, honest place inside you today','Sacral check-in: what is your gut saying a hard yes or hard no to right now?','Move your body with intention — Mars in Scorpio needs physical release today','Depth over breadth: go deeper into one thing instead of spreading across many'],
+  3: ['Post content today ✓ — communicate something true','Mercury Libra 4th: write or speak from your grounded inner knowing, not performance','HD 5/1: what do you know deeply enough to share? Express one piece of real knowledge','Nervous system care: ground before you communicate today','The real thing: what have you been circling around saying? Write a first draft of it'],
+  4: ['Post content today ✓ — your visibility creates abundance','Jupiter conjunct Moon 11th: open one door in your community or receive something offered','Channel 41-30: notice what you\'re yearning for. Let it exist without immediately acting','Expand: do one thing that makes your energy feel bigger, not smaller, today','Abundance check: what is trying to arrive in your life that you haven\'t fully received?'],
+  5: ['Post content today ✓ — visibility is a wealth practice','Venus Leo 2nd: do one thing that treats you as the investment you are','Channel 1-8 (Creative Role Model): be authentically yourself somewhere visible today','Worth: say your real value, price, or gift out loud — to yourself or someone else','Beauty as business: tend to your voice, brand, or self-image as a wealth asset today'],
+  6: ['Post content today ✓ — systems and consistency compound over time','Saturn Aries 10th: give one hour to the unglamorous but important career work','Channel 32-54: what effort is worth sustained energy? Ask your body, trust the answer','Complete something: finish one task, draft, message, or conversation today','Legacy: what are you building that you want still standing in 10 years? Give it focus']
+};
+
+const MONTH_TODO_BOOST = [
+  'Jupiter freshly in your 1st house: write one sentence about who you are becoming this year',
+  'New Moon Jul 24 approaching — what identity seed are you preparing to plant this cycle?',
+  'Eclipse month — integrate before initiating. What needs to settle first?',
+  'Emotional intelligence is your compass this month — trust feeling before analysis today',
+  'Birthday month + nodal shift — what are you consciously choosing to release before Oct 17?',
+  'Mercury Rx + Ketu in 1st: review and refine one thing today instead of launching anything new',
+  'Dec 5 Full Moon on your natal Moon approaching — what is reaching completion in you?',
+  'Rahu-Moon antardasha active: emotional knowing is your map — what is it telling you today?',
+  'Full Moon in your Rising was recent — what has been illuminated that needed to be seen?',
+  'Mercury Rx review month: go deeper into what exists before beginning anything new',
+  'Mercury direct + New Moon in 10th — what career seed are you ready to plant consciously?',
+  'New Moon May 15 in 11th approaching — plant one community or income seed this week',
+  'Jupiter moving to Leo 2nd house this month: what are you ready to express more fully?',
+  'Jupiter in Leo 2nd: abundance through authentic voice and expression — what is yours to say?'
+];
+
+const HD_CHECKINS = {
+  0: { title:'☯ Generator · Sunday Restoration', msg:'Sundays are for restoration. Your sacral life-force needs cycles of full use AND genuine rest. Today isn\'t about doing more — it\'s about letting your body fully release the week. Notice what you genuinely want to say yes to today (not what you feel you should). That distinction — real yes vs. obligated yes — is your design working correctly.' },
+  1: { title:'☯ Emotional Authority · The Wave', msg:'Check in with your emotional wave right now. High (expansive, everything feels possible)? Middle (clear and steady)? Low (contracted, things feel heavier)? All three are correct — none is the permanent truth about your life. The middle of the wave is where your clearest decisions live. Is there a choice you\'ve been trying to make from the high or the low that needs a little more time?' },
+  2: { title:'☯ Sacral Response · Tuesday', msg:'Your sacral is your yes/no system — a gut response that operates before your mind\'s commentary arrives. Try this: "Is there something in my life right now that my gut is saying yes to that my mind keeps talking me out of?" And: "Is there something I\'m still doing that my gut already said no to?" Listen for the physical response first. The body answers faster than the brain.' },
+  3: { title:'☯ Profile 5/1 · Foundation Day', msg:'Your 5/1 profile means what you broadcast matters. The 5 line projects a field of practical expertise — others feel it before you speak. The 1 line underneath needs that field to be backed by real knowledge and lived experience. Before sharing anything today — content, advice, an offer — ask: is this coming from genuine depth, or from performance? The grounded version always lands.' },
+  4: { title:'☯ Channel 41-30 · Desire Engine', msg:'Your Channel 41-30 (Root to Solar Plexus) is your desire engine — it generates yearning and possibility-energy into the world. On Jupiter\'s day, this channel is especially activated. Notice what you are genuinely longing for right now. Don\'t act on it yet. Desire is information — let it exist and tell you something about where your energy wants to go. The wave will carry you toward clarity.' },
+  5: { title:'☯ Channel 1-8 · Creative Role Model', msg:'Your Channel 1-8 (G Center to Throat) is the Creative Role Model channel — you inspire others through authentic creative self-expression, not through performance or strategy. On Venus\'s day (wealth, beauty, visibility), this channel is your most powerful asset. You don\'t need to perform. You need to be genuinely, visibly yourself. What would the most authentically-you version of today create?' },
+  6: { title:'☯ Channel 32-54 · What Endures', msg:'Your Channel 32-54 (Spleen to Root) carries instinctive wisdom about what will endure — and the drive to transform material circumstances through sustained, aligned effort. On Saturn\'s day, this channel is your guide. Before you plan today\'s work, pause and ask your body: "Which of these efforts is worth my sustained energy over time?" Trust the first answer. The Spleen speaks once and clearly.' }
+};
+
 const DAILY_PROMPTS = [
   'What is your body feeling right now that your mind hasn\'t caught up to yet?',
   'What would feel like a real win by the end of today — not a productive one, a meaningful one?',
@@ -887,6 +961,85 @@ function planetDayFor(dateStr) {
   return PLANET_DAYS[d.getDay()];
 }
 
+// ── DAILY TODOS + MOOD HELPERS ───────────────────────────────────────────────
+function getDayTodos(ds) {
+  const d = new Date(ds+'T12:00:00');
+  const todos = [...DOW_TODOS[d.getDay()]];
+  const mIdx = MONTHS.findIndex(m=>m.id===ds.substring(0,7));
+  if(mIdx>=0 && MONTH_TODO_BOOST[mIdx]) todos[4]=MONTH_TODO_BOOST[mIdx];
+  const ev = KEY_DATES[ds];
+  if(ev){
+    if(ev.type==='full-moon') todos[3]='Full moon tonight: sit with what is completing or being illuminated in you';
+    if(ev.type==='new-moon') todos[3]='New moon today: set one clear intention or seed for this cycle';
+    if(ev.type==='eclipse-solar') todos[3]='Solar eclipse: write one identity intention — who are you becoming?';
+    if(ev.type==='eclipse-lunar') todos[3]='Lunar eclipse: name one thing you are consciously releasing tonight';
+    if(ev.type==='birthday') todos[3]='Birthday ritual: write a letter to yourself from the woman you are becoming';
+  }
+  return todos;
+}
+function getMoodColor(s){ return['','#aab8c2','#7a9a9a','#3da8c8','#50A19F','#066664'][s]||''; }
+function getContentStreak(){
+  let streak=0;
+  const base=new Date(todayStr+'T12:00:00');
+  for(let i=0;i<400;i++){
+    const c=new Date(base); c.setDate(c.getDate()-i);
+    const ds=`${c.getFullYear()}-${String(c.getMonth()+1).padStart(2,'0')}-${String(c.getDate()).padStart(2,'0')}`;
+    if(localStorage.getItem('todo-'+ds+'-0')==='1') streak++;
+    else if(i>0) break;
+  }
+  return streak;
+}
+function toggleDayTodo(ds,idx){
+  const key='todo-'+ds+'-'+idx;
+  const cur=localStorage.getItem(key)==='1';
+  localStorage.setItem(key,cur?'0':'1');
+  const item=document.getElementById('dtodo-'+idx);
+  if(item){ item.classList.toggle('done',!cur); const cb=item.querySelector('input'); if(cb) cb.checked=!cur; }
+  const todos=getDayTodos(ds);
+  const done=todos.filter((_,i)=>localStorage.getItem('todo-'+ds+'-'+i)==='1').length;
+  const bar=document.getElementById('dtodo-bar'); const lbl=document.getElementById('dtodo-lbl');
+  if(bar) bar.style.width=(done/todos.length*100)+'%';
+  if(lbl) lbl.textContent=done+'/'+todos.length+' complete';
+  updateCellMoodDot(ds);
+  // Refresh streak in today card if visible
+  const sc=document.getElementById('streak-num'); if(sc) sc.textContent=getContentStreak();
+}
+function saveMood(ds,score){
+  localStorage.setItem('mood-'+ds,score);
+  document.querySelectorAll('.mood-btn').forEach((b,i)=>b.classList.toggle('selected',i+1===score));
+  updateCellMoodDot(ds);
+}
+function saveWinChallenge(ds){
+  const win=document.getElementById('win-ta')?.value||'';
+  const ch=document.getElementById('challenge-ta')?.value||'';
+  localStorage.setItem('win-'+ds,win); localStorage.setItem('challenge-'+ds,ch);
+  const btn=document.getElementById('wc-save'); if(btn){btn.textContent='Saved ✓';setTimeout(()=>{btn.textContent='Save';},1300);}
+}
+function updateCellMoodDot(ds){
+  const score=parseInt(localStorage.getItem('mood-'+ds)||'0');
+  const cell=document.getElementById('cell-'+ds); if(!cell) return;
+  let dot=cell.querySelector('.mood-dot-cal');
+  if(!score){ if(dot) dot.remove(); return; }
+  if(!dot){ dot=document.createElement('div'); dot.className='mood-dot-cal'; cell.appendChild(dot); }
+  dot.style.background=getMoodColor(score);
+}
+function buildTodosHtml(ds){
+  const todos=getDayTodos(ds);
+  const done=todos.filter((_,i)=>localStorage.getItem('todo-'+ds+'-'+i)==='1').length;
+  const items=todos.map((t,i)=>{
+    const ck=localStorage.getItem('todo-'+ds+'-'+i)==='1';
+    return `<div class="dtodo-item${ck?' done':''}" id="dtodo-${i}" onclick="toggleDayTodo('${ds}',${i})"><input type="checkbox"${ck?' checked':''} onclick="event.stopPropagation();toggleDayTodo('${ds}',${i})"><label>${t}</label></div>`;
+  }).join('');
+  return `<div class="day-todos"><div class="day-todos-header"><div class="day-todos-label">✦ Daily Practices</div><div class="dtodo-progress-label" id="dtodo-lbl">${done}/${todos.length} complete</div></div><div class="dtodo-progress-bar"><div class="dtodo-progress-fill" id="dtodo-bar" style="width:${Math.round(done/todos.length*100)}%"></div></div>${items}</div>`;
+}
+function buildMoodHtml(ds){
+  const saved=parseInt(localStorage.getItem('mood-'+ds)||'0');
+  const moods=[['🌑','Dark'],['🌒','Low'],['🌓','Okay'],['🌔','Good'],['🌕','Full']];
+  const btns=moods.map((m,i)=>`<button class="mood-btn${saved===i+1?' selected':''}" onclick="saveMood('${ds}',${i+1})"><span>${m[0]}</span><span class="mood-word">${m[1]}</span></button>`).join('');
+  const win=localStorage.getItem('win-'+ds)||''; const ch=localStorage.getItem('challenge-'+ds)||'';
+  return `<div class="mood-section"><div class="mood-label">How are you feeling today?</div><div class="mood-options">${btns}</div></div><div class="win-challenge"><div class="wc-block"><label>One win today</label><textarea id="win-ta" placeholder="Something good, however small…">${win}</textarea></div><div class="wc-block"><label>One challenge today</label><textarea id="challenge-ta" placeholder="Something hard or unclear…">${ch}</textarea></div></div><button class="wc-save-btn" id="wc-save" onclick="saveWinChallenge('${ds}')">Save</button>`;
+}
+
 // ── BUILD TODAY CARD ─────────────────────────────────────────────────────────
 function buildTodayCard() {
   const card = document.getElementById('todayCard');
@@ -909,6 +1062,7 @@ function buildTodayCard() {
       <strong>${tip.planet}</strong>
       ${tip.tip}
     </div>
+    ${(()=>{const s=getContentStreak();return `<div class="streak-display"><span class="streak-num" id="streak-num">${s}</span><div class="streak-text"><strong style="color:var(--green);font-size:0.76rem">${s===0?'Start your streak today':'day content streak'}</strong><br><span style="font-size:0.62rem;opacity:0.75">${s>=7?'✦ 7+ days — momentum is real':'Post daily to build your abundance'}</span></div></div>`;})()}
   `;
 }
 
@@ -1041,7 +1195,9 @@ function buildCal(y,mo) {
     const dot = ev?`<div class="edot" style="background:${dotColors[ev.type]||'#ccc'}"></div>`:'';
     const hasNote = localStorage.getItem('daynote-'+ds);
     const noteDot = (!ev && hasNote) ? `<div class="note-dot"></div>` : '';
-    h+=`<div class="${cls}" ${todayId} id="cell-${ds}" onclick="openDayModal('${ds}')"><div class="num">${d}</div>${dot}${noteDot}</div>`;
+    const moodScore = parseInt(localStorage.getItem('mood-'+ds)||'0');
+    const moodDot = moodScore ? `<div class="mood-dot-cal" style="background:${getMoodColor(moodScore)}"></div>` : '';
+    h+=`<div class="${cls}" ${todayId} id="cell-${ds}" onclick="openDayModal('${ds}')"><div class="num">${d}</div>${dot}${noteDot}${moodDot}</div>`;
   }
   h+='</div>';
   return h;
@@ -1277,6 +1433,9 @@ function openDayModal(ds){
     </div>
     ${guideHtml}`;
 
+  const hdc = HD_CHECKINS[d.getDay()];
+  const hdHtml = !isBirthday ? `<div class="hd-checkin"><div class="hd-checkin-title">${hdc.title}</div>${hdc.msg}</div>` : '';
+
   document.getElementById('modalContent').innerHTML=`
     ${birthdayTopHtml}
     <h3 style="${isBirthday?'color:var(--pink);text-align:center;font-size:1.5rem':''}${!isBirthday?'':''}">
@@ -1286,6 +1445,9 @@ function openDayModal(ds){
     ${dailySection}
     ${countdownHtml}
     ${eventHtml}
+    ${hdHtml}
+    ${buildTodosHtml(ds)}
+    ${buildMoodHtml(ds)}
     <hr class="modal-divider">
     <div class="modal-prompt-label">${isBirthday?'Birthday Reflection Prompt':'Today\'s Journal Prompt'}</div>
     <div class="modal-prompt-text">${isBirthday?'What do you want this year to feel like — not look like, feel like? Write it without editing yourself.':prompt}</div>
