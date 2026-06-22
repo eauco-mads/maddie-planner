@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personalized Planner Intake · EAUCO</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #066664;
+    --green-mid: #50A19F;
+    --green-light: #B1E9E8;
+    --gold: #B8832A;
+    --gold-light: #FDBB89;
+    --gold-bg: #FFF8F0;
+    --text: #1a3a3a;
+    --text-dim: #3a5a5a;
+    --text-light: #6a8a8a;
+    --bg: #f4fafa;
+    --card: #ffffff;
+    --border: #d0e8e8;
+    --shadow: rgba(6,102,100,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+  .page-wrap {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 36px 28px 32px;
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 2px 16px var(--shadow);
+    border-top: 3px solid var(--green);
+  }
+  .header-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--green-mid);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.1rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+  .header h1 em {
+    color: var(--green);
+    font-style: italic;
+  }
+  .header-sub {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.75;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+
+  /* What you'll receive box */
+  .receive-box {
+    background: var(--gold-bg);
+    border-left: 3px solid var(--gold-light);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 24px 0 0;
+    text-align: left;
+  }
+  .receive-box h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .receive-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .receive-box ul li {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    padding-left: 14px;
+    position: relative;
+  }
+  .receive-box ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--gold-light);
+    font-size: 0.65rem;
+    top: 3px;
+  }
+
+  /* Form sections */
+  .form-section {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px 24px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 8px var(--shadow);
+    border-left: 3px solid var(--border);
+  }
+  .form-section.active-border { border-left-color: var(--green); }
+  .form-section.gold-border { border-left-color: var(--gold-light); }
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--green);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .section-note {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+
+  /* Fields */
+  .field-group {
+    margin-bottom: 18px;
+  }
+  .field-group:last-child { margin-bottom: 0; }
+  .field-row {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .field-row.two { grid-template-columns: 1fr 1fr; }
+  .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
+  @media (max-width: 480px) {
+    .field-row.two, .field-row.three { grid-template-columns: 1fr; }
+  }
+  label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  label .opt {
+    font-weight: 300;
+    color: var(--text-light);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  input[type="time"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--green-mid);
+    background: #fff;
+  }
+  input::placeholder, textarea::placeholder { color: var(--text-light); }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236a8a8a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+  .field-hint {
+    font-size: 0.67rem;
+    color: var(--text-light);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+
+  /* Radio / checkbox groups */
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0;
+    text-transform: none;
+    cursor: pointer;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 13px;
+    transition: all 0.18s;
+    user-select: none;
+    margin-bottom: 0;
+  }
+  .radio-group input[type="radio"],
+  .radio-group input[type="checkbox"] {
+    width: auto;
+    accent-color: var(--green);
+  }
+  .radio-group label:has(input:checked) {
+    border-color: var(--green);
+    background: #e8f6f6;
+    color: var(--green);
+  }
+
+  /* Time accuracy meter */
+  .time-accuracy {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .time-accuracy label {
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px 8px;
+    font-size: 0.72rem;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    font-weight: 400;
+  }
+  .time-accuracy label:has(input:checked) {
+    border-color: var(--green);
+    background: #e8f6f6;
+    color: var(--green);
+  }
+  .time-accuracy .ta-label { display: block; font-weight: 500; font-size: 0.72rem; }
+  .time-accuracy .ta-sub { display: block; font-size: 0.62rem; color: var(--text-light); margin-top: 2px; }
+  .time-accuracy label:has(input:checked) .ta-sub { color: var(--green-mid); }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 18px 0;
+  }
+
+  /* Submit */
+  .submit-section {
+    text-align: center;
+    margin-top: 10px;
+  }
+  .submit-btn {
+    background: var(--green);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 40px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 12px rgba(6,102,100,0.25);
+  }
+  .submit-btn:hover { background: #055554; transform: translateY(-1px); box-shadow: 0 5px 18px rgba(6,102,100,0.3); }
+  .submit-note {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  /* What happens next */
+  .next-steps {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-top: 28px;
+    box-shadow: 0 1px 8px var(--shadow);
+    border-top: 2px solid var(--green-light);
+  }
+  .next-steps h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+  .next-step-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .step-num {
+    background: var(--green-light);
+    color: var(--green);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 0.65rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-text { font-size: 0.78rem; color: var(--text-dim); line-height: 1.6; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.68rem;
+    color: var(--text-light);
+    line-height: 1.8;
+  }
+  .footer a { color: var(--green-mid); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-eyebrow">✦ EAUCO · Sovereign Systems</div>
+    <h1><em>Your</em> Personalized<br>Life Navigation Planner</h1>
+    <p class="header-sub">Built from your Vedic chart, your Human Design, and the exact transits moving through your life right now. Not a template. <em>Yours.</em></p>
+
+    <div class="receive-box">
+      <h4>✦ What you'll receive</h4>
+      <ul>
+        <li>Interactive 14-month HTML planner built to your exact birth chart</li>
+        <li>Daily energy guidance aligned to your planetary rulers and chart placements</li>
+        <li>Key transits, moon phases, and personal dates mapped to your houses</li>
+        <li>Human Design strategy and authority woven into daily practices</li>
+        <li>Progress tracker, mood log, and monthly journal prompts</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <form id="intakeForm" action="YOUR_FORM_ENDPOINT_HERE" method="POST">
+
+    <!-- Section 1: You -->
+    <div class="form-section active-border">
+      <div class="section-label">✦ About You</div>
+      <div class="section-note">This is how we'll personalize your planner and how we'll reach you when it's ready.</div>
+
+      <div class="field-group">
+        <label>Full Name</label>
+        <input type="text" name="full_name" placeholder="Your full name" required>
+      </div>
+      <div class="field-group">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <div class="field-hint">We'll send your planner link here. No spam, ever.</div>
+      </div>
+    </div>
+
+    <!-- Section 2: Birth Data -->
+    <div class="form-section active-border">
+      <div class="section-label">☽ Birth Data</div>
+      <div class="section-note">This is the foundation of everything. The more precise your birth time, the more accurate your Rising sign, house placements, and nakshatra positions — which is where the real personalization lives.</div>
+
+      <div class="field-row two">
+        <div>
+          <label>Date of Birth</label>
+          <input type="date" name="birth_date" required>
+        </div>
+        <div>
+          <label>Time of Birth</label>
+          <input type="time" name="birth_time">
+          <div class="field-hint">Leave blank if unknown. We'll note it.</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>How certain are you of your birth time?</label>
+        <div class="time-accuracy radio-group">
+          <label>
+            <input type="radio" name="time_accuracy" value="exact">
+            <span class="ta-label">Exact</span>
+            <span class="ta-sub">From birth cert or hospital record</span>
+          </label>
+          <label>
+            <input type="radio" name="time_accuracy" value="approximate">
+            <span class="ta-label">Approximate</span>
+            <span class="ta-sub">Family memory, within ~1 hour</span>
+          </label>
+          <label>
+            <input type="radio" name="time_accuracy" value="unknown">
+            <span class="ta-label">Unknown</span>
+            <span class="ta-sub">Not on record</span>
+          </label>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field-group">
+        <label>City of Birth</label>
+        <input type="text" name="birth_city" placeholder="e.g. Portland, Oregon" required>
+      </div>
+      <div class="field-group">
+        <label>Country of Birth</label>
+        <input type="text" name="birth_country" placeholder="e.g. United States" required>
+      </div>
+    </div>
+
+    <!-- Section 3: Chart -->
+    <div class="form-section active-border">
+      <div class="section-label">♃ Astrological Background</div>
+      <div class="section-note">Answer what you know. If you're not sure, leave it blank — we'll pull your chart from scratch using your birth data. Nothing here is required.</div>
+
+      <div class="field-group">
+        <label>Do you know your Vedic (Jyotish) Rising Sign? <span class="opt">optional</span></label>
+        <select name="vedic_rising">
+          <option value="">Not sure / pull from my birth data</option>
+          <option>Aries (Mesha)</option>
+          <option>Taurus (Vrishabha)</option>
+          <option>Gemini (Mithuna)</option>
+          <option>Cancer (Karka)</option>
+          <option>Leo (Simha)</option>
+          <option>Virgo (Kanya)</option>
+          <option>Libra (Tula)</option>
+          <option>Scorpio (Vrishchika)</option>
+          <option>Sagittarius (Dhanu)</option>
+          <option>Capricorn (Makara)</option>
+          <option>Aquarius (Kumbha)</option>
+          <option>Pisces (Meena)</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Do you know your Western Sun Sign? <span class="opt">optional</span></label>
+        <select name="western_sun">
+          <option value="">Not sure</option>
+          <option>Aries</option><option>Taurus</option><option>Gemini</option>
+          <option>Cancer</option><option>Leo</option><option>Virgo</option>
+          <option>Libra</option><option>Scorpio</option><option>Sagittarius</option>
+          <option>Capricorn</option><option>Aquarius</option><option>Pisces</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Have you ever had your Vedic chart read? <span class="opt">optional</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="chart_experience" value="never"> Never — totally new to this</label>
+          <label><input type="radio" name="chart_experience" value="some"> A little — I know a few placements</label>
+          <label><input type="radio" name="chart_experience" value="yes"> Yes — I know my chart well</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Human Design -->
+    <div class="form-section gold-border">
+      <div class="section-label" style="color:var(--gold)">☯ Human Design <span style="font-weight:300;font-size:0.8rem;color:var(--text-light);font-family:'Inter',sans-serif;margin-left:6px">optional but powerful</span></div>
+      <div class="section-note">Human Design layers your energetic strategy and authority into your daily practices. If you don't know yours yet, no worries — leave blank and we'll note it as a future addition.</div>
+
+      <div class="field-group">
+        <label>Human Design Type <span class="opt">optional</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="hd_type" value="generator"> Generator</label>
+          <label><input type="radio" name="hd_type" value="manifesting_generator"> Manifesting Generator</label>
+          <label><input type="radio" name="hd_type" value="projector"> Projector</label>
+          <label><input type="radio" name="hd_type" value="manifestor"> Manifestor</label>
+          <label><input type="radio" name="hd_type" value="reflector"> Reflector</label>
+          <label><input type="radio" name="hd_type" value="unknown"> Don't know yet</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Inner Authority <span class="opt">optional</span></label>
+        <select name="hd_authority">
+          <option value="">Don't know / not sure</option>
+          <option>Emotional / Solar Plexus</option>
+          <option>Sacral</option>
+          <option>Splenic</option>
+          <option>Ego / Heart</option>
+          <option>Self / G Center</option>
+          <option>Mental / Outer Authority</option>
+          <option>Lunar (Reflector)</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Profile <span class="opt">optional — e.g. 5/1, 2/4, 6/3</span></label>
+        <input type="text" name="hd_profile" placeholder="e.g. 5/1">
+      </div>
+    </div>
+
+    <!-- Section 5: Aesthetic -->
+    <div class="form-section">
+      <div class="section-label">✧ Your Energy + Aesthetic</div>
+      <div class="section-note">This shapes how your planner looks and feels — colors, tone, what resonates with how you actually live.</div>
+
+      <div class="field-group">
+        <label>What words feel most like you right now? <span class="opt">choose all that apply</span></label>
+        <div class="radio-group">
+          <label><input type="checkbox" name="vibe[]" value="earthy"> Earthy + Grounded</label>
+          <label><input type="checkbox" name="vibe[]" value="celestial"> Celestial + Cosmic</label>
+          <label><input type="checkbox" name="vibe[]" value="soft"> Soft + Flowing</label>
+          <label><input type="checkbox" name="vibe[]" value="bold"> Bold + Contrasting</label>
+          <label><input type="checkbox" name="vibe[]" value="minimal"> Clean + Minimal</label>
+          <label><input type="checkbox" name="vibe[]" value="lush"> Lush + Abundant</label>
+          <label><input type="checkbox" name="vibe[]" value="dark"> Dark + Moody</label>
+          <label><input type="checkbox" name="vibe[]" value="warm"> Warm + Golden</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Preferred Color Palette <span class="opt">optional</span></label>
+        <input type="text" name="color_notes" placeholder="e.g. deep greens + warm terracotta, or soft lavender + cream">
+      </div>
+
+      <div class="field-group">
+        <label>What are you most wanting guidance on this year? <span class="opt">optional — helps us deepen the focus</span></label>
+        <textarea name="focus_areas" placeholder="e.g. partnerships, creative direction, money, identity, health, all of it…"></textarea>
+      </div>
+    </div>
+
+    <!-- Section 6: Anything else -->
+    <div class="form-section">
+      <div class="section-label">✦ Anything Else?</div>
+      <div class="section-note">Anything you want us to know before we build — health context, major life chapters, what you're moving through or toward.</div>
+      <textarea name="additional_notes" placeholder="Share whatever feels relevant. This is just for us — it stays private and only makes your planner more accurate." style="min-height:100px"></textarea>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-section">
+      <button type="submit" class="submit-btn">✦ Submit My Intake</button>
+      <p class="submit-note">Your information is private and used only to build your planner.<br>We do not sell, share, or store it beyond what's needed.</p>
+    </div>
+
+  </form>
+
+  <!-- What happens next -->
+  <div class="next-steps">
+    <h4>✦ What happens after you submit</h4>
+    <div class="next-step-item">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>We pull your full chart</strong> — Vedic + Western, Human Design, Vimshottari Dasha, all current transits mapped to your houses.</div>
+    </div>
+    <div class="next-step-item">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Your planner is built</strong> — every month, every transit, every key date written for your chart specifically. Not a template.</div>
+    </div>
+    <div class="next-step-item">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>You receive a private link</strong> — your personalized interactive planner, yours to use on any device. A PDF option is available too.</div>
+    </div>
+    <div class="next-step-item">
+      <div class="step-num">4</div>
+      <div class="step-text"><strong>Turnaround: 5–7 days</strong> for beta testers. We'll reach out if we have questions about your chart.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>✦ EAUCO · Elevate · Align · Unlock</p>
+    <p style="margin-top:4px"><a href="https://elevatealign.com">elevatealign.com</a> · <a href="mailto:maddie@elevatealign.com">maddie@elevatealign.com</a></p>
+    <p style="margin-top:8px;font-size:0.62rem">Your birth data and personal notes are kept private and used solely to generate your planner.</p>
+  </div>
+
+</div>
+</body>
+</html>
