@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmic Life Navigation Planner · EAUCO</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:      #066664;
+  --green-mid:  #50A19F;
+  --green-light:#B1E9E8;
+  --gold:       #B8832A;
+  --gold-light: #FDBB89;
+  --gold-bg:    #FFF8F0;
+  --text:       #1a3a3a;
+  --text-dim:   #3a5a5a;
+  --text-light: #6a8a8a;
+  --bg:         #f4fafa;
+  --card:       #ffffff;
+  --border:     #d0e8e8;
+  --shadow:     rgba(6,102,100,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);}
+img{max-width:100%;display:block;}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--green);letter-spacing:0.04em;}
+.nav-links{display:flex;align-items:center;gap:22px;}
+.nav-links a{font-size:0.75rem;color:var(--text-dim);text-decoration:none;letter-spacing:0.03em;}
+.nav-links a:hover{color:var(--green);}
+.nav-cta{background:var(--green);color:#fff !important;border-radius:20px;padding:8px 18px;font-weight:500;}
+.nav-cta:hover{background:#055554 !important;}
+@media(max-width:600px){.nav-links{gap:12px;}.nav{padding:14px 20px;}}
+
+/* HERO */
+.hero{padding:80px 24px 70px;text-align:center;max-width:780px;margin:0 auto;}
+.hero-eyebrow{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-mid);margin-bottom:18px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,6vw,4rem);font-weight:300;line-height:1.15;color:var(--text);margin-bottom:20px;}
+.hero h1 em{color:var(--green);font-style:italic;}
+.hero-sub{font-size:clamp(0.88rem,2vw,1.05rem);color:var(--text-dim);line-height:1.8;max-width:540px;margin:0 auto 34px;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:var(--green);color:#fff;border-radius:30px;padding:14px 32px;font-size:0.85rem;font-weight:500;text-decoration:none;letter-spacing:0.05em;box-shadow:0 4px 16px rgba(6,102,100,0.25);transition:all 0.2s;}
+.btn-primary:hover{background:#055554;transform:translateY(-2px);box-shadow:0 6px 22px rgba(6,102,100,0.3);}
+.btn-secondary{background:transparent;color:var(--green);border:1.5px solid var(--green);border-radius:30px;padding:13px 30px;font-size:0.85rem;font-weight:500;text-decoration:none;letter-spacing:0.05em;transition:all 0.2s;}
+.btn-secondary:hover{background:#e8f6f6;}
+.hero-note{font-size:0.7rem;color:var(--text-light);margin-top:14px;line-height:1.6;}
+
+/* PROOF BAR */
+.proof-bar{background:var(--green);color:#fff;padding:16px 24px;}
+.proof-inner{max-width:900px;margin:0 auto;display:flex;justify-content:center;gap:40px;flex-wrap:wrap;}
+.proof-item{text-align:center;}
+.proof-num{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;display:block;line-height:1;}
+.proof-label{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.75;margin-top:3px;display:block;}
+@media(max-width:500px){.proof-inner{gap:24px;}.proof-num{font-size:1.2rem;}}
+
+/* WHAT IT IS */
+.section{padding:72px 24px;max-width:900px;margin:0 auto;}
+.section-eyebrow{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--green-mid);margin-bottom:10px;text-align:center;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:300;text-align:center;color:var(--text);line-height:1.25;margin-bottom:14px;}
+.section-title em{color:var(--green);font-style:italic;}
+.section-sub{text-align:center;font-size:0.88rem;color:var(--text-dim);line-height:1.8;max-width:520px;margin:0 auto 48px;}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:680px){.features-grid{grid-template-columns:1fr;}}
+.feature-card{background:var(--card);border-radius:14px;padding:24px 22px;box-shadow:0 2px 12px var(--shadow);border-top:3px solid var(--green-light);}
+.feature-icon{font-size:1.4rem;margin-bottom:12px;display:block;}
+.feature-card h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);margin-bottom:8px;}
+.feature-card p{font-size:0.78rem;color:var(--text-dim);line-height:1.75;}
+
+/* WHAT'S IN IT */
+.included-section{background:var(--card);padding:72px 24px;}
+.included-inner{max-width:860px;margin:0 auto;}
+.included-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px;}
+@media(max-width:640px){.included-grid{grid-template-columns:1fr;gap:24px;}}
+.included-col h4{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-light);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.included-col.paid h4{color:var(--green);}
+.included-item{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
+.included-item .dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;}
+.included-col.free .dot{background:var(--bg);border:1.5px solid var(--border);color:var(--text-light);}
+.included-col.paid .dot{background:#e8f6f6;color:var(--green);}
+.included-item p{font-size:0.78rem;color:var(--text-dim);line-height:1.6;}
+.included-col.paid .included-item p{color:var(--text);}
+.included-col.paid .included-item strong{color:var(--green);}
+
+/* HOW IT WORKS */
+.how-section{padding:72px 24px;max-width:760px;margin:0 auto;}
+.steps{margin-top:48px;display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:24px;padding:24px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--green-light);font-weight:300;line-height:1;flex-shrink:0;width:42px;}
+.step-body h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text);margin-bottom:5px;}
+.step-body p{font-size:0.8rem;color:var(--text-dim);line-height:1.75;}
+
+/* TESTIMONIAL */
+.testimonial-section{background:linear-gradient(135deg,#f0fafa 0%,var(--gold-bg) 100%);padding:72px 24px;}
+.testimonial-inner{max-width:640px;margin:0 auto;text-align:center;}
+.testimonial-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,3vw,1.7rem);font-weight:300;font-style:italic;color:var(--text);line-height:1.5;margin-bottom:20px;}
+.testimonial-quote::before{content:'"';color:var(--green-light);font-size:2rem;line-height:0;vertical-align:-0.4em;margin-right:4px;}
+.testimonial-quote::after{content:'"';color:var(--green-light);font-size:2rem;line-height:0;vertical-align:-0.4em;margin-left:4px;}
+.testimonial-name{font-size:0.72rem;color:var(--text-light);letter-spacing:0.08em;text-transform:uppercase;}
+.testimonial-name span{color:var(--green);font-weight:500;}
+
+/* FREE CAPTURE */
+.capture-section{padding:80px 24px;max-width:580px;margin:0 auto;text-align:center;}
+.capture-card{background:var(--card);border-radius:16px;padding:44px 38px;box-shadow:0 4px 24px var(--shadow);border-top:3px solid var(--green);}
+@media(max-width:500px){.capture-card{padding:30px 22px;}}
+.capture-eyebrow{font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--green-mid);margin-bottom:10px;}
+.capture-card h2{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--text);line-height:1.25;margin-bottom:10px;}
+.capture-card h2 em{color:var(--green);font-style:italic;}
+.capture-card p{font-size:0.82rem;color:var(--text-dim);line-height:1.75;margin-bottom:26px;}
+.capture-form{display:flex;flex-direction:column;gap:12px;}
+.capture-form input{padding:13px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:0.85rem;color:var(--text);background:var(--bg);outline:none;transition:border-color 0.2s;}
+.capture-form input:focus{border-color:var(--green-mid);background:#fff;}
+.capture-form input::placeholder{color:var(--text-light);}
+.capture-form button{background:var(--green);color:#fff;border:none;border-radius:30px;padding:14px 24px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;letter-spacing:0.04em;transition:all 0.2s;box-shadow:0 3px 12px rgba(6,102,100,0.25);}
+.capture-form button:hover{background:#055554;transform:translateY(-1px);}
+.capture-privacy{font-size:0.67rem;color:var(--text-light);margin-top:10px;line-height:1.6;}
+.capture-divider{display:flex;align-items:center;gap:12px;margin:20px 0;}
+.capture-divider::before,.capture-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.capture-divider span{font-size:0.68rem;color:var(--text-light);white-space:nowrap;}
+.capture-alt{font-size:0.78rem;color:var(--text-dim);line-height:1.7;}
+.capture-alt a{color:var(--green);font-weight:500;text-decoration:none;border-bottom:1px solid var(--green-light);}
+
+/* FAQ */
+.faq-section{background:var(--card);padding:72px 24px;}
+.faq-inner{max-width:680px;margin:0 auto;}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0;}
+.faq-item:last-child{border-bottom:none;}
+.faq-q{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.faq-q span{font-size:0.9rem;color:var(--text-light);}
+.faq-a{font-size:0.8rem;color:var(--text-dim);line-height:1.8;}
+
+/* FINAL CTA */
+.final-cta{background:linear-gradient(135deg,var(--green) 0%,#044a48 100%);padding:80px 24px;text-align:center;}
+.final-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:300;color:#fff;line-height:1.2;margin-bottom:14px;}
+.final-cta h2 em{font-style:italic;color:var(--gold-light);}
+.final-cta p{font-size:0.88rem;color:rgba(255,255,255,0.8);line-height:1.8;max-width:460px;margin:0 auto 32px;}
+.btn-gold{background:var(--gold-light);color:var(--text);border-radius:30px;padding:14px 34px;font-size:0.88rem;font-weight:500;text-decoration:none;letter-spacing:0.04em;display:inline-block;box-shadow:0 4px 16px rgba(184,131,42,0.3);transition:all 0.2s;}
+.btn-gold:hover{background:#fdb070;transform:translateY(-2px);}
+.final-note{font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:16px;}
+
+/* FOOTER */
+footer{background:#0a2828;color:rgba(255,255,255,0.55);text-align:center;padding:28px 24px;font-size:0.72rem;line-height:1.8;}
+footer a{color:rgba(255,255,255,0.7);text-decoration:none;}
+footer a:hover{color:#fff;}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-brand">✦ EAUCO</div>
+  <div class="nav-links">
+    <a href="free.html">Try Free</a>
+    <a href="#how">How It Works</a>
+    <a href="#faq">FAQ</a>
+    <a href="intake.html" class="nav-cta">Get My Planner →</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section style="background:var(--card);border-bottom:1px solid var(--border);">
+  <div class="hero">
+    <div class="hero-eyebrow">✦ Vedic Astrology · Human Design · 14 Months</div>
+    <h1>Not a horoscope.<br><em>Your chart.</em> Your year.</h1>
+    <p class="hero-sub">An interactive life navigation planner built from your exact birth data — your Rising sign, your houses, your planetary periods, your Human Design — woven into one daily tool you actually use.</p>
+    <div class="hero-btns">
+      <a href="intake.html" class="btn-primary">✦ Get My Personalized Planner</a>
+      <a href="free.html" class="btn-secondary">Try the Free Version First</a>
+    </div>
+    <p class="hero-note">$22.22/month · Cancel anytime · Delivered within 5–7 days</p>
+  </div>
+</section>
+
+<!-- Proof Bar -->
+<div class="proof-bar">
+  <div class="proof-inner">
+    <div class="proof-item"><span class="proof-num">14</span><span class="proof-label">Months Covered</span></div>
+    <div class="proof-item"><span class="proof-num">400+</span><span class="proof-label">Guided Days</span></div>
+    <div class="proof-item"><span class="proof-num">$22.22</span><span class="proof-label">Per Month</span></div>
+    <div class="proof-item"><span class="proof-num">100%</span><span class="proof-label">Personalized to You</span></div>
+  </div>
+</div>
+
+<!-- What It Is -->
+<section class="section">
+  <div class="section-eyebrow">✦ What This Is</div>
+  <h2 class="section-title">The sky isn't generic.<br><em>Your reading of it shouldn't be either.</em></h2>
+  <p class="section-sub">Most astrology content tells you what's happening for everyone. This tells you what it means for your specific chart — your Rising sign, your houses, your current planetary period.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">☽</span>
+      <h3>Built from your birth chart</h3>
+      <p>Every transit, every moon phase, every weekly theme is interpreted through your Rising sign and house placements — not a generic Sun sign overview.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">♃</span>
+      <h3>14 months of real guidance</h3>
+      <p>June 2026 through July 2027. Every key date — full moons, new moons, retrogrades, eclipses, your birthday — with guidance specific to what it means in your chart.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">☯</span>
+      <h3>Human Design woven in</h3>
+      <p>Your energetic type, authority, and strategy layered into your daily practices. Not a separate system — integrated into how you navigate each day.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌕</span>
+      <h3>Interactive, not static</h3>
+      <p>Click any day in the calendar. See the moon phase, planet day energy, a daily prompt. Track your mood. Save journal entries. Your browser remembers everything.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">✦</span>
+      <h3>Daily + monthly rhythm</h3>
+      <p>A Today card that shows you exactly what the day's energy is. Weekly themes. Monthly overviews. A full learning index so you understand what you're reading.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌱</span>
+      <h3>Yours to use every day</h3>
+      <p>A private link, yours forever for the subscription period. Open it on your phone or laptop. No app to download, no login to forget. Just your chart, every day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Free vs Paid -->
+<section class="included-section">
+  <div class="included-inner">
+    <div class="section-eyebrow" style="text-align:center;">✦ Free vs. Personalized</div>
+    <h2 class="section-title">Start free. Upgrade when you're ready.</h2>
+    <p class="section-sub">The free planner shows you the universal sky. Your personalized planner shows you what it means in your chart.</p>
+
+    <div class="included-grid">
+      <div class="included-col free">
+        <h4>✧ Free Planner</h4>
+        <div class="included-item"><div class="dot">✓</div><p>14-month interactive calendar (June 2026–July 2027)</p></div>
+        <div class="included-item"><div class="dot">✓</div><p>Universal moon phases + planet day energy</p></div>
+        <div class="included-item"><div class="dot">✓</div><p>Daily rotating prompts</p></div>
+        <div class="included-item"><div class="dot">✓</div><p>Mood tracker + daily journal (saved in your browser)</p></div>
+        <div class="included-item"><div class="dot">✓</div><p>HD type selector for Sunday rest guidance</p></div>
+        <div class="included-item"><div class="dot">✓</div><p>Full astrology + Human Design learning index</p></div>
+        <div class="included-item"><div class="dot">✗</div><p style="color:var(--text-light)">Your Rising sign and house placements</p></div>
+        <div class="included-item"><div class="dot">✗</div><p style="color:var(--text-light)">Your nakshatra placements</p></div>
+        <div class="included-item"><div class="dot">✗</div><p style="color:var(--text-light)">Your Dasha period (current planetary chapter)</p></div>
+        <div class="included-item"><div class="dot">✗</div><p style="color:var(--text-light)">Chart-specific daily tips (30 rotating)</p></div>
+        <div class="included-item"><div class="dot">✗</div><p style="color:var(--text-light)">Personalized key date guidance (birthday, full moons in your houses)</p></div>
+      </div>
+      <div class="included-col paid">
+        <h4>✦ Personalized Planner — $22.22/mo</h4>
+        <div class="included-item"><div class="dot">✓</div><p>Everything in the free version, plus:</p></div>
+        <div class="included-item"><div class="dot">✓</div><p><strong>Your Rising sign</strong> — all content interpreted through your chart, not a generic one</p></div>
+        <div class="included-item"><div class="dot">✓</div><p><strong>Your 12 houses</strong> — every transit mapped to the domain of life it's actually activating for you</p></div>
+        <div class="included-item"><div class="dot">✓</div><p><strong>Your nakshatra placements</strong> — the precise texture of how each planet expresses in your chart</p></div>
+        <div class="included-item"><div class="dot">✓</div><p><strong>Your Dasha period</strong> — which planetary chapter you're in and what it means for this year</p></div>
+        <div class="included-item"><div class="dot">✓</div><p><strong>30 rotating chart-specific daily tips</strong> — written for your planets, not everyone's</p></div>
+        <div class="included-item"><div class="dot">✓</div><p><strong>Personalized key dates</strong> — your birthday, your stellium activations, your most significant full moons</p></div>
+        <div class="included-item"><div class="dot">✓</div><p><strong>Human Design fully integrated</strong> — your type, authority, and profile in every daily practice</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-section" id="how">
+  <div class="section-eyebrow" style="text-align:center;">✦ How It Works</div>
+  <h2 class="section-title" style="text-align:center;">From your birth data<br>to your <em>daily navigation tool</em></h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h3>Fill out your intake form</h3>
+        <p>Your birth date, time, and place — plus any Human Design info you have. Takes about 3 minutes. The more accurate your birth time, the more precise your Rising sign and house placements.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h3>Your chart is pulled and your planner is built</h3>
+        <p>We pull your full Vedic chart — every planet, every house, your Dasha period, your nakshatra placements — and build your planner from the ground up. Not a template. Not a fill-in-the-blank. Yours. Allow 5–7 days.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h3>You receive your private planner link</h3>
+        <p>A link that opens your personalized interactive planner on any device. No app. No account. Just your chart, your transits, and 14 months of daily navigation — yours to use every day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section class="testimonial-section">
+  <div class="testimonial-inner">
+    <div class="section-eyebrow">✦ From a beta subscriber</div>
+    <p class="testimonial-quote">I've tried so many astrology apps and readings. This is the first thing that made me feel like the chart was actually about me — not a general description I could have fit myself into.</p>
+    <p class="testimonial-name">— <span>Chloe N.</span> · Beta subscriber · Libra Rising · Jupiter Mahadasha</p>
+  </div>
+</section>
+
+<!-- Free Capture -->
+<section class="capture-section" id="free">
+  <div class="capture-card">
+    <div class="capture-eyebrow">✦ Start Here — It's Free</div>
+    <h2>Try the planner<br><em>before you subscribe.</em></h2>
+    <p>Enter your email and we'll send you access to the free interactive cosmic planner — 14 months of moon phases, planet day energy, daily prompts, and a full astrology learning guide. Yours to use right now.</p>
+
+    <form class="capture-form" action="https://formspree.io/f/xojoqzro" method="POST">
+      <input type="hidden" name="_subject" value="✦ Free Planner Request">
+      <input type="hidden" name="_next" value="https://eauco-mads.github.io/maddie-planner/free.html">
+      <input type="text" name="name" placeholder="Your first name" required>
+      <input type="email" name="email" placeholder="Your email address" required>
+      <button type="submit">✦ Send Me the Free Planner</button>
+      <p class="capture-privacy">No spam. Just your planner link and occasional cosmic updates.</p>
+    </form>
+
+    <div class="capture-divider"><span>or skip straight to personalized</span></div>
+    <p class="capture-alt">Ready to go deeper? <a href="intake.html">Fill out the intake form</a> and get a planner built from your exact birth chart. $22.22/month.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div class="section-eyebrow" style="text-align:center;">✦ Questions</div>
+    <h2 class="section-title" style="text-align:center;margin-bottom:36px;">Good things to know</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Do I need to know my birth time? <span>↓</span></div>
+      <div class="faq-a">Your birth time determines your Rising sign, which is the foundation of your entire house system — it's the most important piece of data in the chart. If you know it exactly, great. Approximate (within an hour) still works well. If you don't have it, we'll note it and work with what we have — but the planner will be less precise, particularly for Rising sign and house placements.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I don't know my Human Design type? <span>↓</span></div>
+      <div class="faq-a">That's completely fine — it's optional on the intake form. If you leave it blank, we'll focus on your Vedic chart and you can share your HD info later if you find it. You can get your Human Design chart free at any HD chart calculator (myhumandesign.com is a good one).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does it take to receive my planner? <span>↓</span></div>
+      <div class="faq-a">5–7 days from when you submit your intake form. We pull your full chart, write your month-by-month content, and build your interactive planner from scratch — it takes real time because it's actually personalized.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What's the difference between this and a birth chart reading? <span>↓</span></div>
+      <div class="faq-a">A reading gives you a snapshot — a conversation about your chart on one day. This is a 14-month living tool you use every day. It's built from your chart, but it's designed for daily navigation: the moon phases, the transits, the planetary day energy, the prompts — all of it mapped to your specific houses and placements so you know what to do with the information every morning.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I cancel anytime? <span>↓</span></div>
+      <div class="faq-a">Yes — monthly subscription, cancel anytime through Stripe. Your planner link stays active for the duration of the period you've paid for. No contracts, no lock-ins.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What does my planner actually look like? <span>↓</span></div>
+      <div class="faq-a">It's a beautiful interactive HTML page — a monthly calendar you can click through, a Today card that shows your daily energy, a full glossary of astrology and HD terms, moon phase tracking, a mood log, and journal prompts. All saved privately in your own browser. <a href="free.html" style="color:var(--green);text-decoration:none;border-bottom:1px solid var(--green-light)">Try the free version</a> to see exactly what the experience is like.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+  <h2>The sky is moving.<br><em>Know where it's taking you.</em></h2>
+  <p>14 months of your chart, your transits, your daily energy — built from your birth data and delivered as an interactive planner you open every morning.</p>
+  <a href="intake.html" class="btn-gold">✦ Get My Personalized Planner — $22.22/month</a>
+  <p class="final-note">Fill out the intake form → planner delivered within 5–7 days → cancel anytime</p>
+</section>
+
+<footer>
+  <p>✦ EAUCO · Elevate · Align · Unlock</p>
+  <p style="margin-top:4px"><a href="https://elevatealign.com">elevatealign.com</a> · <a href="mailto:maddie@elevatealign.com">maddie@elevatealign.com</a></p>
+  <p style="margin-top:6px;font-size:0.62rem">All chart calculations use Jyotish · Lahiri Ayanamsha · Whole Sign Houses</p>
+</footer>
+
+</body>
+</html>
