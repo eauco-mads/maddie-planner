@@ -1,6 +1,6 @@
 # EAUCO Personalized Planner — Project Progress
 
-> Last updated: June 22, 2026  
+> Last updated: June 22, 2026 (evening)  
 > This file is the source of truth. Update it every session.
 
 ---
@@ -12,6 +12,7 @@
 | Maddie's planner | https://eauco-mads.github.io/maddie-planner/ |
 | Chloe's planner | https://eauco-mads.github.io/chloe-planner/ |
 | Free planner (lead magnet) | https://eauco-mads.github.io/maddie-planner/free.html |
+| Landing page | https://eauco-mads.github.io/maddie-planner/landing.html |
 | Intake form | https://eauco-mads.github.io/maddie-planner/intake.html |
 | Thank-you + Stripe page | https://eauco-mads.github.io/maddie-planner/thankyou.html |
 | Subscriber tracker (Google Sheet) | https://docs.google.com/spreadsheets/d/13Et-UBWZSdYLgHNm6qca9B28krauU3euHsIjcVEtZIM |
@@ -20,16 +21,17 @@
 
 | Service | What it does | Status |
 |---------|-------------|--------|
-| Formspree `xojoqzro` | Emails intake submissions to maddie@elevatealign.com | ✅ Live |
+| Formspree `xojoqzro` | Emails intake submissions + free planner requests to maddie@elevatealign.com | ✅ Live |
 | Stripe | $22.22/month subscription | ✅ Live — link on thank-you page |
 | GitHub Pages | Hosts all HTML files | ✅ Live |
 | Google Drive MCP | Connected — Drive accessible in Claude sessions | ✅ Active |
+| GHL email sequence | 3 emails: free planner → what personalized includes → subscribe CTA | ⏳ Not built yet |
 
 ## Git Repo
 
 - **Repo:** `eauco-mads/maddie-planner` (main branch)
 - **Local clone for pushing:** `/tmp/maddie-planner/`
-- **Files in repo:** `index.html`, `free.html`, `intake.html`, `thankyou.html`, `PROGRESS.md`
+- **Files in repo:** `index.html`, `free.html`, `intake.html`, `thankyou.html`, `landing.html`, `PROGRESS.md`
 - **To push updates:** copy file to `/tmp/maddie-planner/`, commit, push
 
 ---
@@ -45,17 +47,18 @@
 - [x] Subscriber tracker Google Sheet — created in Drive
 - [x] This PROGRESS.md — created
 
-### 🔄 Phase 1 — Beta & Pre-Launch (IN PROGRESS)
-- [ ] **Sister fills out intake** — form sent, awaiting response
-- [ ] **Chloe fills out intake** — to send
-- [ ] **Andie fills out intake** — to send
-- [ ] **Sister's planner built** — needs birth data from intake
-- [ ] **Free planner polished** — live but needs:
-  - [ ] Dedicated repo/URL (suggest: create `eauco-mads/planner` repo → eauco-mads.github.io/planner)
-  - [ ] Landing page wrapping it (headline, how it works, CTA to subscribe)
-- [ ] **Landing page built** — copy + build needed
-- [ ] **Free lead magnet** — decided: free planner IS the lead magnet ✓
-- [ ] **GHL email sequence** — 3 emails: deliver free planner → what personalized includes → subscribe CTA
+### ✅ Phase 1a — Landing Page (DONE)
+- [x] Landing page — live at /landing.html
+  - Hero · 6 features · Free vs Paid comparison · How It Works · Testimonial · Email capture · FAQ · Final CTA
+  - Email capture → Formspree (swap to GHL when ready)
+  - All CTAs → intake.html and free.html
+
+### 🔄 Phase 1b — Beta Planners (IN PROGRESS)
+- [x] Chloe filled out intake form — ✅ confirmed working
+- [ ] **Sister's planner built** — intake data to be pasted in next session
+- [ ] **Andie fills out intake** — to send her the form link
+- [ ] **GHL email sequence** — 3 emails: deliver free planner link → what personalized includes → subscribe CTA
+- [ ] **Email capture endpoint** — swap landing page Formspree → GHL webhook when sequence is ready
 
 ### ⏳ Phase 2 — Launch (NEXT)
 - [ ] TikTok account set up + bio
@@ -136,7 +139,7 @@ Columns: Name · Email · Submission Date · Birth Date · Birth Time · Time Ac
 |--------|------|--------|
 | Maddie | You — founder, first planner live | ✅ |
 | Chloe Newby | Beta tester — planner live | ✅ |
-| Maddie's sister | Beta tester #2 — intake sent | 🔄 Awaiting form |
+| Maddie's sister | Beta tester #2 — intake returned, planner build pending | 🔄 Build next |
 | Andie | Beta tester — to send form | ⏳ |
 
 ---
