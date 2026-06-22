@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmic Life Navigation Planner · 2026–2027 · Free</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:      #066664;
+  --green-mid:  #50A19F;
+  --green-light:#B1E9E8;
+  --gold:       #B8832A;
+  --gold-light: #FDBB89;
+  --gold-bg:    #FFF8F0;
+  --mars:       #c07050;
+  --retro:      #3da8c8;
+  --nodal:      #7a6a9a;
+  --text:       #1a3a3a;
+  --text-dim:   #3a5a5a;
+  --text-light: #6a8a8a;
+  --bg:         #f4fafa;
+  --card:       #ffffff;
+  --border:     #d0e8e8;
+  --shadow:     rgba(6,102,100,0.08);
+  --pink:       #C97090;
+  --pink-light: #f0c0d0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,var(--green) 0%,#044a48 100%);color:#fff;text-align:center;padding:11px 20px;font-size:0.75rem;line-height:1.5;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;}
+.cta-banner a{color:var(--gold-light);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(253,187,137,0.4);white-space:nowrap;}
+.cta-banner a:hover{border-bottom-color:var(--gold-light);}
+.cta-banner-dismiss{background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:1rem;padding:0 4px;flex-shrink:0;}
+.cta-banner-dismiss:hover{color:#fff;}
+
+/* LAYOUT */
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh;}
+@media(max-width:700px){.shell{grid-template-columns:1fr;}}
+aside{background:var(--card);border-right:1px solid var(--border);padding:20px 14px;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;}
+@media(max-width:700px){aside{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:14px;}}
+main{padding:22px 20px 60px;max-width:820px;}
+
+/* SIDEBAR */
+.brand-mark{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--green);font-weight:300;letter-spacing:0.04em;margin-bottom:4px;}
+.brand-sub{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-light);margin-bottom:18px;}
+.today-btn{background:var(--gold);color:#fff;border:none;border-radius:20px;padding:8px 16px;font-size:0.75rem;font-weight:500;cursor:pointer;width:100%;margin-bottom:14px;letter-spacing:0.04em;transition:all 0.2s;}
+.today-btn:hover{background:#a0721e;transform:translateY(-1px);}
+.month-nav{display:flex;flex-direction:column;gap:3px;}
+.month-nav button{background:none;border:none;text-align:left;padding:7px 10px;border-radius:7px;font-size:0.75rem;color:var(--text-dim);cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;}
+.month-nav button:hover{background:var(--bg);color:var(--green);}
+.month-nav button.active{background:#e8f6f6;color:var(--green);border-left-color:var(--green);font-weight:500;}
+.sidebar-cta{margin-top:18px;background:var(--gold-bg);border-radius:10px;padding:14px 12px;border:1px solid rgba(184,131,42,0.15);}
+.sidebar-cta h5{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--gold);margin-bottom:5px;}
+.sidebar-cta p{font-size:0.67rem;color:var(--text-dim);line-height:1.6;margin-bottom:10px;}
+.sidebar-cta a{display:block;background:var(--green);color:#fff;text-align:center;border-radius:16px;padding:8px 12px;font-size:0.7rem;font-weight:500;text-decoration:none;letter-spacing:0.03em;}
+.hd-selector-wrap{margin-top:16px;}
+.hd-selector-wrap label{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:5px;}
+.hd-selector-wrap select{width:100%;padding:7px 10px;font-family:'Inter',sans-serif;font-size:0.75rem;color:var(--text);background:var(--bg);border:1.5px solid var(--border);border-radius:7px;outline:none;appearance:none;}
+.hd-selector-wrap select:focus{border-color:var(--green-mid);}
+
+/* TODAY CARD */
+.today-card{display:none;background:var(--card);border-radius:12px;padding:16px 18px;margin-bottom:18px;border-left:3px solid var(--pink);box-shadow:0 2px 10px var(--shadow);}
+.today-card.visible{display:block;}
+.today-card-header{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;}
+.today-card h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--pink);}
+.today-date{font-size:0.72rem;color:var(--text-light);}
+.today-planet-day{font-size:0.72rem;font-style:italic;margin-bottom:6px;}
+.today-msg{font-size:0.82rem;color:var(--text-dim);line-height:1.7;margin-bottom:10px;}
+.today-prompt{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:0.78rem;color:var(--text);line-height:1.6;border-left:3px solid var(--green);margin-bottom:10px;}
+.today-prompt strong{color:var(--green);font-family:'Cormorant Garamond',serif;display:block;font-size:0.9rem;margin-bottom:3px;}
+.today-cta-inline{background:var(--gold-bg);border-radius:8px;padding:9px 13px;font-size:0.7rem;color:var(--text-dim);line-height:1.6;border-left:2px solid var(--gold-light);}
+.today-cta-inline a{color:var(--gold);font-weight:500;text-decoration:none;}
+
+/* MONTH SECTION */
+.month-section{display:none;}
+.month-section.active{display:block;}
+.month-header{margin-bottom:20px;}
+.month-header h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--text);margin-bottom:4px;}
+.month-theme{font-size:0.75rem;color:var(--green);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px;}
+.month-mantra{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--text-light);}
+.overview-card{background:var(--card);border-radius:10px;padding:16px 18px;margin-bottom:14px;box-shadow:0 1px 5px var(--shadow);border-left:3px solid var(--green);}
+.overview-card h4{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--green);margin-bottom:7px;}
+.overview-card p{font-size:0.8rem;color:var(--text-dim);line-height:1.75;}
+.transit-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.ttag{background:#e8f6f6;color:var(--green);border-radius:12px;padding:3px 10px;font-size:0.65rem;font-weight:500;letter-spacing:0.03em;}
+.ttag.ev{background:var(--gold-bg);color:var(--gold);}
+.ttag.retro{background:#e8f4f9;color:var(--retro);}
+.opp-caut{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:600px){.opp-caut{grid-template-columns:1fr;}}
+.opp-box,.caut-box{background:var(--card);border-radius:10px;padding:14px 16px;box-shadow:0 1px 5px var(--shadow);}
+.opp-box{border-top:2px solid var(--green-light);}
+.caut-box{border-top:2px solid var(--gold-light);}
+.opp-box h4,.caut-box h4{font-family:'Cormorant Garamond',serif;font-size:0.88rem;margin-bottom:8px;}
+.opp-box h4{color:var(--green);}
+.caut-box h4{color:var(--gold);}
+.opp-box ul,.caut-box ul{list-style:none;padding:0;}
+.opp-box ul li,.caut-box ul li{font-size:0.73rem;color:var(--text-dim);line-height:1.7;padding-left:12px;position:relative;margin-bottom:2px;}
+.opp-box ul li::before,.caut-box ul li::before{content:'✦';position:absolute;left:0;font-size:0.55rem;top:4px;}
+.opp-box ul li::before{color:var(--green);}
+.caut-box ul li::before{color:var(--gold);}
+.section-label{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--text-light);letter-spacing:0.06em;text-transform:uppercase;margin:18px 0 8px;border-bottom:1px solid var(--border);padding-bottom:5px;}
+.week-card{background:var(--card);border-radius:10px;padding:13px 16px;margin-bottom:7px;border-left:3px solid var(--border);box-shadow:0 1px 5px var(--shadow);}
+.week-card h4{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--text);margin-bottom:4px;}
+.week-card p{font-size:0.76rem;color:var(--text-dim);line-height:1.6;}
+
+/* MONTH CTA BLOCK */
+.month-cta{background:linear-gradient(135deg,#e8f6f6 0%,var(--gold-bg) 100%);border-radius:12px;padding:20px 22px;margin:18px 0;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.month-cta-text h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);margin-bottom:4px;}
+.month-cta-text p{font-size:0.74rem;color:var(--text-dim);line-height:1.6;}
+.month-cta a{flex-shrink:0;background:var(--green);color:#fff;border-radius:20px;padding:10px 20px;font-size:0.75rem;font-weight:500;text-decoration:none;letter-spacing:0.04em;white-space:nowrap;}
+.month-cta a:hover{background:#055554;}
+
+/* CALENDAR */
+.cal-wrap{overflow-x:auto;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;min-width:300px;}
+.cal-header-cell{text-align:center;font-size:0.6rem;font-weight:500;color:var(--text-light);letter-spacing:0.06em;text-transform:uppercase;padding:4px 0 6px;}
+.cal-day{background:var(--card);border-radius:6px;padding:6px 4px 5px;min-height:52px;cursor:pointer;border:1.5px solid transparent;transition:all 0.15s;position:relative;}
+.cal-day:hover{border-color:var(--green-mid);background:#f0fbfb;}
+.cal-day.empty{background:transparent;cursor:default;border-color:transparent;}
+.cal-day.today-cell{border-color:var(--pink);box-shadow:0 0 0 2px rgba(201,112,144,0.15);}
+.cal-day.today-cell .num{color:var(--pink);font-weight:600;}
+.cal-day.has-event{border-color:var(--gold-light);}
+.cal-day.has-event .num{color:var(--gold);}
+.cal-day.retro-day{border-color:rgba(61,168,200,0.3);}
+.num{font-size:0.78rem;font-weight:400;color:var(--text);display:block;margin-bottom:3px;}
+.cal-moon{font-size:0.75rem;display:block;line-height:1;}
+.cal-event-dot{position:absolute;bottom:4px;right:5px;font-size:0.6rem;color:var(--gold);}
+.mood-dot-cal{position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;}
+.cal-day.has-note::after{content:'';position:absolute;bottom:4px;left:5px;width:5px;height:5px;border-radius:50%;background:var(--green-light);}
+
+/* DAY MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,30,30,0.45);z-index:100;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border-radius:14px;padding:22px 22px 18px;max-width:460px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(6,102,100,0.18);}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.modal-date-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);}
+.modal-day-tag{font-size:0.65rem;color:var(--text-light);margin-top:2px;}
+.modal-close{background:none;border:none;font-size:1.2rem;color:var(--text-light);cursor:pointer;padding:0 4px;}
+.modal-close:hover{color:var(--text);}
+.modal-event-box{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:8px;padding:11px 13px;margin-bottom:12px;font-size:0.78rem;color:var(--text-dim);line-height:1.65;}
+.modal-event-box strong{color:var(--gold);font-family:'Cormorant Garamond',serif;display:block;font-size:0.9rem;margin-bottom:3px;}
+.modal-event-action{margin-top:7px;font-size:0.72rem;color:var(--green);border-left:2px solid var(--green-light);padding-left:8px;}
+.modal-moon-box{background:#f0fbfb;border-radius:8px;padding:9px 12px;margin-bottom:12px;font-size:0.74rem;color:var(--text-dim);line-height:1.6;}
+.modal-planet{font-size:0.72rem;font-style:italic;color:var(--text-light);margin-bottom:10px;}
+.modal-prompt{font-size:0.8rem;color:var(--text-dim);line-height:1.7;margin-bottom:12px;padding:10px 13px;background:var(--bg);border-radius:8px;border-left:3px solid var(--green);}
+.modal-prompt strong{color:var(--green);font-family:'Cormorant Garamond',serif;display:block;margin-bottom:3px;}
+.mood-section{margin-bottom:12px;}
+.mood-label{font-size:0.67rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-light);margin-bottom:6px;}
+.mood-options{display:flex;gap:5px;}
+.mood-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:6px 8px;cursor:pointer;font-size:0.8rem;display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;transition:all 0.15s;}
+.mood-btn.selected{border-color:var(--green);background:#e8f6f6;}
+.mood-word{font-size:0.58rem;color:var(--text-light);}
+.modal-notes{margin-bottom:10px;}
+.modal-notes label{font-size:0.67rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-light);display:block;margin-bottom:5px;}
+.modal-notes textarea{width:100%;border:1.5px solid var(--border);border-radius:7px;padding:9px 11px;font-family:'Inter',sans-serif;font-size:0.78rem;color:var(--text);resize:vertical;min-height:70px;background:var(--bg);outline:none;}
+.modal-notes textarea:focus{border-color:var(--green-mid);}
+.save-btn{background:var(--green);color:#fff;border:none;border-radius:20px;padding:8px 20px;font-size:0.75rem;font-weight:500;cursor:pointer;width:100%;letter-spacing:0.04em;transition:background 0.2s;}
+.save-btn:hover{background:#055554;}
+.modal-cta{margin-top:12px;background:var(--gold-bg);border-radius:8px;padding:9px 12px;font-size:0.69rem;color:var(--text-dim);line-height:1.6;text-align:center;border-top:2px solid var(--gold-light);}
+.modal-cta a{color:var(--gold);font-weight:500;text-decoration:none;}
+
+/* DAILY PRACTICES */
+.day-todos{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px var(--shadow);}
+.day-todos-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.day-todos-label{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--green);}
+.dtodo-progress-label{font-size:0.65rem;color:var(--text-light);}
+.dtodo-progress-bar{height:3px;background:var(--border);border-radius:2px;margin-bottom:10px;}
+.dtodo-progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width 0.3s;}
+.dtodo-item{display:flex;align-items:flex-start;gap:8px;padding:6px 4px;border-radius:6px;cursor:pointer;font-size:0.76rem;color:var(--text-dim);line-height:1.55;transition:background 0.1s;}
+.dtodo-item:hover{background:var(--bg);}
+.dtodo-item input[type="checkbox"]{margin-top:2px;accent-color:var(--green);flex-shrink:0;}
+.dtodo-item.done label{text-decoration:line-through;color:var(--text-light);}
+
+/* JOURNAL */
+.journal-section{background:var(--card);border-radius:10px;padding:16px 18px;margin-bottom:14px;box-shadow:0 1px 5px var(--shadow);}
+.journal-section h4{font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--green);margin-bottom:6px;}
+.journal-prompt{font-size:0.78rem;color:var(--text-dim);line-height:1.7;margin-bottom:10px;font-style:italic;}
+.journal-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 13px;font-family:'Inter',sans-serif;font-size:0.78rem;color:var(--text);min-height:100px;resize:vertical;background:var(--bg);outline:none;margin-bottom:10px;}
+.journal-textarea:focus{border-color:var(--green-mid);}
+
+/* LEARNING INDEX */
+.index-section{display:none;}
+.index-section.active{display:block;}
+.index-hero{background:linear-gradient(135deg,var(--green) 0%,#044a48 100%);color:#fff;border-radius:14px;padding:32px 28px;margin-bottom:20px;text-align:center;}
+.index-hero h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:8px;}
+.index-hero h2 em{font-style:italic;opacity:0.85;}
+.index-hero p{font-size:0.82rem;opacity:0.85;line-height:1.7;max-width:440px;margin:0 auto;}
+.learn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+@media(max-width:580px){.learn-grid{grid-template-columns:1fr;}}
+.learn-card{background:var(--card);border-radius:10px;padding:16px 18px;box-shadow:0 1px 5px var(--shadow);border-top:2px solid var(--green-light);}
+.learn-card h4{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--green);margin-bottom:8px;}
+.learn-card p{font-size:0.74rem;color:var(--text-dim);line-height:1.7;}
+.term-list{margin-top:10px;}
+.term-item{border-bottom:1px solid var(--border);padding:10px 0;}
+.term-item:last-child{border-bottom:none;}
+.term-item dt{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--text);margin-bottom:3px;}
+.term-item dd{font-size:0.73rem;color:var(--text-dim);line-height:1.65;}
+.index-cta{background:linear-gradient(135deg,#e8f6f6 0%,var(--gold-bg) 100%);border-radius:12px;padding:28px;text-align:center;margin-top:20px;}
+.index-cta h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--text);margin-bottom:8px;}
+.index-cta p{font-size:0.8rem;color:var(--text-dim);line-height:1.7;margin-bottom:18px;max-width:400px;margin-left:auto;margin-right:auto;}
+.index-cta a{display:inline-block;background:var(--green);color:#fff;border-radius:24px;padding:13px 32px;font-size:0.82rem;font-weight:500;text-decoration:none;letter-spacing:0.05em;box-shadow:0 3px 12px rgba(6,102,100,0.25);}
+
+/* MOBILE */
+.mobile-nav-btn{display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:0.75rem;font-weight:500;color:var(--green);cursor:pointer;width:100%;margin-bottom:12px;text-align:left;}
+@media(max-width:700px){
+  .mobile-nav-btn{display:block;}
+  aside{display:none;}
+  aside.mobile-open{display:block;}
+}
+</style>
+</head>
+<body>
+
+<!-- Sticky CTA Banner -->
+<div class="cta-banner" id="ctaBanner">
+  <span>✦ This is the universal sky. <a href="intake.html">Get your personalized planner</a> — built from your exact birth chart. $22.22/month</span>
+  <button class="cta-banner-dismiss" onclick="document.getElementById('ctaBanner').style.display='none'">✕</button>
+</div>
+
+<div class="shell">
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="brand-mark">EAUCO</div>
+    <div class="brand-sub">Cosmic Life Navigation</div>
+    <button class="today-btn" onclick="jumpToToday()">✦ Today</button>
+    <nav class="month-nav" id="monthNav"></nav>
+
+    <!-- HD Type Selector -->
+    <div class="hd-selector-wrap">
+      <label>Your HD Type</label>
+      <select id="hdTypeSelect" onchange="setHDType(this.value)">
+        <option value="">Select for Sunday guidance</option>
+        <option value="generator">Generator</option>
+        <option value="mg">Manifesting Generator</option>
+        <option value="projector">Projector</option>
+        <option value="manifestor">Manifestor</option>
+        <option value="reflector">Reflector</option>
+      </select>
+    </div>
+
+    <!-- Sidebar CTA -->
+    <div class="sidebar-cta">
+      <h5>✦ Make it yours</h5>
+      <p>This is the universal sky. Your personalized planner shows exactly what every transit means for YOUR Rising sign, your houses, and your chart.</p>
+      <a href="intake.html">Get Your Planner →</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main>
+    <button class="mobile-nav-btn" onclick="document.getElementById('sidebar').classList.toggle('mobile-open')">✦ Navigation + HD Type ↓</button>
+
+    <!-- Today Card -->
+    <div class="today-card" id="todayCard"></div>
+
+    <!-- Month Sections -->
+    <div id="monthSections"></div>
+
+    <!-- Learning Index -->
+    <div class="index-section" id="m-index">
+      <div class="index-hero">
+        <h2>The <em>Language</em> of the Sky</h2>
+        <p>Everything you need to understand what you're reading in your planner — and why it matters for how you actually live.</p>
+      </div>
+
+      <div class="learn-grid">
+        <div class="learn-card">
+          <h4>What is Vedic Astrology?</h4>
+          <p>Vedic astrology (Jyotish) is the ancient Indian system of sky interpretation, using the sidereal zodiac — aligned to actual star positions rather than the seasons. It uses a different ayanamsha (zodiac starting point) than Western astrology, which is why your Vedic Sun and Rising signs may differ from your Western ones. Jyotish places particular emphasis on the Rising sign (Lagna), the Moon, and a time-lord system called Vimshottari Dasha that maps your life into planetary chapters.</p>
+        </div>
+        <div class="learn-card">
+          <h4>What is Human Design?</h4>
+          <p>Human Design is a synthesis of astrology, I Ching, Kabbalah, and the chakra system, calculated from your birth data. It describes your energetic type (Generator, Projector, Manifestor, Manifesting Generator, or Reflector), your inner authority (how you make aligned decisions), your profile (your life theme), and your defined centers (consistent energies) vs. open centers (where you absorb others' energy). It's less predictive than astrology and more mechanical — a map of how your energy works.</p>
+        </div>
+        <div class="learn-card">
+          <h4>The Five HD Types</h4>
+          <p><strong>Generator (37%):</strong> Sustainable life-force energy. Strategy: respond to what lights you up. <br><strong>Manifesting Generator (32%):</strong> Multi-passionate, fast-moving. Strategy: respond then inform. <br><strong>Projector (22%):</strong> Guide and direct others' energy. Strategy: wait for recognition and invitation. <br><strong>Manifestor (9%):</strong> Initiates and impacts. Strategy: inform before acting. <br><strong>Reflector (1%):</strong> Samples and reflects collective health. Strategy: wait a full lunar cycle before major decisions.</p>
+        </div>
+        <div class="learn-card">
+          <h4>The Planetary Days</h4>
+          <p>Each day of the week is governed by a planet in both Vedic and Western traditions:<br>
+          <strong>Sunday</strong> — Sun · identity, vitality, life force<br>
+          <strong>Monday</strong> — Moon · emotion, intuition, body wisdom<br>
+          <strong>Tuesday</strong> — Mars · action, will, creative fire<br>
+          <strong>Wednesday</strong> — Mercury · communication, thought, perception<br>
+          <strong>Thursday</strong> — Jupiter · expansion, wisdom, opportunity<br>
+          <strong>Friday</strong> — Venus · beauty, relationship, value, pleasure<br>
+          <strong>Saturday</strong> — Saturn · discipline, structure, endurance</p>
+        </div>
+      </div>
+
+      <div class="section-label">Key Terms</div>
+      <div class="learn-card" style="margin-bottom:14px">
+        <dl class="term-list">
+          <div class="term-item"><dt>Rising Sign (Lagna / Ascendant)</dt><dd>The zodiac sign rising on the eastern horizon at your exact moment of birth. In Jyotish, this is the most important point in the chart — it determines your 12 houses, your physical appearance, your general life orientation, and which planet is your chart ruler. Everything in Vedic astrology is interpreted relative to your Rising sign.</dd></div>
+          <div class="term-item"><dt>Houses</dt><dd>The 12 divisions of the birth chart, each governing a domain of life: 1st (self/body), 2nd (money/voice), 3rd (communication/siblings), 4th (home/inner life), 5th (creativity/children/joy), 6th (health/daily work), 7th (partnerships), 8th (transformation/hidden things), 9th (philosophy/dharma), 10th (career/public life), 11th (community/income), 12th (spiritual life/hidden enemies/losses). Your Rising sign determines which sign occupies each house.</dd></div>
+          <div class="term-item"><dt>Nakshatra</dt><dd>The 27 lunar mansions used in Vedic astrology, each spanning 13°20' of the zodiac. Where your Moon, Rising, and other planets fall within these nakshatras gives the chart profound precision. Nakshatras describe the quality and texture of a planet's expression — not just what sign it's in, but exactly HOW it expresses. They are one of the primary tools of interpretation in Jyotish.</dd></div>
+          <div class="term-item"><dt>Vimshottari Dasha</dt><dd>The Vedic system of planetary time periods (mahadashas) that governs your life in chapters, each ruled by a different planet. The sequence and timing are determined by your Moon's nakshatra at birth. Each mahadasha lasts between 6 and 20 years, with sub-periods (antardashas) nested within. This is one of the most powerful predictive tools in Jyotish — it tells you which planet's energy is most dominant in your life right now.</dd></div>
+          <div class="term-item"><dt>Exaltation</dt><dd>When a planet is in its sign of exaltation, it operates at maximum power and beneficence. The exaltations are: Sun in Aries, Moon in Taurus, Mercury in Virgo, Venus in Pisces, Mars in Capricorn, Jupiter in Cancer, Saturn in Libra. Jupiter in Cancer (active June 2026 – June 2027) is one of the most auspicious transits possible — the most benefic planet at full strength.</dd></div>
+          <div class="term-item"><dt>Retrograde (Vakri)</dt><dd>A planet appears to move backward from Earth's perspective due to orbital mechanics. In Jyotish, retrograde planets are considered intensified and internalized — their energy turns inward. Mercury retrograde (~3 weeks, 3-4x/year) is the most commonly discussed: it invites review, reflection, and revisiting rather than launching or initiating new things.</dd></div>
+          <div class="term-item"><dt>Rahu + Ketu (The Nodes)</dt><dd>The north and south nodes of the Moon — the points where the Moon's path crosses the ecliptic. They are always opposite each other and move backward through the zodiac in ~18-month cycles. Rahu (north node) represents desire, growth, and karmic hunger — where you're being pulled toward. Ketu (south node) represents release, wisdom, and what you're completing. Their transit through your houses describes where evolution and release are happening in your life.</dd></div>
+          <div class="term-item"><dt>New Moon / Full Moon</dt><dd>New moons are seeding points — the moment when Sun and Moon conjoin, initiating a new 29.5-day lunar cycle. They are optimal for planting intentions in the house where they fall. Full moons are illumination and harvest points — the Moon is opposite the Sun, bringing things to light, completion, or emotional peak. The house where a full moon falls describes what is at maximum brightness in your life.</dd></div>
+          <div class="term-item"><dt>Transit</dt><dd>A planet's current position in the sky, as opposed to its natal (birth chart) position. Transits show what the sky is doing right now and how it interacts with your natal chart. When a transiting planet moves through one of your houses, it activates the themes of that house. The most significant current transit: Jupiter in Cancer (June 2026 – June 2027).</dd></div>
+        </dl>
+      </div>
+
+      <div class="section-label">Moon Phases</div>
+      <div class="learn-grid">
+        <div class="learn-card">
+          <h4>🌑 New Moon — Seed</h4><p>Sun and Moon conjoin. A reset point — the sky goes dark and new beginnings become possible. Set one clear intention in the house where this new moon falls. New moons are quiet, inward, and potent.</p>
+        </div>
+        <div class="learn-card">
+          <h4>🌒 Waxing Crescent — Stir</h4><p>The first sliver of light. The seed is moving. Take first small actions toward what you planted at the new moon. Build momentum without forcing.</p>
+        </div>
+        <div class="learn-card">
+          <h4>🌓 First Quarter — Act</h4><p>A push of energy. Half-lit and active. Challenges that arise at the first quarter refine your direction — they're not obstacles, they're navigation.</p>
+        </div>
+        <div class="learn-card">
+          <h4>🌔 Waxing Gibbous — Refine</h4><p>Refinement before fullness. Keep building, editing, and preparing for what's about to fully arrive. This is the phase of craft and detail.</p>
+        </div>
+        <div class="learn-card">
+          <h4>🌕 Full Moon — Illuminate</h4><p>Sun and Moon opposite. Full illumination — what was planted is now visible. Emotions and energy peak. Receive, celebrate, or release. The house the full moon falls in is at maximum brightness.</p>
+        </div>
+        <div class="learn-card">
+          <h4>🌗 Last Quarter — Release</h4><p>The tide turns. What no longer serves is ready to be released. This is the phase of conscious completion and clearing before the next new moon.</p>
+        </div>
+      </div>
+
+      <div class="index-cta">
+        <h3>Ready to see all of this<br>through <em>your</em> chart?</h3>
+        <p>This planner shows you the sky. Your personalized version shows you what the sky means specifically for your Rising sign, your houses, your nakshatra placements, your Dasha period, and your Human Design — all woven together into one daily navigation tool.</p>
+        <a href="intake.html">✦ Get My Personalized Planner — $22.22/month</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Day Modal -->
+<div class="modal-overlay" id="dayModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const PLANET_DAYS = {
+  0:{ name:'Sun Day · Sunday', color:'var(--gold)',
+      msg:'Sunday belongs to the Sun — the day to restore, reflect, and tend your inner world. The Sun represents your life force, your identity, and the light you carry. Sundays are for filling yourself up so you can sustain everything you\'re building the rest of the week. Rest is not the opposite of productivity. Rest is the soil.',
+      hd:{
+        generator:'Generator Sunday: your sacral energy needs genuine rest and replenishment — not performing rest while still mentally grinding. Only respond to what actually lights you up today. Let your gut lead.',
+        mg:'Manifesting Generator Sunday: allow yourself to be multidirectional without pressure to commit. Follow your sacral response without needing to justify pivots. Replenish the full range of you.',
+        projector:'Projector Sunday: genuine withdrawal is your restoration. You absorb others\' energy all week. Today is for being in your own aura — not socializing out of obligation, not advising. Just you.',
+        manifestor:'Manifestor Sunday: deep solitude and informing. Rest your initiating energy fully. Notice what impulse is building for the week ahead — but don\'t move on it yet. Let it ripen.',
+        reflector:'Reflector Sunday: release what you\'ve absorbed from others\' energy this week. Spend time in your own aura. Notice what felt like you vs. what you were reflecting. Your clarity is the goal today.'
+      }},
+  1:{ name:'Moon Day · Monday', color:'var(--green-mid)',
+      msg:'Monday belongs to the Moon — the planet of emotion, intuition, and the body\'s wisdom. Your emotional intelligence is most available today. What are you feeling your way toward? What does your body know that your mind hasn\'t caught up to yet? Let the Moon lead today instead of logic.' },
+  2:{ name:'Mars Day · Tuesday', color:'var(--mars)',
+      msg:'Tuesday belongs to Mars — the planet of action, energy, and creative fire. Tuesday is for making things, not planning them. What has been waiting for directed energy? Mars asks: what are you willing to build, create, or move toward? Channel intensity into output. Create something real today.' },
+  3:{ name:'Mercury Day · Wednesday', color:'var(--retro)',
+      msg:'Wednesday belongs to Mercury — the planet of communication, thought, and connection. Today your mind is sharpest and your words carry the most weight. What needs to be written, said, communicated, or decided? Mercury asks for precision and honesty. Don\'t say the careful version — say the real thing.' },
+  4:{ name:'Jupiter Day · Thursday', color:'var(--green)',
+      msg:'Thursday belongs to Jupiter — the planet of expansion, wisdom, and aligned opportunity. Thursday is your most naturally expansive day. What is the most aligned, growth-oriented move you can make today? Jupiter doesn\'t reward the cautious version of your vision. Take one step toward the real one.' },
+  5:{ name:'Venus Day · Friday', color:'var(--gold)',
+      msg:'Friday belongs to Venus — the planet of beauty, relationship, pleasure, and value. Fridays are for tending what you love: the people, the spaces, the creative work, and the things that make life feel worth living. What deserves your appreciation today? What would you do if beauty were the only requirement?' },
+  6:{ name:'Saturn Day · Saturday', color:'var(--text-light)',
+      msg:'Saturday belongs to Saturn — the planet of discipline, endurance, and the unglamorous work that builds something real. Saturn doesn\'t reward inspiration. He rewards consistency. What project, relationship, or practice deserves your most serious, sustained attention today? Do the work that compounds.' }
+};
+
+const DOW_TODOS = {
+  0:['Honor genuine rest — no forcing, no performing today','Tend one space in your environment that makes you feel good','Notice what your body is actually asking for and give it that','Write what you want the week ahead to feel like','Practice receiving without immediately doing or producing'],
+  1:['Show up somewhere online — even something small counts','Reach out to one person you genuinely care about','Check in emotionally: high / middle / low — without judgment','Nourish your body with something that actually makes you feel good','Set one clear creative or relational intention for the week'],
+  2:['Create or move something forward — make it physically real','Move your body with intention today','Take one action you\'ve been thinking about but not doing','Channel any frustration or intensity into creative output today','What needs to be built or made? Do one piece of it.'],
+  3:['Write or say the real thing — not the careful version','Review your commitments: are they aligned with what you actually want?','Have one honest conversation today','Clarify your core message or offer in one sentence','What has been left unsaid that needs to be communicated?'],
+  4:['Take one expansive action — the real version, not the cautious one','Connect with someone whose vision genuinely aligns with yours','Do one thing that feels like the next level of you','Ask for something you\'ve been afraid to ask for','What would the expanded version of you do today? Do that.'],
+  5:['Tend one relationship that genuinely matters to you','Do something just for beauty or pleasure — no productivity justification needed','Acknowledge your own worth in some tangible way today','Invest in your space, your presentation, or your wellbeing','Connect your work to what you actually love about it'],
+  6:['Do the one thing you\'ve been putting off because it feels like work','Review the week: what worked, what didn\'t, what to adjust','Work on something that takes sustained effort and pays off slowly','Set up one system that makes next week easier','What habit, if consistent for 90 days, would change everything?']
+};
+
+const DAILY_PROMPTS = [
+  { label:'Today\'s Prompt', text:'What is your body telling you right now that your mind keeps overriding?' },
+  { label:'Today\'s Prompt', text:'What would you build today if you weren\'t afraid of it being imperfect?' },
+  { label:'Today\'s Prompt', text:'Who showed up for you recently in a way that deserves acknowledgment — and have you told them?' },
+  { label:'Today\'s Prompt', text:'What are you building right now that you want to be proud of in 10 years?' },
+  { label:'Today\'s Prompt', text:'What would you do today if you weren\'t worried about what anyone else thought?' },
+  { label:'Today\'s Prompt', text:'Where are you leaking energy? What do you need to stop, reduce, or release?' },
+  { label:'Today\'s Prompt', text:'What is trying to arrive in your life that you haven\'t fully let yourself receive?' },
+  { label:'Today\'s Prompt', text:'If you could give your honest, brave answer to one question today — what would it be, and what would you say?' },
+  { label:'Today\'s Prompt', text:'What needs to be released before you can fully step into what\'s coming?' },
+  { label:'Today\'s Prompt', text:'What have you been making smaller than it actually is — your vision, your worth, your ask?' },
+  { label:'Today\'s Prompt', text:'What do you know for certain that you haven\'t let yourself say out loud yet?' },
+  { label:'Today\'s Prompt', text:'What is one thing you could do today that your future self would genuinely thank you for?' }
+];
+
+const NM_ANCHORS = [
+  ['2026-06-25', 93],['2026-07-24',121],['2026-08-23',150],['2026-09-21',178],
+  ['2026-10-21',207],['2026-11-19',237],['2026-12-19',267],['2027-01-17',297],
+  ['2027-02-16',327],['2027-03-17',356],['2027-04-16', 26],['2027-05-15', 54],
+  ['2027-06-14', 83],['2027-07-13',110]
+];
+const ZODIAC_SIGNS = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const PHASE_NAMES = [
+  {max:1.8,emoji:'🌑',name:'New Moon'},{max:7.4,emoji:'🌒',name:'Waxing Crescent'},
+  {max:10.5,emoji:'🌓',name:'First Quarter'},{max:14.5,emoji:'🌔',name:'Waxing Gibbous'},
+  {max:16.5,emoji:'🌕',name:'Full Moon'},{max:21.8,emoji:'🌖',name:'Waning Gibbous'},
+  {max:25.3,emoji:'🌗',name:'Last Quarter'},{max:29.5,emoji:'🌘',name:'Balsamic'}
+];
+
+const KEY_DATES = {
+  '2026-07-10':{ type:'full-moon', title:'Full Moon in Sagittarius', guidance:'Full Moon in Sagittarius — the sign of philosophy, expansion, and long-horizon thinking. What do you believe about what\'s possible for you? Your worldview and sense of the horizon are at full brightness tonight.', action:'Write one thing you genuinely believe about your own future that you haven\'t let yourself say out loud. Let this full moon witness it.' },
+  '2026-07-24':{ type:'new-moon', title:'New Moon in Cancer — The Partnership Seed ★', guidance:'The most powerful new moon of this year for partnership intentions. New Moon in Cancer with Jupiter exalted nearby: what you seed in the domain of your most important collaborations and connections today carries extraordinary support. Who are you choosing to build with?', action:'Write one sentence about who you want to be building WITH in the next year. Say it clearly. The new moon in Cancer is listening.' },
+  '2026-08-09':{ type:'full-moon', title:'Full Moon in Aquarius', guidance:'Full Moon in Aquarius — the sign of community, innovation, and collective vision. What networks and shared visions are genuinely aligned with who you\'re becoming? What community connection is at full brightness?', action:'Name one community or group that genuinely reflects your values. Do one thing today to invest in it.' },
+  '2026-08-23':{ type:'new-moon', title:'New Moon in Virgo', guidance:'New Moon in Virgo — the sign of precision and daily practice. What specific habit, health practice, or work rhythm is ready to be seeded intentionally? Virgo asks for concrete, sustainable change — not vague improvement.', action:'Name one specific daily practice you are committing to for the next 30 days. Small and real beats ambitious and abandoned.' },
+  '2026-09-07':{ type:'full-moon', title:'Full Moon in Pisces', guidance:'Full Moon in Pisces — the sign of intuition, spirituality, and the invisible. What wants to be released from your inner world? What have you been quietly carrying that is ready to be felt and let go?', action:'Spend 10 quiet minutes today. Let whatever wants to surface come up. You don\'t have to fix it — just acknowledge it.' },
+  '2026-09-12':{ type:'retro-start', title:'Mercury Retrograde Begins', guidance:'Mercury stations retrograde — a ~3-week review period begins. Revisit, refine, and complete rather than launch, sign, or announce. Review your communication, commitments, and how you express your genuine value.', action:'Pick one area that needs honest review. Use this retrograde period to clarify before acting.' },
+  '2026-10-04':{ type:'retro-end', title:'Mercury Retrograde Ends', guidance:'Mercury goes direct today. Full forward motion returns. Post-retrograde is one of the sharpest action windows of the year — the clarity you built during the retrograde is now fully actionable. Move within 48 hours.', action:'Take one concrete action that reflects what you clarified during the retrograde. This is the window.' },
+  '2026-10-07':{ type:'full-moon', title:'Full Moon in Pisces', guidance:'Second Pisces full moon of this season — a deeper illumination of the spiritual and inner domain. What chapter of invisible inner work is complete and ready to be acknowledged?', action:'Write one thing that is genuinely complete in your inner world. It deserves acknowledgment.' },
+  '2026-10-21':{ type:'new-moon', title:'New Moon in Libra', guidance:'New Moon in Libra — the sign of partnership, balance, and beautiful precision. What do you want your professional presence and public relationships to feel like? This is the most significant career-and-public-presence seed of the year.', action:'Write one sentence about what you want your professional reputation to feel like by this time next year. Be specific and honest.' },
+  '2026-11-05':{ type:'full-moon', title:'Full Moon in Taurus', guidance:'Full Moon in Taurus — the sign of beauty, real value, and what endures. What has arrived in your material, creative, and physical world that deserves to be fully received? Taurus full moons illuminate what is genuinely here.', action:'Write five things that are real, tangible, and good in your life right now that you haven\'t fully received or appreciated. Receive them tonight.' },
+  '2026-11-19':{ type:'new-moon', title:'New Moon in Scorpio', guidance:'New Moon in Scorpio — the sign of depth, transformation, and what lies beneath the surface. What wants to be understood more deeply? What investigation or honest inner inquiry wants to be seeded here?', action:'Name one area of your life that deserves deeper honesty or investigation. Commit to going deeper there over the next 30 days.' },
+  '2026-12-05':{ type:'full-moon', title:'Full Moon in Taurus ★★', guidance:'The most significant lunar event of the second half of this year. Full Moon in Taurus illuminates beauty, creative work, real value, and what endures. What has been built this year that is genuinely worth celebrating? Receive the harvest.', action:'Celebrate something real tonight. Not what you\'re working toward — what is actually here. This full moon rewards genuine receipt of what has already arrived.' },
+  '2026-12-19':{ type:'new-moon', title:'New Moon in Sagittarius', guidance:'New Moon in Sagittarius — the sign of philosophy, expansion, and the long horizon. What do you genuinely believe is possible for you in the year ahead? Sagittarius asks for vision that comes from your deepest sense of what\'s true.', action:'Write one paragraph about what you believe about your path as you prepare to enter the new year. Let it be honest and large.' },
+  '2027-01-03':{ type:'full-moon', title:'Full Moon in Cancer', guidance:'Full Moon in Cancer — the sign where Jupiter has been exalted since June 2026. What has the partnership theme of the past seven months illuminated in your most significant connections? Who is genuinely here? What has been built?', action:'Acknowledge one partnership or collaboration that has grown since June 2026. Name what it\'s become. Honor what was built.' },
+  '2027-01-17':{ type:'new-moon', title:'New Moon in Capricorn', guidance:'New Moon in Capricorn — the sign of structure, endurance, and the long game. What do you want to build in 2027 that will still be standing in 2030? Capricorn seeds grow slowly and last.', action:'Write one foundational commitment for 2027. Not a goal list — one thing you\'re building that compounds over years.' },
+  '2027-02-02':{ type:'full-moon', title:'Full Moon in Cancer ★★', guidance:'Maximum illumination of Jupiter\'s partnership year. Everything that has grown in your most significant collaborations and connections since June 2026 is at full brightness tonight. What has actually arrived? Who showed up? What was built?', action:'Write the honest harvest: what changed in your partnerships and connections since June 2026? Name what is genuinely different. Receive it.' },
+  '2027-02-16':{ type:'new-moon', title:'New Moon in Aquarius', guidance:'New Moon in Aquarius — the sign of community, innovation, and collective vision. What community or shared project do you want to invest more deeply in? Aquarius seeds are planted in the space between people.', action:'Name one community or collective vision you want to invest in over the next 30 days. Do one concrete thing today to show up for it.' },
+  '2027-03-03':{ type:'full-moon', title:'Full Moon in Virgo', guidance:'Full Moon in Virgo — precise and practical. What daily systems and habits are at full brightness? What is working in your daily life and deserves acknowledgment? What is ready to be refined or released?', action:'Audit your most important daily habit today. Is it actually working? What one adjustment would make it more effective?' },
+  '2027-03-15':{ type:'retro-start', title:'Mercury Retrograde Begins', guidance:'Mercury stations retrograde in Pisces. The theme: how are you communicating your genuine value? Are the words you use to describe yourself and your work actually reflecting what you\'re worth? Review — don\'t launch until April 7.', action:'Review how you describe your work and your value. What would you change if you weren\'t worried about how it sounded?' },
+  '2027-04-02':{ type:'full-moon', title:'Full Moon in Libra', guidance:'Full Moon in Libra — the sign of partnership, balance, and what is genuinely fair. What relationship is at full brightness? What partnership dynamic is ready to be seen clearly?', action:'Look clearly at one important relationship today — not to fix it, just to see it honestly. What is true about it?' },
+  '2027-04-07':{ type:'retro-end', title:'Mercury Retrograde Ends', guidance:'Mercury goes direct in Aquarius today. The review of your messaging, value, and communication is complete. Post-retrograde clarity is now fully actionable. Move within 48 hours.', action:'Take one action that reflects your updated relationship to your own value and how you communicate it.' },
+  '2027-04-16':{ type:'new-moon', title:'New Moon in Aries', guidance:'New Moon in Aries — the most initiating new moon of the year. What is genuinely ready to begin? What version of yourself is stepping forward? Aries doesn\'t overthink — it starts.', action:'Begin one thing today. Not plan it — begin it. One small, concrete first step into what you\'ve been preparing for.' },
+  '2027-05-01':{ type:'full-moon', title:'Full Moon in Scorpio', guidance:'Full Moon in Scorpio — depth, transformation, and what has been beneath the surface. What inner knowing or hidden resource is at full brightness? Trust what surfaces tonight, even if it\'s uncomfortable.', action:'Write about something in the background of your awareness — something you\'ve known but not fully looked at. Scorpio rewards honest inner seeing.' },
+  '2027-05-15':{ type:'new-moon', title:'New Moon in Taurus — Creative Seed ★', guidance:'One of the most significant seeding moments of this planner year. New Moon in Taurus plants seeds that grow slowly but last. What creative work or material foundation do you want to be still growing in 5 years?', action:'Name your most important creative or material intention for the next 12 months. Write it with genuine commitment — not urgency. Taurus takes its time and produces something real.' },
+  '2027-05-31':{ type:'full-moon', title:'Full Moon in Sagittarius', guidance:'Full Moon in Sagittarius — what do you genuinely believe about where you\'re going? Your philosophy, your sense of horizon, and your faith in your own path are at full brightness.', action:'Write your honest long-horizon vision — not your plan, your vision. Say it as large as it actually is.' },
+  '2027-06-14':{ type:'new-moon', title:'New Moon in Gemini', guidance:'New Moon in Gemini — the sign of communication, curiosity, and connection between ideas. What new way of thinking or communicating wants to be seeded? What conversation or project is ready to begin?', action:'Begin one conversation, piece of writing, or learning path that you\'ve been circling around. Gemini says: engage first, perfect later.' },
+  '2027-06-29':{ type:'full-moon', title:'Full Moon in Sagittarius', guidance:'Full Moon in Sagittarius as Jupiter prepares to leave Cancer. What has this partnership year built in your belief about what\'s possible with others? What do you now know about collaboration that you didn\'t in June 2026?', action:'Write the philosophical harvest: what do you now believe about partnership and building with others? Let it be true and large.' },
+  '2027-07-13':{ type:'new-moon', title:'New Moon in Cancer — Final Partnership Seed ★', guidance:'The final new moon in Cancer as this planner year closes. Jupiter has been here since June 2026 and is about to enter Leo. What final intention do you want to plant in the space of your most significant connections before this chapter completes?', action:'Write one final partnership intention. Who do you want to be building with as you enter the next chapter? Plant it quietly and with full conviction.' },
+  '2027-07-28':{ type:'full-moon', title:'Full Moon in Capricorn — The Year Closes ★★★', guidance:'Full Moon in Capricorn closes this planner year. Capricorn is the sign of structure, endurance, and what is genuinely built. What foundations have you laid in the past 13 months? What are you standing on that wasn\'t there in June 2026?', action:'Write your honest answer: who are you now that you weren\'t when this planner began? Not what you\'ve accomplished — who you\'ve become. That is the real harvest.' }
+};
+
+const MONTHS = [
+  { id:'2026-06', name:'June 2026', theme:'The Partnership Sky Opens', mantra:'"The right people are already moving toward me."',
+    overview:'Jupiter enters Cancer mid-June 2026 — the most benefic planet in its sign of exaltation. In Vedic astrology, this is one of the most auspicious transits possible: Jupiter\'s wisdom and expansion at maximum strength. The collective theme for the next 12 months: partnership, collaboration, and who you choose to build with. Jupiter in Cancer asks — who are the right people, and what becomes possible when you build together? The Summer Solstice (June 20–21) is one of the four most powerful natural seeding points of the year. The New Moon in Cancer on June 25 opens the most significant partnership cycle of the year. What you plant now in terms of collaboration, connection, and chosen partners carries the support of one of the most benefic transits of the decade.',
+    transits:['Jupiter ENTERS Cancer — exalted, maximum benefic energy','Summer Solstice June 20–21 — natural seeding threshold','New Moon June 25 in Cancer — partnership cycle opens','Jupiter-Saturn antardasha continues for many Gemini-Rising charts'],
+    opps:['Seeding a key partnership or collaboration — the right people are arriving','Solstice threshold June 20–21 — most powerful natural seeding point of the year','New Moon June 25 in Cancer — plant your most important partnership intention'],
+    cauts:['Don\'t force connections that feel effortful — Jupiter in Cancer rewards genuine resonance','Solstice energy can feel overwhelming — go slow and intentional'],
+    weeks:[
+      { label:'Week 1 · Jun 20–22 · Solstice Gateway', focus:'Jupiter is freshly exalted in Cancer and the Summer Solstice arrives. Write one sentence about what you want to build WITH another person by the end of this year. Not what you want to do alone — what you want to create together.' },
+      { label:'Week 2 · Jun 23–26', focus:'The first full weekday week of the partnership year opens. Who is showing up with genuine resonance? What collaborative energy feels most alive? Notice without forcing — Jupiter in Cancer rewards authentic connection over strategic networking.' },
+      { label:'Week 3 · Jun 27–30', focus:'New Moon in Cancer June 25 has planted the seed. The first week of the new partnership cycle begins. Who in your world represents the kind of collaboration, connection, or creative partnership you most want to develop? Take one step toward that relationship today.' }
+    ],
+    journal:'What do I most want to build WITH someone else this year — not for them, not alongside them, but genuinely WITH them? Who comes to mind, and what would become possible?' },
+
+  { id:'2026-07', name:'July 2026', theme:'Build With Who\'s Here', mantra:'"What I build with the right people will outlast anything I build alone."',
+    overview:'Jupiter is fully settled in Cancer and the first complete month of this extraordinary transit begins. The sky is in a sustained period of partnership activation. The Full Moon July 10 in Sagittarius asks what you believe about what\'s possible — your philosophy, your worldview, and your sense of the horizon. The New Moon July 24 in Cancer is the most powerful partnership-seeding moment of the entire year: a new moon in the same sign as exalted Jupiter creates a rare window for planting the most important collaboration or connection intention of the year. Who are you choosing to build with? Say it clearly and with conviction. The sky is listening.',
+    transits:['Jupiter exalted in Cancer — fully active','Full Moon July 10 in Sagittarius','★ New Moon July 24 in Cancer — most powerful partnership seed of the year'],
+    opps:['New Moon July 24 in Cancer — the single most important partnership seeding of the year','Full Moon July 10 in Sagittarius — expand your belief about what\'s possible','First full month of Jupiter in Cancer — let genuine connections deepen'],
+    cauts:['Don\'t mistake busy-ness for building — Jupiter in Cancer rewards depth over volume','Sagittarius full moon can inflate belief without grounding — pair vision with one concrete action'],
+    weeks:[
+      { label:'Week 1 · Jul 1–5', focus:'The first full month of Jupiter exalted in Cancer opens. What is the most genuine, depth-oriented partnership move you can make this week? Not the strategic one — the real one.' },
+      { label:'Week 2 · Jul 6–12 · Full Moon Jul 10', focus:'Full Moon in Sagittarius July 10. What do you believe about what\'s possible with others? Your long-horizon partnership vision is at full brightness. Acknowledge what you actually believe, even if it feels too large.' },
+      { label:'Week 3 · Jul 13–19', focus:'Preparing for the most powerful partnership new moon of the year on July 24. Get clear on what you want to plant: who are you choosing to build with in the next 12 months? What collaboration, connection, or relationship are you ready to consciously call in?' },
+      { label:'Week 4 · Jul 20–26 · New Moon Jul 24 ★', focus:'New Moon in Cancer July 24 — with Jupiter exalted and present. The most powerful partnership seed of this entire planner year opens. Plant your most important collaboration or connection intention today with full consciousness and conviction.' }
+    ],
+    journal:'Who are the people I most want to build with in the next 12 months? What becomes possible in collaboration that I cannot create alone?' },
+
+  { id:'2026-08', name:'August 2026', theme:'Deepen What\'s Real', mantra:'"I build with depth, not speed."',
+    overview:'The full month of Jupiter exalted in Cancer continues. The collective theme deepens: the connections forming now are built on something genuine, not surface resonance. The Full Moon August 9 in Aquarius illuminates your relationship to community and collective vision — what groups, networks, and shared ideas are genuinely aligned with who you\'re becoming? The New Moon August 23 in Virgo seeds practical refinement: your daily systems, your health practices, and the small habits that compound over time. August is a month for going deeper rather than going wide. Depth in relationships, depth in craft, depth in daily practice.',
+    transits:['Jupiter exalted in Cancer — partnership depth deepens','Full Moon August 9 in Aquarius — community + collective vision illuminated','New Moon August 23 in Virgo — daily systems, health, practice'],
+    opps:['Deepening the genuine connections that have been forming since June','New Moon August 23 — seed one specific, sustainable daily habit','Full Moon August 9 — identify which communities and networks are genuinely aligned'],
+    cauts:['August tempts over-extension — guard depth over breadth this month','Virgo new moon asks for specificity — vague intentions won\'t stick'],
+    weeks:[
+      { label:'Week 1 · Aug 1–5', focus:'Jupiter exalted in Cancer is well-settled. What connection or collaboration that began in June or July deserves your deeper investment this week? Go deeper with what is already real rather than starting new.' },
+      { label:'Week 2 · Aug 6–12 · Full Moon Aug 9', focus:'Full Moon in Aquarius August 9. What communities, networks, and collective visions are genuinely aligned with who you\'re becoming? Not where you feel you should be — where you actually belong.' },
+      { label:'Week 3 · Aug 13–22', focus:'Pre-Virgo new moon week. What daily practice, health rhythm, or work system would transform your experience of everyday life if it were consistent? Get specific before the new moon plants it.' },
+      { label:'Week 4 · Aug 23–31 · New Moon Aug 23', focus:'New Moon in Virgo August 23. Seed one specific, sustainable daily practice. The more concrete the better — Virgo doesn\'t do vague. Small and consistent beats ambitious and abandoned every time.' }
+    ],
+    journal:'What daily practice, if I were consistent with it for the next 90 days, would most change the quality of my life and work?' },
+
+  { id:'2026-09', name:'September 2026', theme:'Refine Before the Shift', mantra:'"Clarity before action. Review before launch."',
+    overview:'Mercury goes retrograde approximately September 12, inviting a review of your communication, commitments, and how you express your genuine value. Mercury moves through Libra before stationing in Virgo — this is a review of your messaging, your professional relationships, and how your words reflect what you\'re actually worth. The Full Moon September 7 in Pisces illuminates your inner world and what wants to be released. The New Moon September 21 in Virgo seeds refined, clear systems. Use this month to refine before launching. What needs to be reviewed, clarified, or communicated more honestly before you move forward?',
+    transits:['Jupiter exalted in Cancer — partnership theme continues','Full Moon September 7 in Pisces — inner world illuminated','New Moon September 21 in Virgo — precision and refinement','★ Mercury Retrograde begins ~September 12'],
+    opps:['Mercury Rx: ideal time to review, revise, and clarify — use the slowdown','Full Moon September 7 — release what\'s been quietly weighing on you','New Moon September 21 — plant refined, specific intentions after the review'],
+    cauts:['Mercury Rx: avoid launching new projects, signing contracts, or making major announcements until October 4','Allow extra communication patience — messages can be misunderstood'],
+    weeks:[
+      { label:'Week 1 · Sep 1–6', focus:'Pre-full moon week. What has been weighing on you in your inner world that is ready to surface, be felt, and released before the Pisces full moon on September 7? Make space for it.' },
+      { label:'Week 2 · Sep 7–11 · Full Moon Sep 7', focus:'Full Moon in Pisces September 7. What from your inner life — a quiet burden, an unprocessed feeling, a chapter that has completed — is at full brightness and ready to be honored and released?' },
+      { label:'Week 3 · Sep 12–20 · Mercury Rx begins', focus:'Mercury Retrograde begins approximately September 12. The review phase opens. How are you communicating your genuine value? What messaging, commitment, or conversation needs to be revisited and refined?' },
+      { label:'Week 4 · Sep 21–30 · New Moon Sep 21', focus:'New Moon in Virgo under Mercury Retrograde — seed your refined intentions, but hold off on public launches until Mercury goes direct October 4. What one thing, done consistently, would most improve your daily experience?' }
+    ],
+    journal:'How am I communicating my genuine value right now? Are the words I use to describe myself and my work actually reflecting what I\'m worth?' },
+
+  { id:'2026-10', name:'October 2026', theme:'Identity Shift', mantra:'"I trust what releases and what arrives."',
+    overview:'A significant astrological shift this month: the nodal axis moves from Aquarius/Leo to Capricorn/Cancer. Rahu (north node) enters Capricorn — the sign of structure, endurance, and earned authority — while Ketu (south node) enters Cancer, the same sign as exalted Jupiter. This creates an unusual combination: Jupiter\'s expansion alongside Ketu\'s spiritual detachment. Some connections that feel almost fated arrive. Some that have completed their cycle release naturally. Trust what shifts. Mercury goes direct early October — full momentum returns. The New Moon October 21 in Libra is the most significant professional and public presence seed of the year. What do you want your name and work to stand for?',
+    transits:['★ Nodal Shift: Rahu → Capricorn, Ketu → Cancer (~mid-October)','Mercury goes DIRECT ~October 4','Jupiter exalted in Cancer — continuing','Full Moon October 7 in Pisces','New Moon October 21 in Libra — career + public seed'],
+    opps:['Mercury direct October 4 — sharp action window, move within 48 hours','New Moon October 21 — most powerful career and public presence seed of the year','Nodal shift: some connections feel fated — trust what arrives'],
+    cauts:['Nodal shifts create 1-2 weeks of adjustment — hold lightly during the transition','Ketu entering Cancer: some partnerships complete or change quality — trust the release'],
+    weeks:[
+      { label:'Week 1 · Oct 1–7 · Mercury Direct + Full Moon', focus:'Mercury goes direct approximately October 4 — sharp action window. Take the action you clarified during the retrograde within 48 hours. Full Moon in Pisces October 7: what from your inner world is at full brightness and completing?' },
+      { label:'Week 2 · Oct 8–14 · Nodal Shift', focus:'The nodal axis shifts to Capricorn/Cancer approximately mid-October. Identity is recalibrating. Some things release naturally. Some connections arrive with unusual resonance. Hold change lightly and trust what is moving.' },
+      { label:'Week 3 · Oct 15–20', focus:'Pre-Libra new moon week. What do you want your professional presence and public reputation to feel like one year from now? Get clear before the most important career-seeding moment of the year arrives.' },
+      { label:'Week 4 · Oct 21–31 · New Moon Oct 21 ★', focus:'New Moon in Libra October 21 — seed your most important professional and public presence intention of the year. What do you want your work to stand for? How do you want to be known? Plant it with precision and conviction.' }
+    ],
+    journal:'What do I want my professional reputation and public presence to stand for one year from now? What one thing, if I committed to it consistently, would build that?' },
+
+  { id:'2026-11', name:'November 2026', theme:'Harvest Season', mantra:'"I count what is actually here."',
+    overview:'Rahu in Capricorn and Ketu in Cancer are settling into their 18-month arc. Jupiter remains exalted in Cancer, continuing the partnership chapter. The Full Moon November 5 in Taurus is earthy, sensory, and grounding — a moment to receive and appreciate what has actually arrived in your material, creative, and physical world. The New Moon November 19 in Scorpio seeds depth, research, and transformation. November is a harvest month: count what has genuinely come in since June, acknowledge what has been built in your partnerships and daily life, and plant the next layer of seeds in Scorpio\'s depth-oriented soil.',
+    transits:['Jupiter exalted in Cancer — partnership depth active','Rahu in Capricorn, Ketu in Cancer — settling in','Full Moon November 5 in Taurus — material + creative harvest','New Moon November 19 in Scorpio — depth + transformation seed'],
+    opps:['Full Moon November 5 — receive and acknowledge what has genuinely arrived this year','New Moon November 19 — plant intentions around depth, research, and transformation','Harvest season: count what is real before planting what\'s next'],
+    cauts:['Scorpio new moon can pull toward obsession — use depth productively, not compulsively','Taurus full moon asks you to receive, not just keep building — rest in what is here'],
+    weeks:[
+      { label:'Week 1 · Nov 1–5 · Full Moon Nov 5', focus:'Full Moon in Taurus November 5. What has genuinely arrived in your material, creative, and physical world since June? Count it. Receive it. The Taurus full moon doesn\'t reward chasing what isn\'t here yet — it rewards fully appreciating what is.' },
+      { label:'Week 2 · Nov 6–14', focus:'Post-full moon integration. What did the harvest reveal? What is genuinely here and solid? What needs more time before it\'s ready? Acknowledge the distinction honestly.' },
+      { label:'Week 3 · Nov 15–19 · New Moon Nov 19', focus:'New Moon in Scorpio November 19 — depth, transformation, and what lies beneath the surface. What wants to be understood more deeply? What investigation, inner inquiry, or research is ready to begin?' },
+      { label:'Week 4 · Nov 20–30', focus:'The Scorpio cycle deepens. What has been beneath the surface of your partnerships and creative life? What truth about your path do you know that you haven\'t fully let yourself look at? This is the month to go there.' }
+    ],
+    journal:'What has genuinely arrived in my life since June — in partnerships, in creativity, in daily rhythm — that I haven\'t fully acknowledged or received?' },
+
+  { id:'2026-12', name:'December 2026', theme:'The Creative + Emotional Peak', mantra:'"I receive what is real before I reach for what\'s next."',
+    overview:'The most significant lunar event of the second half of this year: the Full Moon December 5 in Taurus. Taurus is the sign of what is real, beautiful, and enduring — and this full moon illuminates the creative, material, and emotional domain with rare clarity. What has been built this year? What is genuinely solid and worth celebrating? The New Moon December 19 in Sagittarius opens a cycle of philosophical expansion and long-horizon vision. What do you believe about where you\'re going? Let the Winter Solstice (December 21) and the approaching new year be a threshold — a conscious moment to name what you\'re taking forward and what you\'re leaving behind.',
+    transits:['★★ Full Moon December 5 in Taurus — creative + material peak of the year','New Moon December 19 in Sagittarius — long-horizon vision seed','Winter Solstice December 21 — natural threshold','Jupiter exalted in Cancer — partnership year continues'],
+    opps:['Full Moon December 5 — the most significant creative + material harvest moment of the year','Winter Solstice December 21 — powerful annual threshold for conscious intention','New Moon December 19 — plant your long-horizon vision before the year closes'],
+    cauts:['December busyness can pull you away from the inner reflection this month rewards','Don\'t rush past the December 5 full moon — it deserves to be received fully'],
+    weeks:[
+      { label:'Week 1 · Dec 1–5 · Full Moon Dec 5 ★★', focus:'The most significant lunar event of the second half of this year arrives. Full Moon in Taurus December 5. What has been built this year that is genuinely real and worth celebrating? Spend the days before this full moon in preparation — what do you want to receive and acknowledge on that night?' },
+      { label:'Week 2 · Dec 6–13', focus:'Post-peak integration. The Taurus full moon has illuminated what is real. What do you see clearly about this year that you didn\'t before? What are you genuinely standing on that wasn\'t there in June?' },
+      { label:'Week 3 · Dec 14–21 · Solstice + New Moon', focus:'New Moon in Sagittarius December 19 + Winter Solstice December 21. Two seeding events in one week: your long-horizon philosophical vision (Sagittarius) and the annual reset threshold (Solstice). What do you believe about the year ahead? Let it be large.' },
+      { label:'Week 4 · Dec 22–31 · Year\'s End', focus:'The final week of 2026. What are you taking forward with full intention, and what are you consciously leaving at the threshold? Name both. The partnerships, the creative work, the daily practices that belong in your 2027 — name them and carry them forward deliberately.' }
+    ],
+    journal:'What from this year — a partnership, a creative project, a daily habit, a belief about myself — do I want to carry forward with full intention into the next year?' },
+
+  { id:'2027-01', name:'January 2027', theme:'The Year Turns', mantra:'"I build what lasts."',
+    overview:'The year turns under Jupiter still exalted in Cancer — the partnership chapter is in its final six months. The Full Moon January 3 in Cancer is a powerful illumination of the year\'s central theme: partnership, belonging, and who you are building with. The New Moon January 17 in Capricorn seeds ambition, structure, and long-term commitment. What do you want to build in 2027 that will still be standing in 2030? The new year\'s seeds planted under Capricorn\'s energy are slow-growing and deeply rooted. Jupiter\'s partnership year has built something — this is the month to acknowledge what it is and decide how to continue building on it.',
+    transits:['Jupiter exalted in Cancer — final 6 months active','Full Moon January 3 in Cancer — partnership theme illuminated','New Moon January 17 in Capricorn — structure + long-term commitment','Rahu in Capricorn, Ketu in Cancer — identity evolution deepens'],
+    opps:['Full Moon January 3 — acknowledge what Jupiter\'s partnership year has built','New Moon January 17 — plant foundational, long-term intentions for 2027','New year energy: commit to what you\'re actually building, not a list of resolutions'],
+    cauts:['Avoid over-planning at the expense of depth — Capricorn rewards commitment over quantity','January can feel slow after December\'s peak — trust the pace of what\'s actually building'],
+    weeks:[
+      { label:'Week 1 · Jan 1–7 · Full Moon Jan 3', focus:'Full Moon in Cancer January 3. What has Jupiter\'s partnership year built in your most significant connections and collaborations? Name what is genuinely here. Who showed up? What was built together?' },
+      { label:'Week 2 · Jan 8–16', focus:'Mid-January reflection: what is worth carrying forward from 2026\'s partnership theme into 2027? What relationships and collaborations deserve your continued, deepening investment this year?' },
+      { label:'Week 3 · Jan 17–23 · New Moon Jan 17', focus:'New Moon in Capricorn January 17. Plant your most foundational intention for 2027. Not a goal list — one thing. What are you building that compounds over years? Give it your most serious commitment.' },
+      { label:'Week 4 · Jan 24–31', focus:'The foundation of 2027 is set. What structures — daily practices, partnerships, creative commitments — need to be in place to support what you\'re building? January\'s remaining days are for laying that structural groundwork.' }
+    ],
+    journal:'What do I want to build in 2027 that I want to still be standing in 2030? What foundation does that require me to lay right now?' },
+
+  { id:'2027-02', name:'February 2027', theme:'Full Partnership Illumination', mantra:'"I see clearly what has been built."',
+    overview:'The Full Moon February 2 in Cancer is the maximum illumination of everything Jupiter\'s partnership year has been building since June 2026. What has actually arrived in the domain of your most significant collaborations, connections, and shared creative work? What do you see clearly about who is genuinely in your world? This is the moment to receive the harvest of the past eight months, acknowledge what has been built, and decide what you\'re taking into the final chapter of Jupiter in Cancer. The New Moon February 16 in Aquarius opens a cycle of collective vision and community. Jupiter remains exalted in Cancer through June — use these final months to deepen what is most real.',
+    transits:['★★ Full Moon February 2 in Cancer — maximum partnership illumination','New Moon February 16 in Aquarius — community + collective vision','Jupiter exalted in Cancer — final months, precious and active'],
+    opps:['Full Moon February 2 — the harvest of Jupiter\'s entire partnership year is at full brightness','New Moon February 16 — seed community and collective vision for 2027','Use Jupiter\'s remaining months in Cancer to deepen what has most come alive'],
+    cauts:['Cancer full moon is emotionally powerful — allow what surfaces without immediately problem-solving it','Don\'t rush past the February 2 full moon — sit with what it reveals'],
+    weeks:[
+      { label:'Week 1 · Feb 1–2 · Full Moon Feb 2 ★★', focus:'Full Moon in Cancer February 2. This is the peak illumination of Jupiter\'s partnership year. What has actually been built in your most significant collaborations and connections since June 2026? Name it specifically. Receive it fully.' },
+      { label:'Week 2 · Feb 3–14', focus:'Post-peak integration. What did the February 2 full moon reveal about who is genuinely in your life, what has been built together, and what you most value in partnership? Let these insights settle before acting on them.' },
+      { label:'Week 3 · Feb 15–21 · New Moon Feb 16', focus:'New Moon in Aquarius February 16. What community or collective vision do you want to invest more deeply in for the rest of 2027? Aquarius seeds are planted in the space between people — in shared purpose, shared vision, shared belonging.' },
+      { label:'Week 4 · Feb 22–28', focus:'Jupiter\'s final full months in Cancer. What partnership or collaboration deserves your deepest investment before the sign changes in June? Use these months intentionally — this level of benefic energy in your partnership space won\'t return for 12 years.' }
+    ],
+    journal:'Looking at the eight months since June 2026: who has genuinely arrived in my life, what has been built with others, and what do I most want to deepen before Jupiter leaves Cancer in June?' },
+
+  { id:'2027-03', name:'March 2027', theme:'Mercury Retrograde — Review Your Voice', mantra:'"I say what I\'m actually worth."',
+    overview:'Mercury goes retrograde approximately March 15, moving through Pisces before stationing in Aquarius. The retrograde theme: how are you communicating your genuine value? Are the words you use to describe yourself and your work actually reflecting what you\'re worth? Review your messaging, your offers, and the language you use to describe what you do — but don\'t launch new material until Mercury goes direct April 7. The Full Moon March 3 in Virgo precisely illuminates your systems, routines, and daily effectiveness. Jupiter is in Cancer\'s precious final months — every connection worth deepening deserves your attention now.',
+    transits:['Full Moon March 3 in Virgo — daily systems illuminated','★ Mercury Retrograde begins ~March 15 in Pisces','Jupiter exalted in Cancer — final precious months','New Moon March 17 in Pisces — inner life + spiritual depth seed'],
+    opps:['Full Moon March 3 — audit what\'s working in your daily life and systems','Mercury Rx: ideal time to review and refine your messaging and communication of value','New Moon March 17 — seed inner life, spiritual depth, and rest'],
+    cauts:['Mercury Rx: do not launch, sign contracts, or make major announcements March 15 – April 7','Allow extra communication patience — clarity over speed during this period'],
+    weeks:[
+      { label:'Week 1 · Mar 1–7 · Full Moon Mar 3', focus:'Full Moon in Virgo March 3. What daily systems, habits, and routines are at full brightness? What is working and deserves acknowledgment? What is clearly not working and is ready to be refined or released?' },
+      { label:'Week 2 · Mar 8–14', focus:'Pre-retrograde window. This is the last week of full Mercury forward motion before March 15. Anything you want to launch, announce, or send — do it before the retrograde begins.' },
+      { label:'Week 3 · Mar 15–21 · Mercury Rx + New Moon', focus:'Mercury Retrograde begins approximately March 15. New Moon in Pisces March 17. Two inward calls at once: review your communication and value expression (Mercury Rx), and seed your inner life and spiritual practices (Pisces new moon).' },
+      { label:'Week 4 · Mar 22–31', focus:'Deep review week. How are you talking about your work, your value, and your gifts? Is the language honest and accurate? What would you change if you weren\'t worried about how it sounded? Mercury Rx is the time to find out.' }
+    ],
+    journal:'How am I communicating my value right now — in my work, my offers, my relationships? Is the language I\'m using actually reflecting what I\'m worth?' },
+
+  { id:'2027-04', name:'April 2027', theme:'Mercury Direct + Spring Opens', mantra:'"My value is visible. My voice is clear."',
+    overview:'Mercury goes direct approximately April 7 in Aquarius — post-retrograde is one of the sharpest action windows of the year. The clarity built during the retrograde is now fully actionable. Move within the first 48 hours. The Full Moon April 2 in Libra illuminates partnerships and what is genuinely fair in your most important relationships. The New Moon April 16 in Aries opens the most initiating new moon of the year: Aries is the sign of identity, fresh starts, and beginning without needing permission. Spring\'s energy is strong. What have you been waiting to begin?',
+    transits:['Full Moon April 2 in Libra — partnership + balance illuminated','★ Mercury goes DIRECT ~April 7 — sharp action window','New Moon April 16 in Aries — identity + fresh starts','Jupiter exalted in Cancer — final weeks approaching'],
+    opps:['Mercury direct April 7 — post-retrograde action window: move within 48 hours','New Moon April 16 in Aries — begin the thing you\'ve been preparing for','Spring energy: what has been building is ready to move forward'],
+    cauts:['Allow Mercury 2-3 days to build momentum after stationing direct before major launches','Aries new moon energy can be impulsive — pair action with the clarity mercury retrograde built'],
+    weeks:[
+      { label:'Week 1 · Apr 1–7 · Full Moon + Mercury Direct', focus:'Full Moon in Libra April 2 — what relationship dynamic is at full brightness and ready to be seen clearly? Mercury goes direct approximately April 7 — take one concrete action within 48 hours that reflects what you clarified about your value and communication during the retrograde.' },
+      { label:'Week 2 · Apr 8–15', focus:'Mercury direct momentum builds. Post-retrograde clarity is fully actionable. What messaging, offer, or communication that you reviewed and refined during the retrograde is now ready to go? Launch, send, or announce.' },
+      { label:'Week 3 · Apr 16–22 · New Moon Apr 16 ★', focus:'New Moon in Aries April 16 — the most initiating new moon of the year. What is genuinely ready to begin? Not what you\'ve been planning — what you\'re actually starting. Aries doesn\'t overthink. It begins.' },
+      { label:'Week 4 · Apr 23–30', focus:'Build on what Aries started. The spring momentum is strong. What did you begin at the new moon that deserves consistent, daily energy this week to establish its roots? Aries starts — it\'s your job to sustain it through April\'s close.' }
+    ],
+    journal:'What am I genuinely ready to begin — not planning, not preparing for — but actually starting? What has the retrograde\'s review clarified about my value and voice that I\'m ready to make visible?' },
+
+  { id:'2027-05', name:'May 2027', theme:'Creative Seed of the Year', mantra:'"I plant what I want to be proud of for years."',
+    overview:'The New Moon May 15 in Taurus is one of the most significant seeding moments of the entire planner year. Taurus is the sign of enduring beauty, sensory reality, and what is truly valuable — and a new moon here plants seeds that grow slowly but last. The Full Moon May 1 in Scorpio illuminates what has been beneath the surface: your depth, your most honest inner knowing, the things you\'ve been carrying that are ready to be seen. The Full Moon May 31 in Sagittarius at month\'s end opens the horizon again — what do you believe about what\'s possible? Jupiter is preparing to leave Cancer in June, making May a precious final month to deepen the most significant partnerships of this chapter.',
+    transits:['Full Moon May 1 in Scorpio — depth + hidden things illuminated','★ New Moon May 15 in Taurus — creative + material seed of the year','Full Moon May 31 in Sagittarius — long-horizon vision at peak','Jupiter in Cancer — final precious weeks'],
+    opps:['New Moon May 15 in Taurus — plant your most significant creative or material intention of the year','Full Moon May 1 — surface what has been beneath the threshold of conscious awareness','Jupiter\'s final weeks in Cancer — invest deeply in what has most come alive in your partnerships'],
+    cauts:['Taurus seeds are slow — don\'t expect immediate results from the May 15 new moon. Trust the long arc','Two full moons this month creates emotional intensity — pace yourself'],
+    weeks:[
+      { label:'Week 1 · May 1–7 · Full Moon May 1', focus:'Full Moon in Scorpio May 1. What has been beneath the surface — a truth you\'ve known but not looked at directly, a depth of feeling about something important? Scorpio full moons reward going there. Let what wants to surface come up.' },
+      { label:'Week 2 · May 8–14', focus:'Preparing for the most significant creative seeding of the year. What do you want to be still building and proud of in 5 years? Get specific before the Taurus new moon plants it.' },
+      { label:'Week 3 · May 15–21 · New Moon May 15 ★', focus:'New Moon in Taurus May 15 — one of the most powerful seeding moments of this planner year. Plant your most important creative or material intention with patience and full commitment. Taurus grows slowly. What you plant here, you tend for years.' },
+      { label:'Week 4 · May 22–31 · Full Moon May 31', focus:'Full Moon in Sagittarius May 31. Jupiter is weeks away from leaving Cancer. What do you believe about where you\'re going? Let your honest long-horizon vision be at full brightness. What do you most deeply believe is possible?' }
+    ],
+    journal:'What creative work, material foundation, or value-generating project do I want to plant now and still be proud of — and still be building — in 5 years?' },
+
+  { id:'2027-06', name:'June 2027', theme:'Jupiter Transitions — The Chapter Closes', mantra:'"I carry forward what this year built."',
+    overview:'Jupiter is preparing to leave Cancer and enter Leo approximately late June 2027 — a significant collective transition. Jupiter has been exalted in Cancer since June 2026, and its entry into Leo shifts the theme from partnership and emotional depth to creative self-expression, courage, and the willingness to be authentically seen. The Full Moon June 29 in Sagittarius is a final illumination of the year\'s long-horizon thinking. The New Moon June 14 in Gemini opens a cycle of communication and connection. As this chapter closes, the question is: what has the Jupiter-in-Cancer year built in your most significant collaborations and partnerships? Name it specifically before Jupiter moves on.',
+    transits:['★ Jupiter LEAVES Cancer, ENTERS Leo ~late June 2027','Full Moon June 29 in Sagittarius — long-horizon vision illuminated','New Moon June 14 in Gemini — communication + connection seed','Rahu in Capricorn, Ketu in Cancer — continuing'],
+    opps:['New Moon June 14 — seed communication projects and connections','Full Moon June 29 — acknowledge the philosophical harvest of the partnership year','Jupiter entering Leo: prepare to shift from building with others → showing up as yourself'],
+    cauts:['Jupiter sign changes create a week or two of energetic transition — hold lightly','Don\'t let June\'s busyness prevent the honest acknowledgment this closing chapter deserves'],
+    weeks:[
+      { label:'Week 1 · Jun 1–7', focus:'Final weeks of Jupiter in Cancer. What has this extraordinary partnership year built in you that wasn\'t there in June 2026? Name it specifically — not what you did, but who you\'ve become and what you\'ve built with others.' },
+      { label:'Week 2 · Jun 8–14 · New Moon Jun 14', focus:'New Moon in Gemini June 14. Seed one communication project or meaningful connection. Gemini says: begin by engaging, not by waiting until you\'re perfectly ready.' },
+      { label:'Week 3 · Jun 15–22', focus:'Jupiter is about to enter Leo. The partnership chapter is closing and the creative self-expression chapter opens. What do you most want to bring from this year\'s partnership depth INTO your next chapter of visible, courageous creative work?' },
+      { label:'Week 4 · Jun 23–30 · Full Moon Jun 29 · Jupiter enters Leo', focus:'Jupiter enters Leo this week and the chapter officially transitions. Full Moon in Sagittarius June 29 illuminates the philosophical harvest. What do you now believe about partnership, collaboration, and what becomes possible when you build with the right people?' }
+    ],
+    journal:'What has the Jupiter-in-Cancer partnership year (June 2026–June 2027) built in me? Who arrived, what was created together, and what do I believe now that I didn\'t before?' },
+
+  { id:'2027-07', name:'July 2027', theme:'The Year Closes — Who Are You Now?', mantra:'"I arrive knowing exactly who I am."',
+    overview:'Jupiter is in Leo and a new collective chapter begins: the year\'s theme shifts from partnership to creative self-expression and authentic visibility. The New Moon July 13 in Cancer is the final partnership seed of the planner — a quiet, intentional planting in the space that has been Jupiter\'s home for the past year. The Full Moon July 28 in Capricorn closes this entire planner year with a moment of foundational illumination: what have you built, and what are you standing on? Capricorn is the sign of structure, endurance, and the long game. The full moon in Capricorn asks: who are you now that you weren\'t in June 2026? That question is the only one worth answering on that night.',
+    transits:['Jupiter in Leo — creative self-expression + visibility chapter opens','New Moon July 13 in Cancer — final partnership seed of the planner','★★★ Full Moon July 28 in Capricorn — the year closes with full foundation illumination'],
+    opps:['New Moon July 13 — final partnership intention of the year, plant it quietly and with conviction','Full Moon July 28 — the honest harvest of 13 months: who have you become?','Jupiter in Leo: begin showing up more boldly and visibly as your authentic creative self'],
+    cauts:['Don\'t rush the closing of this year\'s chapter — the Full Moon July 28 deserves ceremony and honesty','The transition from Jupiter in Cancer to Leo may feel disorienting — trust the new direction'],
+    weeks:[
+      { label:'Week 1 · Jul 1–7', focus:'First full week of Jupiter in Leo. Your first action: show up more authentically in one creative or visible way. Not more strategically — more genuinely. That is what Jupiter in Leo rewards first.' },
+      { label:'Week 2 · Jul 8–13 · New Moon Jul 13', focus:'New Moon in Cancer July 13 — the final partnership seed of this planner year. What last intention do you want to plant in the space of your most significant connections before this chapter fully closes? Plant it quietly, with full conviction.' },
+      { label:'Week 3 · Jul 14–21', focus:'Year-in-review week. Thirteen months ago, Jupiter entered Cancer and this planner began. Write the honest harvest: what changed in your partnerships? Who arrived? What has Jupiter\'s year built in you that wasn\'t there before?' },
+      { label:'Week 4 · Jul 22–28 · Full Moon Jul 28 ★★★', focus:'Full Moon in Capricorn July 28 closes this entire planner year. Everything that has grown and shifted in you over 13 months is at full brightness on this night. Who are you now? Not what have you done — who have you become? Answer that honestly. That is the real harvest.' }
+    ],
+    journal:'Honest answer: who am I now that I wasn\'t in June 2026? What has this year built in me — in terms of my partnerships, my creative life, my sense of self, and what I believe is possible?' }
+];
+
+// ── STATE + HELPERS ──────────────────────────────────────────────────────────
+const today = new Date();
+const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+const dayOfYear = Math.floor((today - new Date(today.getFullYear(),0,0)) / 86400000);
+let currentHDType = localStorage.getItem('hd-type') || '';
+
+function setHDType(val) {
+  currentHDType = val;
+  localStorage.setItem('hd-type', val);
+  buildTodayCard();
+}
+
+function getMoonData(dateStr) {
+  const d = new Date(dateStr+'T12:00:00');
+  let best=null, bestDiff=Infinity;
+  for(const [nmDate] of NM_ANCHORS){
+    const nm=new Date(nmDate+'T00:00:00');
+    const diff=(d-nm)/86400000;
+    if(diff>=0&&diff<bestDiff){bestDiff=diff;best=[nmDate,NM_ANCHORS.find(x=>x[0]===nmDate)[1]];}
+  }
+  if(!best) return null;
+  const phase=bestDiff%29.53;
+  let phaseObj=PHASE_NAMES[PHASE_NAMES.length-1];
+  for(const p of PHASE_NAMES){if(phase<=p.max){phaseObj=p;break;}}
+  const moonLon=((best[1]+bestDiff*13.18)-24+360)%360;
+  const sign=ZODIAC_SIGNS[Math.floor(moonLon/30)];
+  return {emoji:phaseObj.emoji, phaseName:phaseObj.name, sign};
+}
+
+function getPromptForDate(dateStr) {
+  const d=new Date(dateStr+'T12:00:00');
+  const doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);
+  return DAILY_PROMPTS[doy%DAILY_PROMPTS.length];
+}
+
+function getDayTodos(ds) {
+  const d=new Date(ds+'T12:00:00');
+  return [...DOW_TODOS[d.getDay()]];
+}
+
+function getMoodColor(s){return['','#aab8c2','#7a9a9a','#3da8c8','#50A19F','#066664'][s]||'';}
+
+function toggleTodo(ds,idx){
+  const key=`todo-${ds}-${idx}`;
+  const cur=localStorage.getItem(key)==='1';
+  localStorage.setItem(key,cur?'0':'1');
+  const item=document.getElementById(`dtodo-${idx}`);
+  if(item){item.classList.toggle('done',!cur);const cb=item.querySelector('input');if(cb)cb.checked=!cur;}
+  const todos=getDayTodos(ds);
+  const done=todos.filter((_,i)=>localStorage.getItem(`todo-${ds}-${i}`)==='1').length;
+  const bar=document.getElementById('dtodo-bar');const lbl=document.getElementById('dtodo-lbl');
+  if(bar)bar.style.width=(done/todos.length*100)+'%';
+  if(lbl)lbl.textContent=`${done}/${todos.length} complete`;
+}
+
+function saveMood(ds,score){
+  localStorage.setItem('mood-'+ds,score);
+  document.querySelectorAll('.mood-btn').forEach((b,i)=>b.classList.toggle('selected',i+1===score));
+  updateCellMoodDot(ds);
+}
+
+function saveNote(ds){
+  const ta=document.getElementById('day-note-ta');if(!ta)return;
+  localStorage.setItem('note-'+ds,ta.value);
+  const btn=document.getElementById('note-save-btn');
+  if(btn){btn.textContent='Saved ✓';setTimeout(()=>btn.textContent='Save',1300);}
+  updateCellNoteDot(ds);
+}
+
+function saveJournal(mid){
+  const ta=document.getElementById('j-'+mid);if(!ta)return;
+  localStorage.setItem('journal-'+mid,ta.value);
+  const btn=document.querySelector(`[onclick="saveJournal('${mid}')"]`);
+  if(btn){btn.textContent='Saved ✓';setTimeout(()=>btn.textContent='Save Note',1300);}
+}
+
+function updateCellMoodDot(ds){
+  const score=parseInt(localStorage.getItem('mood-'+ds)||'0');
+  const cell=document.getElementById('cell-'+ds);if(!cell)return;
+  let dot=cell.querySelector('.mood-dot-cal');
+  if(!score){if(dot)dot.remove();return;}
+  if(!dot){dot=document.createElement('div');dot.className='mood-dot-cal';cell.appendChild(dot);}
+  dot.style.background=getMoodColor(score);
+}
+
+function updateCellNoteDot(ds){
+  const cell=document.getElementById('cell-'+ds);if(!cell)return;
+  if(localStorage.getItem('note-'+ds)) cell.classList.add('has-note');
+  else cell.classList.remove('has-note');
+}
+
+// ── BUILD TODAY CARD ─────────────────────────────────────────────────────────
+function buildTodayCard(){
+  const card=document.getElementById('todayCard');
+  const pd=PLANET_DAYS[new Date(todayStr+'T12:00:00').getDay()];
+  const prompt=getPromptForDate(todayStr);
+  const moon=getMoonData(todayStr);
+  const event=KEY_DATES[todayStr];
+  const dateFormatted=today.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  let hdMsg='';
+  if(currentHDType&&pd.hd&&pd.hd[currentHDType]){
+    hdMsg=`<div style="background:#f0f9f9;border-radius:7px;padding:8px 12px;font-size:0.74rem;color:var(--text-dim);line-height:1.6;margin-bottom:10px;border-left:2px solid var(--green-light)"><strong style="color:var(--green);font-size:0.76rem">✦ Your HD Type</strong><br>${pd.hd[currentHDType]}</div>`;
+  }
+
+  card.innerHTML=`
+    <div class="today-card-header"><h3>✦ Today</h3><span class="today-date">${dateFormatted}</span></div>
+    <div class="today-planet-day" style="color:${pd.color}">${pd.name}</div>
+    <div class="today-msg">${pd.msg}</div>
+    ${hdMsg}
+    ${moon?`<div style="font-size:0.72rem;color:var(--text-light);margin-bottom:10px">${moon.emoji} ${moon.phaseName} · Moon in ${moon.sign}</div>`:''}
+    ${event?`<div class="modal-event-box"><strong>✦ ${event.title}</strong>${event.guidance}</div>`:''}
+    <div class="today-prompt"><strong>✦ ${prompt.label}</strong>${prompt.text}</div>
+    <div class="today-cta-inline">This is the universal sky energy for today. <a href="intake.html">Subscribe</a> to see exactly what it means for your Rising sign, your houses, and your chart. $22.22/month.</div>
+  `;
+}
+
+// ── BUILD MONTH NAV ──────────────────────────────────────────────────────────
+function buildNav(){
+  const nav=document.getElementById('monthNav');
+  MONTHS.forEach(m=>{
+    const btn=document.createElement('button');
+    btn.textContent=m.name;btn.dataset.id=m.id;
+    btn.onclick=()=>showMonth(m.id);
+    nav.appendChild(btn);
+  });
+  const idx=document.createElement('button');
+  idx.textContent='✦ Learn the Language';idx.dataset.id='index';
+  idx.onclick=()=>showMonth('index');
+  nav.appendChild(idx);
+}
+
+function showMonth(id){
+  document.querySelectorAll('.month-section,.index-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.month-nav button').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+  const el=document.getElementById('m-'+id);if(el)el.classList.add('active');
+  const todayMo=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+  document.getElementById('todayCard').classList.toggle('visible',id===todayMo);
+}
+
+function jumpToToday(){
+  const mo=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+  const found=MONTHS.find(m=>m.id===mo);
+  if(found){
+    showMonth(found.id);
+    const tc=document.getElementById('today-cell-main');
+    if(tc)setTimeout(()=>tc.scrollIntoView({behavior:'smooth',block:'center'}),100);
+  } else {
+    const sorted=MONTHS.map(m=>({id:m.id,diff:Math.abs(new Date(m.id+'-15')-today)}));
+    sorted.sort((a,b)=>a.diff-b.diff);
+    showMonth(sorted[0].id);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+// ── BUILD CALENDAR ──────────────────────────────────────────────────────────
+function buildCal(y,mo){
+  const first=new Date(y,mo-1,1).getDay();
+  const days=new Date(y,mo,0).getDate();
+  const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html=`<div class="cal-wrap"><div class="cal-grid">`;
+  DOW.forEach(d=>html+=`<div class="cal-header-cell">${d}</div>`);
+  for(let i=0;i<first;i++)html+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=days;d++){
+    const ds=`${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isToday=ds===todayStr;
+    const ev=KEY_DATES[ds];
+    const moon=getMoonData(ds);
+    const isRetro=ev&&(ev.type==='retro-start'||ev.type==='retro-end');
+    const moodScore=parseInt(localStorage.getItem('mood-'+ds)||'0');
+    const hasNote=localStorage.getItem('note-'+ds);
+    let cls='cal-day';
+    if(isToday)cls+=' today-cell';
+    if(ev&&!isRetro)cls+=' has-event';
+    if(isRetro)cls+=' retro-day';
+    if(hasNote)cls+=' has-note';
+    html+=`<div class="${cls}" id="cell-${ds}"${isToday?` id="cell-${ds}" `:''}onclick="openDayModal('${ds}')">
+      <span class="num">${d}</span>
+      ${moon?`<span class="cal-moon">${moon.emoji}</span>`:''}
+      ${ev&&!isRetro?`<span class="cal-event-dot">✦</span>`:''}
+      ${moodScore?`<div class="mood-dot-cal" style="background:${getMoodColor(moodScore)}"></div>`:''}
+    </div>`;
+    if(isToday){
+      // also set today-cell-main id for scroll
+      setTimeout(()=>{const c=document.getElementById('cell-'+ds);if(c)c.id='today-cell-main';},50);
+    }
+  }
+  html+=`</div></div>`;
+  return html;
+}
+
+// ── DAY MODAL ───────────────────────────────────────────────────────────────
+function openDayModal(ds){
+  const d=new Date(ds+'T12:00:00');
+  const dateFormatted=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const pd=PLANET_DAYS[d.getDay()];
+  const moon=getMoonData(ds);
+  const ev=KEY_DATES[ds];
+  const prompt=getPromptForDate(ds);
+  const todos=getDayTodos(ds);
+  const moodSaved=parseInt(localStorage.getItem('mood-'+ds)||'0');
+  const noteSaved=localStorage.getItem('note-'+ds)||'';
+  const moods=[['🌑','Dark'],['🌒','Low'],['🌓','Okay'],['🌔','Good'],['🌕','Full']];
+
+  const todoHtml=todos.map((t,i)=>{
+    const ck=localStorage.getItem(`todo-${ds}-${i}`)==='1';
+    return `<div class="dtodo-item${ck?' done':''}" id="dtodo-${i}" onclick="toggleTodo('${ds}',${i})"><input type="checkbox"${ck?' checked':''} onclick="event.stopPropagation();toggleTodo('${ds}',${i})"><label>${t}</label></div>`;
+  }).join('');
+  const done=todos.filter((_,i)=>localStorage.getItem(`todo-${ds}-${i}`)==='1').length;
+  const moodBtns=moods.map((m,i)=>`<button class="mood-btn${moodSaved===i+1?' selected':''}" onclick="saveMood('${ds}',${i+1})"><span>${m[0]}</span><span class="mood-word">${m[1]}</span></button>`).join('');
+
+  document.getElementById('modalContent').innerHTML=`
+    <div class="modal-header">
+      <div><div class="modal-date-title">${dateFormatted}</div><div class="modal-day-tag" style="color:${pd.color}">${pd.name}</div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    ${moon?`<div class="modal-moon-box">${moon.emoji} <strong>${moon.phaseName}</strong> · Moon in ${moon.sign}</div>`:''}
+    ${ev?`<div class="modal-event-box"><strong>✦ ${ev.title}</strong><br><span style="font-size:0.76rem">${ev.guidance}</span>${ev.action?`<div class="modal-event-action"><strong>Today's Action:</strong> ${ev.action}</div>`:''}</div>`:''}
+    <div class="modal-prompt"><strong>✦ ${prompt.label}</strong>${prompt.text}</div>
+    <div class="day-todos">
+      <div class="day-todos-header"><div class="day-todos-label">✦ Daily Practices</div><div class="dtodo-progress-label" id="dtodo-lbl">${done}/${todos.length} complete</div></div>
+      <div class="dtodo-progress-bar"><div class="dtodo-progress-fill" id="dtodo-bar" style="width:${Math.round(done/todos.length*100)}%"></div></div>
+      ${todoHtml}
+    </div>
+    <div class="mood-section"><div class="mood-label">How are you feeling today?</div><div class="mood-options">${moodBtns}</div></div>
+    <div class="modal-notes"><label>Your notes for today</label><textarea id="day-note-ta" placeholder="Write here — saved privately in your browser.">${noteSaved}</textarea></div>
+    <button class="save-btn" id="note-save-btn" onclick="saveNote('${ds}')">Save</button>
+    <div class="modal-cta">This is the universal energy for today. <a href="intake.html">Get your personalized planner →</a> See exactly what this means for YOUR Rising sign and houses. $22.22/month.</div>
+  `;
+  document.getElementById('dayModal').classList.add('open');
+}
+
+function closeModal(){document.getElementById('dayModal').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// ── BUILD MONTH HTML ─────────────────────────────────────────────────────────
+function buildMonthHTML(m){
+  const [y,mo]=m.id.split('-').map(Number);
+  const transitTags=m.transits.map(t=>`<span class="ttag">${t}</span>`).join('');
+  const opps=m.opps.map(o=>`<li>${o}</li>`).join('');
+  const cauts=m.cauts.map(c=>`<li>${c}</li>`).join('');
+  const weeks=m.weeks.map(w=>`<div class="week-card"><h4>${w.label}</h4><p>${w.focus}</p></div>`).join('');
+  const cal=buildCal(y,mo);
+  const todos=buildTodosHTML(m.id);
+  const journalVal=localStorage.getItem('journal-'+m.id)||'';
+
+  return `
+<div class="month-header">
+  <h2>${m.name}</h2>
+  <div class="month-theme">${m.theme}</div>
+  <div class="month-mantra">${m.mantra}</div>
+</div>
+<div class="overview-card">
+  <h4>✦ Cosmic Overview</h4>
+  <p>${m.overview}</p>
+  <div class="transit-tags">${transitTags}</div>
+</div>
+<div class="opp-caut">
+  <div class="opp-box"><h4>Opportunities This Month</h4><ul>${opps}</ul></div>
+  <div class="caut-box"><h4>Approach With Care</h4><ul>${cauts}</ul></div>
+</div>
+<div class="section-label">Weekly Themes</div>
+${weeks}
+<div class="month-cta">
+  <div class="month-cta-text">
+    <h4>✦ See this in YOUR chart</h4>
+    <p>These are the universal themes for ${m.name}. Your personalized planner shows exactly which of your houses these transits are activating — and what that means specifically for your life.</p>
+  </div>
+  <a href="intake.html">Get My Planner →</a>
+</div>
+<div class="section-label">Calendar · Tap Any Day for Your Daily Prompt + Notes</div>
+${cal}
+${todos}
+<div class="journal-section">
+  <h4>Monthly Reflection</h4>
+  <div class="journal-prompt">${m.journal}</div>
+  <textarea class="journal-textarea" id="j-${m.id}" placeholder="Write here — saved privately in your browser.">${journalVal}</textarea>
+  <button class="save-btn" onclick="saveJournal('${m.id}')">Save Note</button>
+</div>`;
+}
+
+function buildTodosHTML(mid){
+  const mo=MONTHS.find(m=>m.id===mid);
+  if(!mo) return '';
+  const firstDay=new Date(mid+'-01T12:00:00');
+  // Build todos for first 7 days of month to show the weekly pattern
+  return '';
+}
+
+// ── INIT ────────────────────────────────────────────────────────────────────
+function buildMonths(){
+  const container=document.getElementById('monthSections');
+  MONTHS.forEach(m=>{
+    const div=document.createElement('div');
+    div.className='month-section';div.id='m-'+m.id;
+    div.innerHTML=buildMonthHTML(m);
+    container.appendChild(div);
+  });
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  // Restore HD type
+  const saved=localStorage.getItem('hd-type')||'';
+  if(saved){
+    currentHDType=saved;
+    const sel=document.getElementById('hdTypeSelect');
+    if(sel)sel.value=saved;
+  }
+  buildNav();
+  buildMonths();
+  buildTodayCard();
+
+  // Jump to current month or first month
+  const todayMo=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+  const found=MONTHS.find(m=>m.id===todayMo);
+  showMonth(found?todayMo:MONTHS[0].id);
+});
+</script>
+</body>
+</html>
