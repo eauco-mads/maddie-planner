@@ -1,162 +1,166 @@
-# EAUCO Personalized Planner — Project Progress
+# ✦ EAUCO Planner Business — Progress Tracker
 
-> Last updated: June 22, 2026 (evening)  
-> This file is the source of truth. Update it every session.
-
----
-
-## Live URLs
-
-| What | URL |
-|------|-----|
-| Maddie's planner | https://eauco-mads.github.io/maddie-planner/ |
-| Chloe's planner | https://eauco-mads.github.io/chloe-planner/ |
-| Free planner (lead magnet) | https://eauco-mads.github.io/maddie-planner/free.html |
-| Landing page | https://eauco-mads.github.io/maddie-planner/landing.html |
-| Intake form | https://eauco-mads.github.io/maddie-planner/intake.html |
-| Thank-you + Stripe page | https://eauco-mads.github.io/maddie-planner/thankyou.html |
-| Subscriber tracker (Google Sheet) | https://docs.google.com/spreadsheets/d/13Et-UBWZSdYLgHNm6qca9B28krauU3euHsIjcVEtZIM |
-
-## Key Integrations
-
-| Service | What it does | Status |
-|---------|-------------|--------|
-| Formspree `xojoqzro` | Emails intake submissions + free planner requests to maddie@elevatealign.com | ✅ Live |
-| Stripe | $22.22/month subscription | ✅ Live — link on thank-you page |
-| GitHub Pages | Hosts all HTML files | ✅ Live |
-| Google Drive MCP | Connected — Drive accessible in Claude sessions | ✅ Active |
-| GHL email sequence | 3 emails: free planner → what personalized includes → subscribe CTA | ⏳ Not built yet |
-
-## Git Repo
-
-- **Repo:** `eauco-mads/maddie-planner` (main branch)
-- **Local clone for pushing:** `/tmp/maddie-planner/`
-- **Files in repo:** `index.html`, `free.html`, `intake.html`, `thankyou.html`, `landing.html`, `PROGRESS.md`
-- **To push updates:** copy file to `/tmp/maddie-planner/`, commit, push
+> **Last updated:** June 22, 2026  
+> Update this file every session. GitHub renders checkboxes — click them directly on GitHub to mark things done.
 
 ---
 
-## Status by Phase
+## 🔗 Live URLs
 
-### ✅ Phase 0 — Foundation (DONE)
-- [x] Maddie's personalized planner — live + day-of-week corrected (June 22–30 fix pushed June 22)
-- [x] Chloe's planner — live
-- [x] Intake form — live + Formspree connected
-- [x] Thank-you page — live + Stripe $22.22/month button
-- [x] Free planner (lead magnet) — live at /free.html
-- [x] Subscriber tracker Google Sheet — created in Drive
-- [x] This PROGRESS.md — created
+| Page | URL | Status |
+|------|-----|--------|
+| Maddie's Planner | https://eauco-mads.github.io/maddie-planner/ | ✅ Live |
+| Chloe's Planner | https://eauco-mads.github.io/chloe-planner/ | ✅ Live |
+| Free Planner | https://eauco-mads.github.io/maddie-planner/free.html | ✅ Live |
+| Landing Page | https://eauco-mads.github.io/maddie-planner/landing.html | ✅ Live |
+| Intake Form | https://eauco-mads.github.io/maddie-planner/intake.html | ✅ Live |
+| Thank You + Stripe | https://eauco-mads.github.io/maddie-planner/thankyou.html | ✅ Live |
+| Subscriber Sheet | https://docs.google.com/spreadsheets/d/13Et-UBWZSdYLgHNm6qca9B28krauU3euHsIjcVEtZIM | ✅ Live |
 
-### ✅ Phase 1a — Landing Page (DONE)
-- [x] Landing page — live at /landing.html
-  - Hero · 6 features · Free vs Paid comparison · How It Works · Testimonial · Email capture · FAQ · Final CTA
-  - Email capture → Formspree (swap to GHL when ready)
-  - All CTAs → intake.html and free.html
+---
 
-### 🔄 Phase 1b — Beta Planners (IN PROGRESS)
-- [x] Chloe filled out intake form — ✅ confirmed working
-- [ ] **Sister's planner built** — intake data to be pasted in next session
-- [ ] **Andie fills out intake** — to send her the form link
-- [ ] **GHL email sequence** — 3 emails: deliver free planner link → what personalized includes → subscribe CTA
-- [ ] **Email capture endpoint** — swap landing page Formspree → GHL webhook when sequence is ready
+## 💰 Pricing
 
-### ⏳ Phase 2 — Launch (NEXT)
-- [ ] TikTok account set up + bio
-- [ ] Pinterest account set up + boards
-- [ ] TikTok content filmed (5 videos — show planner in action)
-- [ ] Pinterest pins (planner screenshots → landing page)
-- [ ] Launch date picked (suggest: 7-10 days after beta planners done)
-- [ ] All 5 TikToks posted in first 3 days
+| Product | Price | Status |
+|---------|-------|--------|
+| Digital — Monthly | $22.22/month | ✅ Active on Stripe |
+| Digital — Annual | ~$197/year | ⏳ Add when 5+ subscribers |
+| Physical + Digital | $88–111 one-time + sub | ⏳ Phase 3 |
 
-### ⏳ Phase 3 — Subscriber Operations (AFTER LAUNCH)
-- [ ] Formspree → Google Sheet auto-connection (options: Zapier free tier OR manual for now)
-- [ ] Subscriber onboarding email template written
-- [ ] Planner delivery email template written
-- [ ] `eauco-mads/subscriber-planners` repo set up (one folder per subscriber)
-- [ ] GHL + Stripe integration for active/inactive tagging
+---
 
-### ⏳ Phase 4 — Physical Planners (2-3 months out)
-- [ ] Canva design template built
-- [ ] Print partner chosen (Mixam for bulk, Printify for on-demand)
-- [ ] Pricing set ($88–111 suggested)
+## ✅ Phase 0 — Foundation
+> **Completed:** June 22, 2026
+
+- [x] Maddie's personalized planner built + live
+- [x] Day-of-week content corrected (June 22–30 fix)
+- [x] Chloe's personalized planner built + live
+- [x] Intake form built + Formspree connected (`xojoqzro`)
+- [x] Thank-you page built + Stripe button live
+- [x] Free universal planner (lead magnet) built + live
+- [x] Landing page built + live (hero · features · free vs paid · how it works · FAQ · email capture)
+- [x] Subscriber tracker Google Sheet created
+- [x] PROGRESS.md created in GitHub
+
+---
+
+## 🔄 Phase 1 — Beta
+> **Target:** June 22 – July 4, 2026
+
+### Planners
+- [x] Chloe filled out intake form — confirmed working ✦
+- [ ] **Sister's planner built** ← paste her intake answers in Claude → `~1 day to build`
+- [ ] Andie — send her the intake form link → `this week`
+- [ ] Andie's planner built — after she fills out form → `~1 day after submission`
+
+### Email + Automation
+- [ ] Write GHL 3-email sequence → `target: June 28` 
+  - Email 1: Welcome + free planner link
+  - Email 2: What the personalized version includes
+  - Email 3: Subscribe CTA + intake form link
+- [ ] Swap landing page email capture → GHL endpoint → `after GHL sequence is live`
+
+---
+
+## ⏳ Phase 2 — Launch
+> **Target:** Week of July 7, 2026  
+> *(after beta planners done + GHL sequence set up)*
+
+### Accounts + Profiles
+- [ ] TikTok account created → `July 7`
+- [ ] TikTok bio written + profile photo + link → `July 7`
+- [ ] Pinterest account created → `July 7`
+- [ ] Pinterest boards set up (Astrology · Human Design · Moon · Planner Aesthetic) → `July 7`
+
+### Content
+- [ ] 5 TikTok videos filmed (screen record planner + voiceover) → `July 8–10`
+  - Video 1: What is this? (show the planner + explain personalized vs free)
+  - Video 2: Your moon phases for the year
+  - Video 3: Planet day energy — Monday through Sunday
+  - Video 4: How it's built (intake → chart → your planner)
+  - Video 5: Free planner walkthrough + CTA
+- [ ] Pinterest pins made (planner screenshots → landing page) → `July 10`
+- [ ] Pick official launch date → `target: July 14, 2026`
+
+### Launch Day
+- [ ] First 5 TikToks posted (3-day window around launch) → `July 14–16`
+- [ ] Pinterest pins live → `July 14`
+- [ ] Post in any existing communities / close network → `July 14`
+
+---
+
+## ⏳ Phase 3 — Subscriber Operations
+> **Target:** July 2026 (after first 3–5 paying subscribers)
+
+- [ ] Subscriber onboarding email written (what to expect, how to use the planner)
+- [ ] Planner delivery email written (here's your link + how to bookmark it)
+- [ ] Zapier: Formspree → Google Sheet auto-fill (free tier = 100 tasks/month)
+- [ ] Create `eauco-mads/subscriber-planners` GitHub repo (one folder per person)
+- [ ] GHL + Stripe: tag subscribers active/inactive based on payment status
+
+---
+
+## ⏳ Phase 4 — Physical Planners
+> **Target:** September 2026
+
+- [ ] Decide on format (spiral bound, perfect bound, hardcover?)
+- [ ] Canva design template built — cover + monthly spreads + chart pages
+- [ ] Print partner chosen → Mixam (bulk) or Printify (on-demand)
+- [ ] Pricing finalized ($88–111 + digital subscription)
+- [ ] Annual digital tier added to Stripe (~$197/year)
 - [ ] Order form added to landing page
+- [ ] First test order placed + reviewed
 
 ---
 
-## Workflow: Intake → Planner → Delivery
+## 👥 Beta Subscribers
+
+| Name | Intake | Planner | Stripe | Notes |
+|------|--------|---------|--------|-------|
+| Maddie (you) | ✅ | ✅ Live | — | Founder planner |
+| Chloe Newby | ✅ | ✅ Live | ⏳ | Beta — Libra Rising |
+| Your sister | ✅ | 🔄 Build next | ⏳ | Intake received |
+| Andie | ⏳ | ⏳ | ⏳ | Send form this week |
+
+---
+
+## 📋 Workflow — Intake → Planner → Delivery
 
 When a new intake email arrives at maddie@elevatealign.com:
 
-1. **Forward/paste the intake data** to Claude in a new session
-2. Claude pulls birth chart (Vedic + Western + HD) and **builds personalized HTML planner**
-3. Save the HTML file, push to GitHub (either in subscriber-planners repo or maddie-planner/subscribers/)
-4. **Add subscriber to Google Sheet** (link above) — fill in all columns
-5. **Send delivery email** with their private planner link
+1. Paste or forward the intake data to Claude
+2. Claude builds the personalized HTML planner (~1 session)
+3. Push to GitHub → private link created
+4. Add to Google Sheet (link above)
+5. Email subscriber their private link
 6. Confirm Stripe subscription is active
 
----
-
-## Intake Form Fields (what Formspree emails contain)
-
-- Full name + email
-- Birth date, time, time accuracy (exact/approximate/unknown)
-- Birth city + country
-- Vedic rising + Western sun (if known)
-- HD type, authority, profile (optional)
-- Vibe checkboxes + color notes
-- Focus areas for the year
-- Additional notes
+> Claude cannot read email automatically — Maddie pastes the data each time.
 
 ---
 
-## What Claude Needs to Build a New Planner
-
-(Share this in any new session before asking for a build)
+## 🛠 What Claude Needs to Build a New Planner
 
 1. Full name
-2. Birth date (day/month/year)
-3. Birth time (and accuracy)
+2. Birth date (day / month / year)
+3. Birth time + accuracy (exact / approximate / unknown)
 4. Birth city + country
 5. HD type + authority (if provided)
-6. Aesthetic preferences / color notes
-7. Focus areas
+6. Aesthetic preferences / color notes / vibe
+7. Focus areas for the year
 
-Then say: "Build a personalized planner in the style of Maddie's planner at eauco-mads.github.io/maddie-planner — see PROGRESS.md for architecture and reference files."
-
----
-
-## Subscriber Tracker
-
-**Google Sheet:** https://docs.google.com/spreadsheets/d/13Et-UBWZSdYLgHNm6qca9B28krauU3euHsIjcVEtZIM
-
-Columns: Name · Email · Submission Date · Birth Date · Birth Time · Time Accuracy · Birth City · Birth Country · Vedic Rising · HD Type · HD Authority · HD Profile · Vibe · Color Notes · Focus Areas · Notes · Planner Status · Planner URL · Planner Built Date · Stripe Status · Subscription Start · Monthly Amount · Notes
+Tell Claude: *"Build a personalized planner in the style of Maddie's planner — see PROGRESS.md for architecture."*
 
 ---
 
-## Key People
+## 🔑 Key Info
 
-| Person | Role | Status |
-|--------|------|--------|
-| Maddie | You — founder, first planner live | ✅ |
-| Chloe Newby | Beta tester — planner live | ✅ |
-| Maddie's sister | Beta tester #2 — intake returned, planner build pending | 🔄 Build next |
-| Andie | Beta tester — to send form | ⏳ |
-
----
-
-## Pricing
-
-- **Digital subscription:** $22.22/month
-- **Annual (future):** ~$197/year (suggest after 5+ subscribers)
-- **Physical planner (future):** $88–111 + digital access
-
----
-
-## Important Notes
-
-- Formspree submissions email to: maddie@elevatealign.com
-- Claude CANNOT read emails automatically — Maddie must forward/paste intake data
-- To auto-connect Formspree → Google Sheet: use Zapier free tier (100 tasks/month free)
-- All planner files use same CSS design system — see Maddie's planner as the master reference
-- Capricorn Rising correction was made in session — all house assignments now accurate
-- June 22–30 day-of-week content corrected June 22, 2026
+| Thing | Detail |
+|-------|--------|
+| Formspree endpoint | `xojoqzro` → maddie@elevatealign.com |
+| Stripe link | https://buy.stripe.com/bJe3cwfhgfX68gE98I4ow01 |
+| Git repo | `eauco-mads/maddie-planner` |
+| Local clone | `/tmp/maddie-planner/` |
+| Planner local file | `/Users/maddiegalloway/Desktop/Claude/Maddie_Daily_Planner_2026-2027.html` |
+| Design system | Cormorant Garamond + Inter · teal `#066664` · peach `#FDBB89` · gold `#B8832A` |
+| Vedic system | Jyotish · Lahiri Ayanamsha · Whole Sign Houses |
