@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAUCO Planner — Project Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:      #066664;
+  --green-mid:  #50A19F;
+  --green-light:#B1E9E8;
+  --gold:       #B8832A;
+  --gold-light: #FDBB89;
+  --text:       #1a3a3a;
+  --text-dim:   #3a5a5a;
+  --text-light: #6a8a8a;
+  --bg:         #f4fafa;
+  --card:       #ffffff;
+  --border:     #d0e8e8;
+  --done-bg:    #f0faf9;
+  --done-text:  #8abab8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.header{background:var(--green);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.header-brand{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#fff;letter-spacing:0.04em;}
+.header-sub{font-size:0.68rem;color:rgba(255,255,255,0.65);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+.header-reset{font-size:0.7rem;color:rgba(255,255,255,0.5);background:none;border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 14px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;}
+.header-reset:hover{color:#fff;border-color:rgba(255,255,255,0.5);}
+
+/* LAYOUT */
+.main{max-width:860px;margin:0 auto;padding:32px 20px 60px;}
+
+/* OVERVIEW CARDS */
+.overview{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:36px;}
+@media(max-width:600px){.overview{grid-template-columns:repeat(2,1fr);}}
+.ov-card{background:var(--card);border-radius:12px;padding:16px 14px;text-align:center;box-shadow:0 1px 6px rgba(6,102,100,0.06);border-top:3px solid var(--green-light);}
+.ov-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--green);line-height:1;display:block;}
+.ov-label{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light);margin-top:4px;display:block;}
+
+/* PHASE BLOCK */
+.phase{background:var(--card);border-radius:14px;margin-bottom:20px;overflow:hidden;box-shadow:0 1px 8px rgba(6,102,100,0.06);}
+.phase-header{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.phase-left{display:flex;align-items:center;gap:12px;}
+.phase-icon{font-size:1.1rem;flex-shrink:0;}
+.phase-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text);}
+.phase-target{font-size:0.65rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-light);margin-top:1px;}
+.phase-progress{display:flex;align-items:center;gap:10px;}
+.progress-bar{width:100px;height:5px;background:var(--border);border-radius:10px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--green);border-radius:10px;transition:width 0.4s ease;}
+.progress-pct{font-size:0.72rem;color:var(--green);font-weight:500;min-width:30px;text-align:right;}
+
+/* TASK ITEMS */
+.tasks{padding:10px 0;}
+.task-item{display:flex;align-items:flex-start;gap:12px;padding:10px 22px;cursor:pointer;transition:background 0.15s;border-radius:0;}
+.task-item:hover{background:#f7fdfd;}
+.task-item.done{opacity:0.55;}
+.task-item.done .task-text{text-decoration:line-through;color:var(--done-text);}
+.task-checkbox{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;background:#fff;}
+.task-item.done .task-checkbox{background:var(--green);border-color:var(--green);}
+.task-check-icon{color:#fff;font-size:10px;display:none;}
+.task-item.done .task-check-icon{display:block;}
+.task-body{flex:1;}
+.task-text{font-size:0.82rem;color:var(--text-dim);line-height:1.5;}
+.task-meta{font-size:0.67rem;color:var(--text-light);margin-top:2px;}
+.task-tag{display:inline-block;background:#e8f6f6;color:var(--green-mid);border-radius:10px;padding:1px 8px;font-size:0.62rem;letter-spacing:0.04em;margin-top:3px;}
+
+/* SUBTASKS */
+.subtask-item{display:flex;align-items:flex-start;gap:10px;padding:7px 22px 7px 52px;cursor:pointer;transition:background 0.15s;}
+.subtask-item:hover{background:#f7fdfd;}
+.subtask-item.done{opacity:0.5;}
+.subtask-item.done .task-text{text-decoration:line-through;color:var(--done-text);}
+.subtask-checkbox{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;background:#fff;}
+.subtask-item.done .subtask-checkbox{background:var(--green-mid);border-color:var(--green-mid);}
+.subtask-check-icon{color:#fff;font-size:8px;display:none;}
+.subtask-item.done .subtask-check-icon{display:block;}
+
+/* DIVIDER */
+.task-divider{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);padding:12px 22px 4px;border-top:1px solid #f0f8f8;margin-top:4px;}
+
+/* LINKS TABLE */
+.links-section{background:var(--card);border-radius:14px;padding:20px 22px;margin-bottom:20px;box-shadow:0 1px 8px rgba(6,102,100,0.06);}
+.links-title{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:560px){.links-grid{grid-template-columns:1fr;}}
+.link-item{background:var(--bg);border-radius:8px;padding:10px 12px;text-decoration:none;display:flex;flex-direction:column;gap:2px;border:1px solid var(--border);transition:border-color 0.2s;}
+.link-item:hover{border-color:var(--green-mid);}
+.link-name{font-size:0.75rem;font-weight:500;color:var(--text);}
+.link-url{font-size:0.65rem;color:var(--text-light);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.link-badge{font-size:0.58rem;letter-spacing:0.06em;color:#fff;background:var(--green);border-radius:8px;padding:1px 6px;display:inline-block;margin-top:2px;width:fit-content;}
+
+/* SUBSCRIBERS TABLE */
+.sub-section{background:var(--card);border-radius:14px;padding:20px 22px;margin-bottom:20px;box-shadow:0 1px 8px rgba(6,102,100,0.06);}
+.sub-title{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);margin-bottom:14px;}
+.sub-table{width:100%;border-collapse:collapse;font-size:0.75rem;}
+.sub-table th{text-align:left;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light);padding:6px 10px;border-bottom:1px solid var(--border);}
+.sub-table td{padding:10px 10px;border-bottom:1px solid #f0f8f8;color:var(--text-dim);}
+.sub-table tr:last-child td{border-bottom:none;}
+.badge{display:inline-block;border-radius:10px;padding:2px 8px;font-size:0.62rem;font-weight:500;}
+.badge.done{background:#e0f5f4;color:var(--green);}
+.badge.pending{background:#fff3e6;color:var(--gold);}
+.badge.build{background:#e8eeff;color:#4a6ae8;}
+.badge.na{background:#f0f0f0;color:#999;}
+
+/* UPDATED NOTE */
+.updated{text-align:center;font-size:0.67rem;color:var(--text-light);margin-top:32px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-brand">✦ EAUCO — Project Tracker</div>
+    <div class="header-sub">Planner Business · Click any item to mark done · Saves automatically</div>
+  </div>
+  <button class="header-reset" onclick="resetAll()">Reset All</button>
+</div>
+
+<div class="main">
+
+  <!-- Overview Stats -->
+  <div class="overview" id="overview">
+    <div class="ov-card"><span class="ov-num" id="stat-done">0</span><span class="ov-label">Done</span></div>
+    <div class="ov-card"><span class="ov-num" id="stat-total">0</span><span class="ov-label">Total Tasks</span></div>
+    <div class="ov-card"><span class="ov-num" id="stat-pct">0%</span><span class="ov-label">Complete</span></div>
+    <div class="ov-card"><span class="ov-num" id="stat-subs">2</span><span class="ov-label">Subscribers</span></div>
+  </div>
+
+  <!-- Phase 0 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-left">
+        <span class="phase-icon">✅</span>
+        <div>
+          <div class="phase-title">Phase 0 — Foundation</div>
+          <div class="phase-target">Completed June 22, 2026</div>
+        </div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar"><div class="progress-fill" id="prog-0" style="width:0%"></div></div>
+        <span class="progress-pct" id="pct-0">0%</span>
+      </div>
+    </div>
+    <div class="tasks" id="phase-0">
+      <div class="task-item" data-id="p0-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Maddie's personalized planner built + live</div></div></div>
+      <div class="task-item" data-id="p0-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Day-of-week content corrected (June 22–30 fix)</div></div></div>
+      <div class="task-item" data-id="p0-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Chloe's personalized planner built + live</div></div></div>
+      <div class="task-item" data-id="p0-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Intake form built + Formspree connected</div></div></div>
+      <div class="task-item" data-id="p0-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Thank-you page built + Stripe $22.22/month button live</div></div></div>
+      <div class="task-item" data-id="p0-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Free universal planner (lead magnet) built + live</div></div></div>
+      <div class="task-item" data-id="p0-7" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Landing page built + live (hero · features · free vs paid · FAQ)</div></div></div>
+      <div class="task-item" data-id="p0-8" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Subscriber tracker Google Sheet created</div></div></div>
+      <div class="task-item" data-id="p0-9" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">This tracker page created</div></div></div>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-left">
+        <span class="phase-icon">🔄</span>
+        <div>
+          <div class="phase-title">Phase 1 — Beta</div>
+          <div class="phase-target">Target: June 22 – July 4, 2026</div>
+        </div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar"><div class="progress-fill" id="prog-1" style="width:0%"></div></div>
+        <span class="progress-pct" id="pct-1">0%</span>
+      </div>
+    </div>
+    <div class="tasks" id="phase-1">
+      <div class="task-divider">Planners</div>
+      <div class="task-item" data-id="p1-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Chloe filled out intake form</div><div class="task-meta">✦ Confirmed working — flow is live</div></div></div>
+      <div class="task-item" data-id="p1-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Sister's planner built</div><div class="task-meta">Intake received — paste in Claude to build · ~1 day</div><span class="task-tag">Next up</span></div></div>
+      <div class="task-item" data-id="p1-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Send Andie the intake form link</div><div class="task-meta">Target: this week</div></div></div>
+      <div class="task-item" data-id="p1-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Andie's planner built</div><div class="task-meta">After she fills out form · ~1 day to build</div></div></div>
+      <div class="task-divider">Email + Automation</div>
+      <div class="task-item" data-id="p1-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Write GHL 3-email sequence</div><div class="task-meta">Target: June 28</div></div></div>
+      <div class="subtask-item" data-id="p1-5a" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 1 — Welcome + free planner link</div></div></div>
+      <div class="subtask-item" data-id="p1-5b" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 2 — What the personalized version includes</div></div></div>
+      <div class="subtask-item" data-id="p1-5c" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 3 — Subscribe CTA + intake form link</div></div></div>
+      <div class="task-item" data-id="p1-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Swap landing page email capture → GHL endpoint</div><div class="task-meta">After GHL sequence is live</div></div></div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-left">
+        <span class="phase-icon">⏳</span>
+        <div>
+          <div class="phase-title">Phase 2 — Launch</div>
+          <div class="phase-target">Target: Week of July 7 · Launch July 14, 2026</div>
+        </div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar"><div class="progress-fill" id="prog-2" style="width:0%"></div></div>
+        <span class="progress-pct" id="pct-2">0%</span>
+      </div>
+    </div>
+    <div class="tasks" id="phase-2">
+      <div class="task-divider">Accounts + Profiles</div>
+      <div class="task-item" data-id="p2-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok account created</div><div class="task-meta">Target: July 7</div></div></div>
+      <div class="task-item" data-id="p2-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok bio + profile photo + link in bio</div><div class="task-meta">Target: July 7</div></div></div>
+      <div class="task-item" data-id="p2-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pinterest account created</div><div class="task-meta">Target: July 7</div></div></div>
+      <div class="task-item" data-id="p2-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pinterest boards set up</div><div class="task-meta">Astrology · Human Design · Moon · Planner Aesthetic · Target: July 7</div></div></div>
+      <div class="task-divider">Content</div>
+      <div class="task-item" data-id="p2-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok 1 — What is this? (planner overview + personalized vs free)</div><div class="task-meta">Target: July 8–10</div></div></div>
+      <div class="task-item" data-id="p2-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok 2 — Your moon phases for the year</div><div class="task-meta">Target: July 8–10</div></div></div>
+      <div class="task-item" data-id="p2-7" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok 3 — Planet day energy walkthrough</div><div class="task-meta">Target: July 8–10</div></div></div>
+      <div class="task-item" data-id="p2-8" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok 4 — How it's built (intake → chart → your planner)</div><div class="task-meta">Target: July 8–10</div></div></div>
+      <div class="task-item" data-id="p2-9" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok 5 — Free planner walkthrough + CTA</div><div class="task-meta">Target: July 8–10</div></div></div>
+      <div class="task-item" data-id="p2-10" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pinterest pins made (planner screenshots → landing page)</div><div class="task-meta">Target: July 10</div></div></div>
+      <div class="task-divider">Launch Day — July 14</div>
+      <div class="task-item" data-id="p2-11" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pick official launch date</div><div class="task-meta">Suggested: July 14, 2026</div></div></div>
+      <div class="task-item" data-id="p2-12" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">First 5 TikToks posted (over 3 days)</div><div class="task-meta">Target: July 14–16</div></div></div>
+      <div class="task-item" data-id="p2-13" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pinterest pins live</div><div class="task-meta">Target: July 14</div></div></div>
+      <div class="task-item" data-id="p2-14" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Share with close network / communities</div><div class="task-meta">Target: July 14</div></div></div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-left">
+        <span class="phase-icon">⏳</span>
+        <div>
+          <div class="phase-title">Phase 3 — Subscriber Operations</div>
+          <div class="phase-target">Target: July 2026 · after first 3–5 paying subscribers</div>
+        </div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar"><div class="progress-fill" id="prog-3" style="width:0%"></div></div>
+        <span class="progress-pct" id="pct-3">0%</span>
+      </div>
+    </div>
+    <div class="tasks" id="phase-3">
+      <div class="task-item" data-id="p3-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Subscriber onboarding email written</div><div class="task-meta">What to expect + how to use the planner</div></div></div>
+      <div class="task-item" data-id="p3-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Planner delivery email written</div><div class="task-meta">Here's your link + how to bookmark it</div></div></div>
+      <div class="task-item" data-id="p3-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Zapier: Formspree → Google Sheet auto-fill</div><div class="task-meta">Free tier = 100 tasks/month · handles form → Sheet automatically</div></div></div>
+      <div class="task-item" data-id="p3-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Create eauco-mads/subscriber-planners GitHub repo</div><div class="task-meta">One folder per subscriber · private links</div></div></div>
+      <div class="task-item" data-id="p3-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">GHL + Stripe: tag subscribers active/inactive</div><div class="task-meta">Automations based on payment status</div></div></div>
+      <div class="task-item" data-id="p3-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Annual plan added to Stripe (~$197/year)</div><div class="task-meta">Offer after 5+ subscribers</div></div></div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-left">
+        <span class="phase-icon">⏳</span>
+        <div>
+          <div class="phase-title">Phase 4 — Physical Planners</div>
+          <div class="phase-target">Target: September 2026</div>
+        </div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar"><div class="progress-fill" id="prog-4" style="width:0%"></div></div>
+        <span class="progress-pct" id="pct-4">0%</span>
+      </div>
+    </div>
+    <div class="tasks" id="phase-4">
+      <div class="task-item" data-id="p4-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Decide on format (spiral / perfect bound / hardcover)</div></div></div>
+      <div class="task-item" data-id="p4-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Canva design template built</div><div class="task-meta">Cover + monthly spreads + chart pages + HD pages</div></div></div>
+      <div class="task-item" data-id="p4-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Print partner chosen</div><div class="task-meta">Mixam (bulk) or Printify (on-demand)</div></div></div>
+      <div class="task-item" data-id="p4-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pricing finalized ($88–111 + digital subscription)</div></div></div>
+      <div class="task-item" data-id="p4-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Order form added to landing page</div></div></div>
+      <div class="task-item" data-id="p4-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">First test order placed + reviewed</div></div></div>
+    </div>
+  </div>
+
+  <!-- Subscribers -->
+  <div class="sub-section">
+    <div class="sub-title">👥 Beta Subscribers</div>
+    <table class="sub-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Intake</th>
+          <th>Planner</th>
+          <th>Stripe</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Maddie</strong></td>
+          <td><span class="badge done">✅ Done</span></td>
+          <td><span class="badge done">✅ Live</span></td>
+          <td><span class="badge na">Founder</span></td>
+          <td>eauco-mads.github.io/maddie-planner</td>
+        </tr>
+        <tr>
+          <td><strong>Chloe Newby</strong></td>
+          <td><span class="badge done">✅ Done</span></td>
+          <td><span class="badge done">✅ Live</span></td>
+          <td><span class="badge pending">⏳ Pending</span></td>
+          <td>Libra Rising · eauco-mads.github.io/chloe-planner</td>
+        </tr>
+        <tr>
+          <td><strong>Sister</strong></td>
+          <td><span class="badge done">✅ Done</span></td>
+          <td><span class="badge build">🔄 Build next</span></td>
+          <td><span class="badge pending">⏳ Pending</span></td>
+          <td>Intake received — paste to Claude</td>
+        </tr>
+        <tr>
+          <td><strong>Andie</strong></td>
+          <td><span class="badge pending">⏳ Send form</span></td>
+          <td><span class="badge pending">⏳ Pending</span></td>
+          <td><span class="badge pending">⏳ Pending</span></td>
+          <td>Send intake link this week</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Live Links -->
+  <div class="links-section">
+    <div class="links-title">🔗 Live Links</div>
+    <div class="links-grid">
+      <a class="link-item" href="https://eauco-mads.github.io/maddie-planner/" target="_blank">
+        <span class="link-name">Maddie's Planner</span>
+        <span class="link-url">eauco-mads.github.io/maddie-planner/</span>
+        <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://eauco-mads.github.io/chloe-planner/" target="_blank">
+        <span class="link-name">Chloe's Planner</span>
+        <span class="link-url">eauco-mads.github.io/chloe-planner/</span>
+        <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://eauco-mads.github.io/maddie-planner/free.html" target="_blank">
+        <span class="link-name">Free Planner</span>
+        <span class="link-url">eauco-mads.github.io/maddie-planner/free.html</span>
+        <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://eauco-mads.github.io/maddie-planner/landing.html" target="_blank">
+        <span class="link-name">Landing Page</span>
+        <span class="link-url">eauco-mads.github.io/maddie-planner/landing.html</span>
+        <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://eauco-mads.github.io/maddie-planner/intake.html" target="_blank">
+        <span class="link-name">Intake Form</span>
+        <span class="link-url">eauco-mads.github.io/maddie-planner/intake.html</span>
+        <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://eauco-mads.github.io/maddie-planner/thankyou.html" target="_blank">
+        <span class="link-name">Thank You + Stripe</span>
+        <span class="link-url">eauco-mads.github.io/maddie-planner/thankyou.html</span>
+        <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://docs.google.com/spreadsheets/d/13Et-UBWZSdYLgHNm6qca9B28krauU3euHsIjcVEtZIM" target="_blank">
+        <span class="link-name">Subscriber Tracker</span>
+        <span class="link-url">Google Sheet</span>
+        <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://github.com/eauco-mads/maddie-planner" target="_blank">
+        <span class="link-name">GitHub Repo</span>
+        <span class="link-url">eauco-mads/maddie-planner</span>
+        <span class="link-badge">Live</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="updated">✦ Checks save automatically in your browser · Last built June 22, 2026</div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'eauco-tracker-v1';
+
+function getState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function toggle(el) {
+  const id = el.dataset.id;
+  const state = getState();
+  state[id] = !state[id];
+  saveState(state);
+  applyState(id, state[id], el);
+  updateStats();
+}
+
+function applyState(id, done, el) {
+  if (!el) el = document.querySelector(`[data-id="${id}"]`);
+  if (!el) return;
+  if (done) el.classList.add('done');
+  else el.classList.remove('done');
+}
+
+function resetAll() {
+  if (!confirm('Reset all checkboxes? This cannot be undone.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll('.task-item, .subtask-item').forEach(el => el.classList.remove('done'));
+  updateStats();
+}
+
+function updateStats() {
+  const state = getState();
+  const phases = [0, 1, 2, 3, 4];
+
+  let totalDone = 0, totalAll = 0;
+
+  phases.forEach(p => {
+    const container = document.getElementById('phase-' + p);
+    if (!container) return;
+    const items = container.querySelectorAll('[data-id]');
+    let done = 0;
+    items.forEach(item => {
+      if (state[item.dataset.id]) done++;
+    });
+    const pct = items.length ? Math.round(done / items.length * 100) : 0;
+    const fill = document.getElementById('prog-' + p);
+    const label = document.getElementById('pct-' + p);
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.textContent = pct + '%';
+    totalDone += done;
+    totalAll += items.length;
+  });
+
+  const pct = totalAll ? Math.round(totalDone / totalAll * 100) : 0;
+  document.getElementById('stat-done').textContent = totalDone;
+  document.getElementById('stat-total').textContent = totalAll;
+  document.getElementById('stat-pct').textContent = pct + '%';
+}
+
+// Init — restore saved state
+(function init() {
+  const state = getState();
+  Object.entries(state).forEach(([id, done]) => {
+    if (done) applyState(id, true);
+  });
+  updateStats();
+})();
+</script>
+</body>
+</html>
