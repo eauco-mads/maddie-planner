@@ -329,6 +329,37 @@
   }
   .step-text { font-size: 0.78rem; color: var(--text-dim); line-height: 1.6; }
 
+  /* Creator expand */
+  .creator-expand {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin-top: 0;
+  }
+  .creator-expand.open {
+    max-height: 500px;
+    opacity: 1;
+    margin-top: 16px;
+  }
+  .creator-expand-inner {
+    background: #f0f9f9;
+    border-radius: 10px;
+    border: 1.5px solid var(--green-light);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .creator-expand-inner .ce-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 8px;
+    display: block;
+  }
+
   /* Footer */
   .footer {
     text-align: center;
@@ -552,32 +583,9 @@
       <div class="section-note">The more we know about how you actually live, the more your planner becomes a real daily tool — not just an astrology overview. All of this is optional but the more you share, the more accurate and useful your guidance will be.</div>
 
       <div class="field-group">
-        <label>Are you creating content / posting online? <span class="opt">optional</span></label>
-        <div class="radio-group">
-          <label><input type="radio" name="is_creator" value="yes_daily"> Yes — daily or near-daily</label>
-          <label><input type="radio" name="is_creator" value="yes_building"> Yes — sometimes / building toward it</label>
-          <label><input type="radio" name="is_creator" value="no"> Not currently</label>
-        </div>
-      </div>
-
-      <div class="field-group">
-        <label>Platforms <span class="opt">optional — check all that apply</span></label>
-        <div class="radio-group">
-          <label><input type="checkbox" name="platforms[]" value="tiktok"> TikTok</label>
-          <label><input type="checkbox" name="platforms[]" value="instagram"> Instagram</label>
-          <label><input type="checkbox" name="platforms[]" value="pinterest"> Pinterest</label>
-          <label><input type="checkbox" name="platforms[]" value="youtube"> YouTube</label>
-          <label><input type="checkbox" name="platforms[]" value="substack"> Substack / Email</label>
-          <label><input type="checkbox" name="platforms[]" value="podcast"> Podcast</label>
-        </div>
-      </div>
-
-      <hr class="divider">
-
-      <div class="field-group">
         <label>What themes do you want woven into your daily guidance? <span class="opt">choose all that apply</span></label>
         <div class="radio-group">
-          <label><input type="checkbox" name="themes[]" value="content"> Content creation + posting consistency</label>
+          <label><input type="checkbox" name="themes[]" value="content" id="theme-content" onchange="toggleCreator(this)"> Content creation + posting consistency</label>
           <label><input type="checkbox" name="themes[]" value="sovereignty"> Self-empowerment + sovereignty</label>
           <label><input type="checkbox" name="themes[]" value="transition"> Major transition / leaving something behind</label>
           <label><input type="checkbox" name="themes[]" value="business"> Building a business + visibility</label>
@@ -589,6 +597,31 @@
           <label><input type="checkbox" name="themes[]" value="relationships"> Relationships + love + partnership</label>
           <label><input type="checkbox" name="themes[]" value="home"> Home + roots + family</label>
           <label><input type="checkbox" name="themes[]" value="spiritual"> Spiritual practice + devotion</label>
+        </div>
+
+        <!-- Reveal: drops in when Content creation is checked -->
+        <div class="creator-expand" id="creator-expand">
+          <div class="creator-expand-inner">
+            <div>
+              <span class="ce-label">✦ Content creator details</span>
+              <div class="radio-group">
+                <label><input type="radio" name="is_creator" value="yes_daily"> Daily or near-daily</label>
+                <label><input type="radio" name="is_creator" value="yes_building"> Sometimes / building toward it</label>
+                <label><input type="radio" name="is_creator" value="just_starting"> Just starting out</label>
+              </div>
+            </div>
+            <div>
+              <span class="ce-label">Platforms</span>
+              <div class="radio-group">
+                <label><input type="checkbox" name="platforms[]" value="tiktok"> TikTok</label>
+                <label><input type="checkbox" name="platforms[]" value="instagram"> Instagram</label>
+                <label><input type="checkbox" name="platforms[]" value="pinterest"> Pinterest</label>
+                <label><input type="checkbox" name="platforms[]" value="youtube"> YouTube</label>
+                <label><input type="checkbox" name="platforms[]" value="substack"> Substack / Email</label>
+                <label><input type="checkbox" name="platforms[]" value="podcast"> Podcast</label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -647,5 +680,16 @@
   </div>
 
 </div>
+<script>
+function toggleCreator(checkbox) {
+  const expand = document.getElementById('creator-expand');
+  if (checkbox.checked) {
+    expand.classList.add('open');
+  } else {
+    expand.classList.remove('open');
+    expand.querySelectorAll('input').forEach(i => i.checked = false);
+  }
+}
+</script>
 </body>
 </html>
