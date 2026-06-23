@@ -16,6 +16,7 @@
 | Intake Form | https://eauco-mads.github.io/maddie-planner/intake.html | ✅ Live |
 | Thank You + Stripe | https://eauco-mads.github.io/maddie-planner/thankyou.html | ✅ Live |
 | Subscriber Sheet | https://docs.google.com/spreadsheets/d/13Et-UBWZSdYLgHNm6qca9B28krauU3euHsIjcVEtZIM | ✅ Live |
+| Andie's Planner | https://eauco-mads.github.io/andie-planner/ | ✅ Live |
 
 ---
 
@@ -49,9 +50,8 @@
 
 ### Planners
 - [x] Chloe filled out intake form — confirmed working ✦
-- [ ] **Sister's planner built** ← paste her intake answers in Claude → `~1 day to build`
-- [ ] Andie — send her the intake form link → `this week`
-- [ ] Andie's planner built — after she fills out form → `~1 day after submission`
+- [x] **Andie (sister)'s planner built** ← Libra Rising · 4:35 AM MDT · Vishakha nakshatra ✦
+- [x] Pushed to eauco-mads/andie-planner → live at eauco-mads.github.io/andie-planner
 
 ### Email + Automation
 - [ ] Write GHL 3-email sequence → `target: June 28` 
@@ -119,8 +119,7 @@
 |------|--------|---------|--------|-------|
 | Maddie (you) | ✅ | ✅ Live | — | Founder planner |
 | Chloe Newby | ✅ | ✅ Live | ⏳ | Beta — Libra Rising |
-| Your sister | ✅ | 🔄 Build next | ⏳ | Intake received |
-| Andie | ⏳ | ⏳ | ⏳ | Send form this week |
+| Andie Galloway (sister) | ✅ | ✅ Live | ⏳ | Libra Rising · 4:35 AM · Aug 4 2003 · eauco-mads.github.io/andie-planner |
 
 ---
 
