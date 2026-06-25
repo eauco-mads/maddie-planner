@@ -220,10 +220,13 @@ main{padding:22px 20px 60px;max-width:820px;}
 .transit-panel-body{font-size:0.8rem;color:var(--text-dim);line-height:1.75;}
 
 /* MOON SIGN DAILY PANEL */
-.moon-panel{border-radius:8px;padding:12px 14px;margin-bottom:10px;border-left:3px solid var(--green-mid);background:#f0fbfb;}
+.moon-panel{border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid var(--green-mid);background:#f0fbfb;}
 .moon-panel-headline{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;color:var(--green);margin-bottom:3px;letter-spacing:0.01em;}
 .moon-panel-vibe{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-light);margin-bottom:7px;}
 .moon-panel-body{font-size:0.8rem;color:var(--text-dim);line-height:1.75;}
+
+/* VOC INDICATOR */
+.voc-badge{display:inline-block;font-size:0.56rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);background:var(--gold-bg);border-radius:10px;padding:2px 7px;margin-left:6px;border:1px solid rgba(184,131,42,0.25);vertical-align:middle;}
 
 /* CALENDAR MOON SIGN */
 .cal-moon-sign{font-size:0.49rem;color:var(--text-light);display:block;line-height:1.3;letter-spacing:0.01em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
@@ -665,6 +668,72 @@ function getMoonSignEnergy(dateStr) {
   return MOON_SIGN_ENERGY[moon.sign] || null;
 }
 
+const MARS_WINDOWS = [
+  { from:'2026-06-01', to:'2026-06-16', planet:'Mars', sign:'Gemini',
+    headline:'Mars in Gemini',
+    body:'Mars in Gemini disperses action across multiple directions at once — fast, curious, and hard to sustain in one lane. The energy supports communication, idea exploration, and mental agility rather than single-pointed follow-through. Start conversations, test ideas, gather information. Breadth is the gift here. Depth comes next.',
+    vibe:'quick · curious · multidirectional', bg:'#e8f4f9', color:'var(--retro)' },
+
+  { from:'2026-06-17', to:'2026-07-05', planet:'Mars conjunct Jupiter', sign:'Cancer',
+    headline:'Mars conjunct exalted Jupiter in Cancer',
+    body:'Mars enters Cancer and immediately meets Jupiter at the absolute peak of his exalted power — one of the most potent and rare combinations possible. The planet of action and the planet of expansion are fusing in the sign of emotional depth, belonging, and genuine partnership. What you initiate now in the domain of creative work, collaboration, and heartfelt connection has extraordinary growth potential. Mars provides the will and courage to begin. Jupiter in exaltation expands it far beyond what seems immediately visible. Act from genuine desire. Begin the real thing.',
+    vibe:'initiating · expansive · potent', bg:'#fff8f0', color:'var(--gold)' },
+
+  { from:'2026-07-06', to:'2026-08-05', planet:'Mars', sign:'Cancer',
+    headline:'Mars in Cancer',
+    body:'Mars in Cancer operates from emotional instinct rather than linear strategy. Action arises from feeling — from what genuinely matters, who genuinely matters, and what the heart knows needs to happen. This is less direct than other Mars placements, but energy that comes from emotional investment is more sustainable and more powerful than force. What do you care about enough to protect and pursue with everything you have?',
+    vibe:'feeling-driven · protective · instinctive', bg:'#f0fbfb', color:'var(--green-mid)' },
+
+  { from:'2026-08-06', to:'2026-09-21', planet:'Mars', sign:'Leo',
+    headline:'Mars in Leo',
+    body:'Mars in Leo is bold, dramatic, and fiercely creative. The will becomes generous and visible — there\'s a desire to make something that genuinely matters and to be fully present and recognized for it. Creative output, leadership moments, and actions that require real courage are all strongly supported here. Don\'t be subtle when Mars is in Leo. Show up completely. The sky is watching and it is not rewarding the cautious version.',
+    vibe:'bold · expressive · courageous', bg:'#fff8f0', color:'var(--gold)' },
+
+  { from:'2026-09-22', to:'2026-11-03', planet:'Mars', sign:'Virgo',
+    headline:'Mars in Virgo',
+    body:'Mars in Virgo directs action into precision, craft, and the deep satisfaction of doing things exactly right. Energy flows into systems, health practices, and work that is genuinely effective rather than merely impressive. This is one of the most productive Mars placements for daily sustained effort — unglamorous and deeply rewarding. What deserves your most careful and sustained attention right now? Give it that fully.',
+    vibe:'precise · methodical · deeply effective', bg:'#f0fbfb', color:'var(--green)' },
+
+  { from:'2026-11-04', to:'2026-12-14', planet:'Mars', sign:'Libra',
+    headline:'Mars in Libra',
+    body:'Mars in Libra is the diplomat\'s dilemma — the will to act meeting the need to be fair to all sides. Decisions can feel harder to make, not from weakness but from genuine consideration of multiple perspectives. Use this quality productively: the actions taken after real weighing tend to hold better than those taken from pure impulse. This is the time to move with consideration — and then commit fully when you do.',
+    vibe:'deliberate · relational · considered', bg:'#fdf0f5', color:'var(--pink)' },
+
+  { from:'2026-12-15', to:'2027-01-25', planet:'Mars', sign:'Scorpio',
+    headline:'Mars in Scorpio · His Own Sign',
+    body:'Mars enters Scorpio — one of his traditional ruling signs, where he is most focused, strategic, and relentlessly intentional. Action goes deep rather than wide. There is a willingness to go into uncomfortable places that produces genuine transformation. What has been avoided? What needs to be confronted head-on, with total honesty and full force? Mars in Scorpio doesn\'t flinch — and in his own sign, he doesn\'t fail.',
+    vibe:'focused · intense · transformative', bg:'#f4f0fa', color:'var(--nodal)' },
+
+  { from:'2027-01-26', to:'2027-03-08', planet:'Mars', sign:'Sagittarius',
+    headline:'Mars in Sagittarius',
+    body:'Mars in Sagittarius is expansive, principled, and truth-driven. Action is most powerful when aligned with your deepest beliefs about what is right and possible. This is not a time for small, cautious moves — it is a time for the bold, philosophically grounded action that feels like a genuine extension of your values and your vision. What do you believe enough to act on fully, without hedging?',
+    vibe:'expansive · principled · visionary', bg:'#f0fbfb', color:'var(--green)' },
+
+  { from:'2027-03-09', to:'2027-04-18', planet:'Mars exalted', sign:'Capricorn',
+    headline:'Mars in Capricorn · Exalted',
+    body:'Mars enters Capricorn — his sign of exaltation in both Western and Vedic astrology, where he operates at maximum effective and strategic power. This is Mars at his most disciplined, enduring, and results-oriented. Ambition meets structure meets relentless follow-through. What you build with sustained effort during this window is built to last for years. Do not waste this energy on what is merely interesting. Use it for what is genuinely important. This is one of the most productive windows of the entire planner year.',
+    vibe:'disciplined · strategic · maximum power', bg:'#f5f5f0', color:'var(--text-dim)' },
+
+  { from:'2027-04-19', to:'2027-05-31', planet:'Mars', sign:'Aquarius',
+    headline:'Mars in Aquarius',
+    body:'Mars in Aquarius directs the will toward innovation, collective vision, and disrupting what has become stale or unjust. The drive to make things better — not just for yourself but for something larger — is strong and energizing. This energy favors unconventional approaches, collaborative action, and the willingness to break from what tradition dictates when what tradition dictates is no longer serving the larger good.',
+    vibe:'innovative · collective · unconventional', bg:'#e8f4f9', color:'var(--retro)' },
+
+  { from:'2027-06-01', to:'2027-07-12', planet:'Mars', sign:'Pisces',
+    headline:'Mars in Pisces',
+    body:'Mars in Pisces softens action into flow and feeling. The will moves through intuition, inspiration, and surrender rather than force or strategy. The most effective action right now arises from a clear inner signal — move when it is unmistakably present, rest when it is not. Art, spiritual practice, healing work, and any action that serves others from genuine compassion are most powerfully energized here.',
+    vibe:'intuitive · flowing · inspired', bg:'#fdf0f5', color:'var(--pink)' }
+];
+
+function getMarsEnergy(dateStr) {
+  const d = new Date(dateStr+'T12:00:00');
+  const active = MARS_WINDOWS.filter(w =>
+    d >= new Date(w.from+'T00:00:00') && d <= new Date(w.to+'T23:59:59')
+  );
+  if (!active.length) return null;
+  return active.find(w => w.planet.includes('conjunct') || w.planet.includes('exalted')) || active[0];
+}
+
 const MONTHS = [
   { id:'2026-06', name:'June 2026', theme:'The Partnership Sky Opens', mantra:'"The right people are already moving toward me."',
     overview:'Jupiter enters Cancer mid-June 2026 — the most benefic planet in its sign of exaltation. In Vedic astrology, this is one of the most auspicious transits possible: Jupiter\'s wisdom and expansion at maximum strength. The collective theme for the next 12 months: partnership, collaboration, and who you choose to build with. Jupiter in Cancer asks — who are the right people, and what becomes possible when you build together? The Summer Solstice (June 20–21) is one of the four most powerful natural seeding points of the year. The New Moon in Cancer on June 25 opens the most significant partnership cycle of the year. What you plant now in terms of collaboration, connection, and chosen partners carries the support of one of the most benefic transits of the decade.',
@@ -884,7 +953,9 @@ function getMoonData(dateStr) {
   return {
     emoji:phaseObj.emoji, phaseName:phaseObj.name, sign, degree, illumination,
     daysToFull:Math.ceil(daysToFull), daysToNew:Math.ceil(daysToNew),
-    nextFullDate, nextNewDate
+    nextFullDate, nextNewDate,
+    approachingVOC: degree >= 27,
+    justEntered: degree <= 2
   };
 }
 
@@ -959,6 +1030,7 @@ function buildTodayCard(){
   const event=KEY_DATES[todayStr];
   const transit=getDailyTransitEnergy(todayStr);
   const moonEnergy=getMoonSignEnergy(todayStr);
+  const marsEnergy=getMarsEnergy(todayStr);
   const dateFormatted=today.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
 
   let hdMsg='';
@@ -966,10 +1038,18 @@ function buildTodayCard(){
     hdMsg=`<div style="background:#f0f9f9;border-radius:7px;padding:8px 12px;font-size:0.74rem;color:var(--text-dim);line-height:1.6;margin-bottom:10px;border-left:2px solid var(--green-light)"><strong style="color:var(--green);font-size:0.76rem">✦ Your HD Type</strong><br>${pd.hd[currentHDType]}</div>`;
   }
 
+  const vocBadge = moon && moon.approachingVOC ? '<span class="voc-badge">void approaching</span>' : '';
+  const vocNote = moon && moon.approachingVOC
+    ? ' The Moon is in her final degrees — approaching void-of-course. Rest, complete, and avoid launching new endeavors until she enters the next sign.'
+    : '';
+  const justEnteredNote = moon && moon.justEntered
+    ? ' The Moon has just entered this sign — the void has lifted. Fresh energy is available.'
+    : '';
+
   const moonBar = moon ? `
     <div class="today-moon-bar">
       <div class="tmb-left">
-        <span class="tmb-sign">${moon.emoji} ${moon.degree}° ${moon.sign}</span>
+        <span class="tmb-sign">${moon.emoji} ${moon.degree}° ${moon.sign}${vocBadge}</span>
         <span class="tmb-illum">${moon.illumination}% illuminated</span>
       </div>
       <div class="tmb-right">
@@ -992,11 +1072,19 @@ function buildTodayCard(){
        </div>`
     : `<div class="today-msg">${pd.msg}</div>`;
 
+  const marsBlock = marsEnergy
+    ? `<div class="transit-panel" style="background:${marsEnergy.bg};border-left-color:${marsEnergy.color}">
+        <div class="transit-panel-headline">${marsEnergy.headline}</div>
+        <div class="transit-panel-vibe">${marsEnergy.vibe}</div>
+        <div class="transit-panel-body">${marsEnergy.body}</div>
+       </div>`
+    : '';
+
   const moonEnergyBlock = moonEnergy
     ? `<div class="moon-panel">
         <div class="moon-panel-headline">${moonEnergy.headline}</div>
-        <div class="moon-panel-vibe">${moonEnergy.vibe}</div>
-        <div class="moon-panel-body">${moonEnergy.body}</div>
+        <div class="moon-panel-vibe">${moonEnergy.vibe}${moon&&moon.approachingVOC?' · void approaching':''}</div>
+        <div class="moon-panel-body">${moonEnergy.body}${vocNote}${justEnteredNote}</div>
        </div>`
     : '';
 
@@ -1005,6 +1093,7 @@ function buildTodayCard(){
     <div class="today-planet-day" style="color:${pd.color}">${pd.name}</div>
     ${moonBar}
     ${transitBlock}
+    ${marsBlock}
     ${moonEnergyBlock}
     ${hdMsg}
     ${event?`<div class="modal-event-box"><strong>✦ ${event.title}</strong>${event.guidance}</div>`:''}
@@ -1096,6 +1185,7 @@ function openDayModal(ds){
   const ev=KEY_DATES[ds];
   const transit=getDailyTransitEnergy(ds);
   const moonEnergy=getMoonSignEnergy(ds);
+  const marsEnergy=getMarsEnergy(ds);
   const prompt=getPromptForDate(ds);
   const todos=getDayTodos(ds);
   const moodSaved=parseInt(localStorage.getItem('mood-'+ds)||'0');
@@ -1109,11 +1199,17 @@ function openDayModal(ds){
   const done=todos.filter((_,i)=>localStorage.getItem(`todo-${ds}-${i}`)==='1').length;
   const moodBtns=moods.map((m,i)=>`<button class="mood-btn${moodSaved===i+1?' selected':''}" onclick="saveMood('${ds}',${i+1})"><span>${m[0]}</span><span class="mood-word">${m[1]}</span></button>`).join('');
 
+  const vocBadgeM = moon && moon.approachingVOC ? ' <span class="voc-badge">void approaching</span>' : '';
+  const vocNoteM = moon && moon.approachingVOC
+    ? ' The Moon is in her final degrees — approaching void-of-course. Complete, rest, and avoid launching until she enters the next sign.'
+    : '';
+  const justEnteredNoteM = moon && moon.justEntered ? ' The Moon has just entered this sign — fresh clear energy is available.' : '';
+
   const moonDetail = moon ? `
     <div class="modal-moon-detail">
       <div class="mmd-icon">${moon.emoji}</div>
       <div class="mmd-info">
-        <div class="mmd-phase-name">${moon.degree}° ${moon.sign} · ${moon.phaseName}</div>
+        <div class="mmd-phase-name">${moon.degree}° ${moon.sign}${vocBadgeM} · ${moon.phaseName}</div>
         <div class="mmd-detail">${moon.illumination}% illuminated</div>
       </div>
       <div class="mmd-next">
@@ -1129,11 +1225,18 @@ function openDayModal(ds){
       <div class="modal-transit-body">${transit.body}</div>
     </div>` : `<div class="modal-planet">${pd.msg}</div>`;
 
+  const marsBox = marsEnergy ? `
+    <div class="modal-transit-box" style="background:${marsEnergy.bg};border-left-color:${marsEnergy.color}">
+      <div class="modal-transit-headline">${marsEnergy.headline}</div>
+      <div class="modal-transit-vibe">${marsEnergy.vibe}</div>
+      <div class="modal-transit-body">${marsEnergy.body}</div>
+    </div>` : '';
+
   const moonEnergyBox = moonEnergy ? `
     <div class="modal-transit-box" style="background:#f0fbfb;border-left-color:var(--green-mid)">
       <div class="modal-transit-headline">${moonEnergy.headline}</div>
-      <div class="modal-transit-vibe">${moonEnergy.vibe}</div>
-      <div class="modal-transit-body">${moonEnergy.body}</div>
+      <div class="modal-transit-vibe">${moonEnergy.vibe}${moon&&moon.approachingVOC?' · void approaching':''}</div>
+      <div class="modal-transit-body">${moonEnergy.body}${vocNoteM}${justEnteredNoteM}</div>
     </div>` : '';
 
   document.getElementById('modalContent').innerHTML=`
@@ -1143,6 +1246,7 @@ function openDayModal(ds){
     </div>
     ${moonDetail}
     ${transitBox}
+    ${marsBox}
     ${moonEnergyBox}
     ${ev?`<div class="modal-event-box"><strong>✦ ${ev.title}</strong><br><span style="font-size:0.76rem">${ev.guidance}</span>${ev.action?`<div class="modal-event-action"><strong>Today's Action:</strong> ${ev.action}</div>`:''}</div>`:''}
     <div class="modal-prompt"><strong>✦ ${prompt.label}</strong>${prompt.text}</div>
