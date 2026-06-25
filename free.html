@@ -214,10 +214,16 @@ main{padding:22px 20px 60px;max-width:820px;}
 .tmb-arrows{color:var(--border);font-size:0.85rem;}
 
 /* TRANSIT PANEL */
-.transit-panel{border-radius:8px;padding:12px 14px;margin-bottom:10px;border-left:3px solid var(--gold);}
+.transit-panel{border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid var(--gold);}
 .transit-panel-headline{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;color:var(--text);margin-bottom:3px;letter-spacing:0.01em;}
 .transit-panel-vibe{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-light);margin-bottom:7px;}
 .transit-panel-body{font-size:0.8rem;color:var(--text-dim);line-height:1.75;}
+
+/* MOON SIGN DAILY PANEL */
+.moon-panel{border-radius:8px;padding:12px 14px;margin-bottom:10px;border-left:3px solid var(--green-mid);background:#f0fbfb;}
+.moon-panel-headline{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;color:var(--green);margin-bottom:3px;letter-spacing:0.01em;}
+.moon-panel-vibe{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-light);margin-bottom:7px;}
+.moon-panel-body{font-size:0.8rem;color:var(--text-dim);line-height:1.75;}
 
 /* CALENDAR MOON SIGN */
 .cal-moon-sign{font-size:0.49rem;color:var(--text-light);display:block;line-height:1.3;letter-spacing:0.01em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
@@ -590,6 +596,75 @@ function getDailyTransitEnergy(dateStr) {
   );
 }
 
+const MOON_SIGN_ENERGY = {
+  Aries: {
+    headline:'Moon in Aries',
+    vibe:'initiating · direct · restless',
+    body:'The Moon in Aries sharpens emotion into immediate impulse. What you want right now is impossible to ignore — and it wants to move. There is a restlessness in the air, a low-level urgency that can be channeled into beginning something, confronting something, or finally saying the thing that has been sitting in your chest. Use the directness. Watch the edges for impatience.'
+  },
+  Taurus: {
+    headline:'Moon in Taurus',
+    vibe:'grounding · sensory · slow',
+    body:'The Moon settles into Taurus and the pace drops. Comfort, beauty, and physical sensation become the most instinctive language. Your body knows what it needs right now — and what it needs is real: rest, nourishment, texture, pleasure that can be touched. This is not a day for urgency. It is a day for receiving what is already here.'
+  },
+  Gemini: {
+    headline:'Moon in Gemini',
+    vibe:'curious · communicative · quick',
+    body:'The Moon in Gemini quickens the mind and multiplies the questions. Feelings move fast and shift easily right now — don\'t try to lock down a mood that is simply in motion. Conversation, writing, and thinking out loud are the natural modes. What needs to be said? The Moon in Gemini gives language to what has been circling without words. Catch the good ones before they move on.'
+  },
+  Cancer: {
+    headline:'Moon in Cancer',
+    vibe:'feeling-forward · intuitive · home',
+    body:'The Moon is at home in Cancer — the sign she rules — and her power is at its fullest. Emotional depth, strong intuition, and the desire to tend what genuinely matters are the hallmarks of this transit. What you feel right now is real information. Trust your instincts before you trust your logic. Tend the people, spaces, and relationships that make you feel genuinely held.'
+  },
+  Leo: {
+    headline:'Moon in Leo',
+    vibe:'expressive · generous · visible',
+    body:'The Moon in Leo brings warmth, generosity, and a natural desire to share what you love with others. Creativity flows without effort and play feels like the most honest mode. Lead from the heart today. What genuinely delights you? What are you proud of right now? The Moon in Leo says those things deserve to be visible — not for approval, but because joy is not meant to be hidden.'
+  },
+  Virgo: {
+    headline:'Moon in Virgo',
+    vibe:'precise · discerning · tending',
+    body:'The Moon in Virgo brings a precise, analytical quality to emotion. Small things reveal large truths. The urge to refine, organize, and tend to what has been neglected is strong and productive today. What in your daily life has been quietly slipping or needs genuine attention? This energy is ideal for addressing it with care — methodically, without drama, and with real effectiveness.'
+  },
+  Libra: {
+    headline:'Moon in Libra',
+    vibe:'relational · balancing · fair',
+    body:'The Moon in Libra turns attention toward connection, harmony, and what is genuinely fair in your most important relationships. How are things between you and the people who matter most? The desire for balanced exchange and mutual appreciation is strong right now. This is a good day for honest, diplomatic conversations — saying what needs to be said with care for how it lands.'
+  },
+  Scorpio: {
+    headline:'Moon in Scorpio',
+    vibe:'deep · intense · penetrating',
+    body:'The Moon in Scorpio brings emotional depth and intensity to whatever is already in the air. What is true beneath what appears on the surface? Trust what you sense rather than what you see — Scorpio moon reads subtext and undercurrents with extraordinary accuracy. Go deeper than the surface today. The truth is always more interesting than the version that is safe to say.'
+  },
+  Sagittarius: {
+    headline:'Moon in Sagittarius',
+    vibe:'expansive · truth-seeking · free',
+    body:'The Moon in Sagittarius lifts the horizon and asks what you genuinely believe. Philosophy over precision. Vision over detail. The emotional need right now is for freedom, meaning, and a sense that life is pointing somewhere significant. What do you truly believe is possible — not what is currently probable, but what you feel in your bones? Let that question breathe.'
+  },
+  Capricorn: {
+    headline:'Moon in Capricorn',
+    vibe:'purposeful · disciplined · focused',
+    body:'The Moon in Capricorn focuses emotion into purposeful effort. What are you building that genuinely matters, and what does it need from you right now? Discipline and sustained attention feel more natural than forced. The emotional body is most satisfied when it is working toward something real. Do the work that has long-term consequence. That is where the satisfaction lives today.'
+  },
+  Aquarius: {
+    headline:'Moon in Aquarius',
+    vibe:'visionary · collective · detached',
+    body:'The Moon in Aquarius steps back from the personal and sees the larger picture. The emotional need is for a sense of participation in something meaningful beyond your own life. What is your role in something bigger than yourself right now? Innovation, community, and shared vision feel most alive. Detachment is not coldness here — it is the clarity that comes from seeing things from above.'
+  },
+  Pisces: {
+    headline:'Moon in Pisces',
+    vibe:'intuitive · spiritually open · porous',
+    body:'The Moon in Pisces brings heightened sensitivity, emotional porousness, and access to what is usually invisible. The boundary between inner and outer is thinner today. Trust what surfaces as feeling, image, or intuition rather than reaching for logical thought. Rest more than you think you need to. Dream. Allow what wants to emerge to come through without forcing it into words before it is ready.'
+  }
+};
+
+function getMoonSignEnergy(dateStr) {
+  const moon = getMoonData(dateStr);
+  if (!moon) return null;
+  return MOON_SIGN_ENERGY[moon.sign] || null;
+}
+
 const MONTHS = [
   { id:'2026-06', name:'June 2026', theme:'The Partnership Sky Opens', mantra:'"The right people are already moving toward me."',
     overview:'Jupiter enters Cancer mid-June 2026 — the most benefic planet in its sign of exaltation. In Vedic astrology, this is one of the most auspicious transits possible: Jupiter\'s wisdom and expansion at maximum strength. The collective theme for the next 12 months: partnership, collaboration, and who you choose to build with. Jupiter in Cancer asks — who are the right people, and what becomes possible when you build together? The Summer Solstice (June 20–21) is one of the four most powerful natural seeding points of the year. The New Moon in Cancer on June 25 opens the most significant partnership cycle of the year. What you plant now in terms of collaboration, connection, and chosen partners carries the support of one of the most benefic transits of the decade.',
@@ -883,6 +958,7 @@ function buildTodayCard(){
   const moon=getMoonData(todayStr);
   const event=KEY_DATES[todayStr];
   const transit=getDailyTransitEnergy(todayStr);
+  const moonEnergy=getMoonSignEnergy(todayStr);
   const dateFormatted=today.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
 
   let hdMsg='';
@@ -916,11 +992,20 @@ function buildTodayCard(){
        </div>`
     : `<div class="today-msg">${pd.msg}</div>`;
 
+  const moonEnergyBlock = moonEnergy
+    ? `<div class="moon-panel">
+        <div class="moon-panel-headline">${moonEnergy.headline}</div>
+        <div class="moon-panel-vibe">${moonEnergy.vibe}</div>
+        <div class="moon-panel-body">${moonEnergy.body}</div>
+       </div>`
+    : '';
+
   card.innerHTML=`
     <div class="today-card-header"><h3>✦ Today</h3><span class="today-date">${dateFormatted}</span></div>
     <div class="today-planet-day" style="color:${pd.color}">${pd.name}</div>
     ${moonBar}
     ${transitBlock}
+    ${moonEnergyBlock}
     ${hdMsg}
     ${event?`<div class="modal-event-box"><strong>✦ ${event.title}</strong>${event.guidance}</div>`:''}
     <div class="today-prompt"><strong>✦ ${prompt.label}</strong>${prompt.text}</div>
@@ -1010,6 +1095,7 @@ function openDayModal(ds){
   const moon=getMoonData(ds);
   const ev=KEY_DATES[ds];
   const transit=getDailyTransitEnergy(ds);
+  const moonEnergy=getMoonSignEnergy(ds);
   const prompt=getPromptForDate(ds);
   const todos=getDayTodos(ds);
   const moodSaved=parseInt(localStorage.getItem('mood-'+ds)||'0');
@@ -1043,6 +1129,13 @@ function openDayModal(ds){
       <div class="modal-transit-body">${transit.body}</div>
     </div>` : `<div class="modal-planet">${pd.msg}</div>`;
 
+  const moonEnergyBox = moonEnergy ? `
+    <div class="modal-transit-box" style="background:#f0fbfb;border-left-color:var(--green-mid)">
+      <div class="modal-transit-headline">${moonEnergy.headline}</div>
+      <div class="modal-transit-vibe">${moonEnergy.vibe}</div>
+      <div class="modal-transit-body">${moonEnergy.body}</div>
+    </div>` : '';
+
   document.getElementById('modalContent').innerHTML=`
     <div class="modal-header">
       <div><div class="modal-date-title">${dateFormatted}</div><div class="modal-day-tag" style="color:${pd.color}">${pd.name}</div></div>
@@ -1050,6 +1143,7 @@ function openDayModal(ds){
     </div>
     ${moonDetail}
     ${transitBox}
+    ${moonEnergyBox}
     ${ev?`<div class="modal-event-box"><strong>✦ ${ev.title}</strong><br><span style="font-size:0.76rem">${ev.guidance}</span>${ev.action?`<div class="modal-event-action"><strong>Today's Action:</strong> ${ev.action}</div>`:''}</div>`:''}
     <div class="modal-prompt"><strong>✦ ${prompt.label}</strong>${prompt.text}</div>
     <div class="day-todos">
