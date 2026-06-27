@@ -11,25 +11,39 @@
   --green-mid:  #50A19F;
   --green-light:#B1E9E8;
   --gold:       #B8832A;
-  --gold-light: #FDBB89;
   --text:       #1a3a3a;
   --text-dim:   #3a5a5a;
   --text-light: #6a8a8a;
   --bg:         #f4fafa;
   --card:       #ffffff;
   --border:     #d0e8e8;
-  --done-bg:    #f0faf9;
   --done-text:  #8abab8;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
 /* HEADER */
-.header{background:var(--green);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.header{background:var(--green);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 .header-brand{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#fff;letter-spacing:0.04em;}
-.header-sub{font-size:0.68rem;color:rgba(255,255,255,0.65);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
-.header-reset{font-size:0.7rem;color:rgba(255,255,255,0.5);background:none;border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 14px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;}
-.header-reset:hover{color:#fff;border-color:rgba(255,255,255,0.5);}
+.header-sub{font-size:0.67rem;color:rgba(255,255,255,0.6);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.identity-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 12px;}
+.identity-pill label{font-size:0.63rem;color:rgba(255,255,255,0.55);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;}
+.identity-pill select{background:transparent;border:none;color:#fff;font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:500;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none;}
+.sync-badge{font-size:0.63rem;color:rgba(255,255,255,0.45);white-space:nowrap;}
+.sync-badge.ok{color:var(--green-light);}
+.header-btn{font-size:0.68rem;color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:5px 14px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;white-space:nowrap;}
+.header-btn:hover{color:#fff;background:rgba(255,255,255,0.2);}
+.header-reset{font-size:0.68rem;color:rgba(255,255,255,0.45);background:none;border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;}
+.header-reset:hover{color:#fff;border-color:rgba(255,255,255,0.4);}
+
+/* COLLAB BANNER */
+.collab-banner{background:#054d4b;border-bottom:1px solid rgba(177,233,232,0.18);padding:10px 24px;display:none;align-items:center;gap:10px;flex-wrap:wrap;}
+.collab-label{font-size:0.72rem;color:rgba(255,255,255,0.7);white-space:nowrap;}
+.share-url-input{flex:1;min-width:180px;background:rgba(255,255,255,0.07);border:1px solid rgba(177,233,232,0.2);border-radius:8px;padding:5px 10px;color:#fff;font-size:0.68rem;font-family:'Inter',sans-serif;outline:none;}
+.copy-btn{background:var(--green-light);color:var(--green);border:none;border-radius:8px;padding:5px 14px;font-size:0.7rem;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;flex-shrink:0;}
+.sync-now-btn{background:transparent;border:1px solid rgba(177,233,232,0.25);border-radius:8px;padding:5px 12px;font-size:0.68rem;color:rgba(255,255,255,0.55);cursor:pointer;font-family:'Inter',sans-serif;flex-shrink:0;}
+.sync-now-btn:hover{color:rgba(255,255,255,0.85);}
 
 /* LAYOUT */
 .main{max-width:860px;margin:0 auto;padding:32px 20px 60px;}
@@ -55,18 +69,19 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* TASK ITEMS */
 .tasks{padding:10px 0;}
-.task-item{display:flex;align-items:flex-start;gap:12px;padding:10px 22px;cursor:pointer;transition:background 0.15s;border-radius:0;}
+.task-item{display:flex;align-items:flex-start;gap:12px;padding:10px 22px;cursor:pointer;transition:background 0.15s;}
 .task-item:hover{background:#f7fdfd;}
-.task-item.done{opacity:0.55;}
+.task-item.done{opacity:0.58;}
 .task-item.done .task-text{text-decoration:line-through;color:var(--done-text);}
 .task-checkbox{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;background:#fff;}
 .task-item.done .task-checkbox{background:var(--green);border-color:var(--green);}
 .task-check-icon{color:#fff;font-size:10px;display:none;}
 .task-item.done .task-check-icon{display:block;}
-.task-body{flex:1;}
+.task-body{flex:1;min-width:0;}
 .task-text{font-size:0.82rem;color:var(--text-dim);line-height:1.5;}
 .task-meta{font-size:0.67rem;color:var(--text-light);margin-top:2px;}
 .task-tag{display:inline-block;background:#e8f6f6;color:var(--green-mid);border-radius:10px;padding:1px 8px;font-size:0.62rem;letter-spacing:0.04em;margin-top:3px;}
+.task-claimer{font-size:0.62rem;color:var(--green-mid);margin-top:3px;opacity:0.85;}
 
 /* SUBTASKS */
 .subtask-item{display:flex;align-items:flex-start;gap:10px;padding:7px 22px 7px 52px;cursor:pointer;transition:background 0.15s;}
@@ -81,7 +96,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 /* DIVIDER */
 .task-divider{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);padding:12px 22px 4px;border-top:1px solid #f0f8f8;margin-top:4px;}
 
-/* LINKS TABLE */
+/* LINKS SECTION */
 .links-section{background:var(--card);border-radius:14px;padding:20px 22px;margin-bottom:20px;box-shadow:0 1px 8px rgba(6,102,100,0.06);}
 .links-title{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .links-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
@@ -91,8 +106,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .link-name{font-size:0.75rem;font-weight:500;color:var(--text);}
 .link-url{font-size:0.65rem;color:var(--text-light);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .link-badge{font-size:0.58rem;letter-spacing:0.06em;color:#fff;background:var(--green);border-radius:8px;padding:1px 6px;display:inline-block;margin-top:2px;width:fit-content;}
+.link-badge.rose{background:#b86080;}
 
-/* SUBSCRIBERS TABLE */
+/* SUBSCRIBERS */
 .sub-section{background:var(--card);border-radius:14px;padding:20px 22px;margin-bottom:20px;box-shadow:0 1px 8px rgba(6,102,100,0.06);}
 .sub-title{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);margin-bottom:14px;}
 .sub-table{width:100%;border-collapse:collapse;font-size:0.75rem;}
@@ -103,9 +119,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .badge.done{background:#e0f5f4;color:var(--green);}
 .badge.pending{background:#fff3e6;color:var(--gold);}
 .badge.build{background:#e8eeff;color:#4a6ae8;}
+.badge.next{background:#fce8f3;color:#b86080;}
 .badge.na{background:#f0f0f0;color:#999;}
 
-/* UPDATED NOTE */
 .updated{text-align:center;font-size:0.67rem;color:var(--text-light);margin-top:32px;}
 </style>
 </head>
@@ -116,31 +132,47 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="header-brand">✦ EAUCO — Project Tracker</div>
     <div class="header-sub">Planner Business · Click any item to mark done · Saves automatically</div>
   </div>
-  <button class="header-reset" onclick="resetAll()">Reset All</button>
+  <div class="header-right">
+    <div class="identity-pill">
+      <label for="identity-select">you are</label>
+      <select id="identity-select" onchange="setCurrentUser(this.value)">
+        <option>Maddie</option>
+        <option>Chloe</option>
+        <option>Anthony</option>
+      </select>
+    </div>
+    <span id="sync-status" class="sync-badge"></span>
+    <button class="header-btn" id="collab-btn" onclick="handleCollabBtn()">Enable Sharing</button>
+    <button class="header-reset" onclick="resetAll()">Reset All</button>
+  </div>
+</div>
+
+<!-- Appears once sharing is enabled -->
+<div id="collab-banner" class="collab-banner">
+  <span class="collab-label">🔗 Sharing active — send this link to Chloe &amp; Anthony:</span>
+  <input id="share-url-input" type="text" readonly class="share-url-input" />
+  <button id="copy-btn" class="copy-btn" onclick="copyShareLink()">Copy Link</button>
+  <button class="sync-now-btn" onclick="pullState()">↺ Sync Now</button>
 </div>
 
 <div class="main">
 
-  <!-- Overview Stats -->
-  <div class="overview" id="overview">
+  <div class="overview">
     <div class="ov-card"><span class="ov-num" id="stat-done">0</span><span class="ov-label">Done</span></div>
     <div class="ov-card"><span class="ov-num" id="stat-total">0</span><span class="ov-label">Total Tasks</span></div>
     <div class="ov-card"><span class="ov-num" id="stat-pct">0%</span><span class="ov-label">Complete</span></div>
-    <div class="ov-card"><span class="ov-num" id="stat-subs">2</span><span class="ov-label">Subscribers</span></div>
+    <div class="ov-card"><span class="ov-num" id="stat-subs">3</span><span class="ov-label">Planners Live</span></div>
   </div>
 
-  <!-- Phase 0 -->
+  <!-- PHASE 0 -->
   <div class="phase">
     <div class="phase-header">
-      <div class="phase-left">
-        <span class="phase-icon">✅</span>
-        <div>
-          <div class="phase-title">Phase 0 — Foundation</div>
-          <div class="phase-target">Completed June 22, 2026</div>
-        </div>
-      </div>
+      <div class="phase-left"><span class="phase-icon">✅</span><div>
+        <div class="phase-title">Phase 0 — Foundation</div>
+        <div class="phase-target">Completed June 22, 2026</div>
+      </div></div>
       <div class="phase-progress">
-        <div class="progress-bar"><div class="progress-fill" id="prog-0" style="width:0%"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-0"></div></div>
         <span class="progress-pct" id="pct-0">0%</span>
       </div>
     </div>
@@ -157,48 +189,44 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
   </div>
 
-  <!-- Phase 1 -->
+  <!-- PHASE 1 -->
   <div class="phase">
     <div class="phase-header">
-      <div class="phase-left">
-        <span class="phase-icon">🔄</span>
-        <div>
-          <div class="phase-title">Phase 1 — Beta</div>
-          <div class="phase-target">Target: June 22 – July 4, 2026</div>
-        </div>
-      </div>
+      <div class="phase-left"><span class="phase-icon">🔄</span><div>
+        <div class="phase-title">Phase 1 — Beta</div>
+        <div class="phase-target">Target: June 22 – July 4, 2026</div>
+      </div></div>
       <div class="phase-progress">
-        <div class="progress-bar"><div class="progress-fill" id="prog-1" style="width:0%"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-1"></div></div>
         <span class="progress-pct" id="pct-1">0%</span>
       </div>
     </div>
     <div class="tasks" id="phase-1">
       <div class="task-divider">Planners</div>
       <div class="task-item" data-id="p1-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Chloe filled out intake form</div><div class="task-meta">✦ Confirmed working — flow is live</div></div></div>
-      <div class="task-item" data-id="p1-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Sister's planner built</div><div class="task-meta">Intake received — paste in Claude to build · ~1 day</div><span class="task-tag">Next up</span></div></div>
-      <div class="task-item" data-id="p1-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Send Andie the intake form link</div><div class="task-meta">Target: this week</div></div></div>
-      <div class="task-item" data-id="p1-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Andie's planner built</div><div class="task-meta">After she fills out form · ~1 day to build</div></div></div>
+      <div class="task-item" data-id="p1-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Andie's planner built + live (Gemini Rising · all 14 months)</div><div class="task-meta">eauco-mads.github.io/andie-planner</div></div></div>
+      <div class="task-item" data-id="p1-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Chloe's Cycle Harmony v2 + Human Design built + live</div><div class="task-meta">Manifestor · Emotional Authority · 4/6 · Cross of Penetration 2</div></div></div>
+      <div class="task-item" data-id="p1-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Cycle Harmony landing page built + live</div><div class="task-meta">eauco-mads.github.io/chloe-planner/cycle-harmony.html</div></div></div>
+      <div class="task-item" data-id="p1-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Follow up with Devin — send intake form + build his planner</div><div class="task-meta">Next beta after Chloe + Andie</div><span class="task-tag">Next up</span></div></div>
+      <div class="task-item" data-id="p1-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Check in with Andie — how is she liking her planner?</div><div class="task-meta">Gather feedback · what would make it better?</div></div></div>
       <div class="task-divider">Email + Automation</div>
-      <div class="task-item" data-id="p1-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Write GHL 3-email sequence</div><div class="task-meta">Target: June 28</div></div></div>
-      <div class="subtask-item" data-id="p1-5a" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 1 — Welcome + free planner link</div></div></div>
-      <div class="subtask-item" data-id="p1-5b" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 2 — What the personalized version includes</div></div></div>
-      <div class="subtask-item" data-id="p1-5c" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 3 — Subscribe CTA + intake form link</div></div></div>
-      <div class="task-item" data-id="p1-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Swap landing page email capture → GHL endpoint</div><div class="task-meta">After GHL sequence is live</div></div></div>
+      <div class="task-item" data-id="p1-7" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Write GHL 3-email sequence</div><div class="task-meta">Target: June 28</div></div></div>
+      <div class="subtask-item" data-id="p1-7a" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 1 — Welcome + free planner link</div></div></div>
+      <div class="subtask-item" data-id="p1-7b" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 2 — What the personalized version includes</div></div></div>
+      <div class="subtask-item" data-id="p1-7c" onclick="toggle(this)"><div class="subtask-checkbox"><span class="subtask-check-icon">✓</span></div><div class="task-body"><div class="task-text">Email 3 — Subscribe CTA + intake form link</div></div></div>
+      <div class="task-item" data-id="p1-8" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Swap landing page email capture → GHL endpoint</div><div class="task-meta">After GHL sequence is live</div></div></div>
     </div>
   </div>
 
-  <!-- Phase 2 -->
+  <!-- PHASE 2 -->
   <div class="phase">
     <div class="phase-header">
-      <div class="phase-left">
-        <span class="phase-icon">⏳</span>
-        <div>
-          <div class="phase-title">Phase 2 — Launch</div>
-          <div class="phase-target">Target: Week of July 7 · Launch July 14, 2026</div>
-        </div>
-      </div>
+      <div class="phase-left"><span class="phase-icon">⏳</span><div>
+        <div class="phase-title">Phase 2 — Launch</div>
+        <div class="phase-target">Target: Week of July 7 · Launch July 14, 2026</div>
+      </div></div>
       <div class="phase-progress">
-        <div class="progress-bar"><div class="progress-fill" id="prog-2" style="width:0%"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-2"></div></div>
         <span class="progress-pct" id="pct-2">0%</span>
       </div>
     </div>
@@ -207,7 +235,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <div class="task-item" data-id="p2-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok account created</div><div class="task-meta">Target: July 7</div></div></div>
       <div class="task-item" data-id="p2-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok bio + profile photo + link in bio</div><div class="task-meta">Target: July 7</div></div></div>
       <div class="task-item" data-id="p2-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pinterest account created</div><div class="task-meta">Target: July 7</div></div></div>
-      <div class="task-item" data-id="p2-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pinterest boards set up</div><div class="task-meta">Astrology · Human Design · Moon · Planner Aesthetic · Target: July 7</div></div></div>
+      <div class="task-item" data-id="p2-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pinterest boards set up (Astrology · Human Design · Moon · Planner Aesthetic)</div><div class="task-meta">Target: July 7</div></div></div>
       <div class="task-divider">Content</div>
       <div class="task-item" data-id="p2-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok 1 — What is this? (planner overview + personalized vs free)</div><div class="task-meta">Target: July 8–10</div></div></div>
       <div class="task-item" data-id="p2-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">TikTok 2 — Your moon phases for the year</div><div class="task-meta">Target: July 8–10</div></div></div>
@@ -223,18 +251,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
   </div>
 
-  <!-- Phase 3 -->
+  <!-- PHASE 3 -->
   <div class="phase">
     <div class="phase-header">
-      <div class="phase-left">
-        <span class="phase-icon">⏳</span>
-        <div>
-          <div class="phase-title">Phase 3 — Subscriber Operations</div>
-          <div class="phase-target">Target: July 2026 · after first 3–5 paying subscribers</div>
-        </div>
-      </div>
+      <div class="phase-left"><span class="phase-icon">⏳</span><div>
+        <div class="phase-title">Phase 3 — Subscriber Operations</div>
+        <div class="phase-target">Target: July 2026 · after first 3–5 paying subscribers</div>
+      </div></div>
       <div class="phase-progress">
-        <div class="progress-bar"><div class="progress-fill" id="prog-3" style="width:0%"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-3"></div></div>
         <span class="progress-pct" id="pct-3">0%</span>
       </div>
     </div>
@@ -248,44 +273,57 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
   </div>
 
-  <!-- Phase 4 -->
+  <!-- PHASE 4 -->
   <div class="phase">
     <div class="phase-header">
-      <div class="phase-left">
-        <span class="phase-icon">⏳</span>
-        <div>
-          <div class="phase-title">Phase 4 — Physical Planners</div>
-          <div class="phase-target">Target: September 2026</div>
-        </div>
-      </div>
+      <div class="phase-left"><span class="phase-icon">⏳</span><div>
+        <div class="phase-title">Phase 4 — Physical Planners</div>
+        <div class="phase-target">Target: September 2026</div>
+      </div></div>
       <div class="phase-progress">
-        <div class="progress-bar"><div class="progress-fill" id="prog-4" style="width:0%"></div></div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-4"></div></div>
         <span class="progress-pct" id="pct-4">0%</span>
       </div>
     </div>
     <div class="tasks" id="phase-4">
       <div class="task-item" data-id="p4-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Decide on format (spiral / perfect bound / hardcover)</div></div></div>
       <div class="task-item" data-id="p4-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Canva design template built</div><div class="task-meta">Cover + monthly spreads + chart pages + HD pages</div></div></div>
-      <div class="task-item" data-id="p4-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Print partner chosen</div><div class="task-meta">Mixam (bulk) or Printify (on-demand)</div></div></div>
+      <div class="task-item" data-id="p4-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Print partner chosen (Mixam bulk or Printify on-demand)</div></div></div>
       <div class="task-item" data-id="p4-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Pricing finalized ($88–111 + digital subscription)</div></div></div>
       <div class="task-item" data-id="p4-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Order form added to landing page</div></div></div>
       <div class="task-item" data-id="p4-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">First test order placed + reviewed</div></div></div>
     </div>
   </div>
 
-  <!-- Subscribers -->
+  <!-- PHASE 5 — NEW -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-left"><span class="phase-icon">⚙️</span><div>
+        <div class="phase-title">Phase 5 — Tech Infrastructure</div>
+        <div class="phase-target">Target: July–August 2026 · makes every future build faster</div>
+      </div></div>
+      <div class="phase-progress">
+        <div class="progress-bar"><div class="progress-fill" id="prog-5"></div></div>
+        <span class="progress-pct" id="pct-5">0%</span>
+      </div>
+    </div>
+    <div class="tasks" id="phase-5">
+      <div class="task-divider">Astro Automation — Swiss Ephemeris</div>
+      <div class="task-item" data-id="p5-1" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Integrate astronomia npm package (Swiss Ephemeris JS port)</div><div class="task-meta">Same engine Astro Future + NASA use · enables auto moon phases + planet positions without manual chart entry per subscriber</div></div></div>
+      <div class="task-item" data-id="p5-2" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Build birth data → auto chart generator script</div><div class="task-meta">Name + date/time/location in → all planet positions, nakshatras, dasha timelines out · eliminates manual entry for every new subscriber</div></div></div>
+      <div class="task-item" data-id="p5-3" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Standardized planner base template (swap chart data in → ready to style)</div><div class="task-meta">Target: reduce build time from ~4h → under 1h per subscriber</div></div></div>
+      <div class="task-divider">Cycle Harmony — Scale</div>
+      <div class="task-item" data-id="p5-4" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Wire cycle-harmony.html email capture → Formspree or GHL</div><div class="task-meta">Free ebook CTA is still a stub — needs backend to actually collect leads</div></div></div>
+      <div class="task-item" data-id="p5-5" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Add Cycle Harmony tab to Maddie's planner</div><div class="task-meta">Already built for Chloe · replicate for Maddie's personalized version</div></div></div>
+      <div class="task-item" data-id="p5-6" onclick="toggle(this)"><div class="task-checkbox"><span class="task-check-icon">✓</span></div><div class="task-body"><div class="task-text">Add Cycle Harmony tab to Andie's planner</div><div class="task-meta">Same pattern as Chloe's · swap into andie-planner repo</div></div></div>
+    </div>
+  </div>
+
+  <!-- SUBSCRIBERS -->
   <div class="sub-section">
-    <div class="sub-title">👥 Beta Subscribers</div>
+    <div class="sub-title">👥 Beta Subscribers &amp; Planners</div>
     <table class="sub-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Intake</th>
-          <th>Planner</th>
-          <th>Stripe</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Name</th><th>Intake</th><th>Planner</th><th>Stripe</th><th>Notes</th></tr></thead>
       <tbody>
         <tr>
           <td><strong>Maddie</strong></td>
@@ -299,27 +337,27 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <td><span class="badge done">✅ Done</span></td>
           <td><span class="badge done">✅ Live</span></td>
           <td><span class="badge pending">⏳ Pending</span></td>
-          <td>Libra Rising · eauco-mads.github.io/chloe-planner</td>
+          <td>Libra Rising · Cycle Harmony + HD live · eauco-mads.github.io/chloe-planner</td>
         </tr>
         <tr>
-          <td><strong>Sister</strong></td>
+          <td><strong>Andie Galloway</strong></td>
           <td><span class="badge done">✅ Done</span></td>
-          <td><span class="badge build">🔄 Build next</span></td>
+          <td><span class="badge done">✅ Live</span></td>
           <td><span class="badge pending">⏳ Pending</span></td>
-          <td>Intake received — paste to Claude</td>
+          <td>Gemini Rising · eauco-mads.github.io/andie-planner · check in for feedback</td>
         </tr>
         <tr>
-          <td><strong>Andie</strong></td>
-          <td><span class="badge pending">⏳ Send form</span></td>
+          <td><strong>Devin</strong></td>
+          <td><span class="badge next">⏳ Send form</span></td>
+          <td><span class="badge next">🔜 Next build</span></td>
           <td><span class="badge pending">⏳ Pending</span></td>
-          <td><span class="badge pending">⏳ Pending</span></td>
-          <td>Send intake link this week</td>
+          <td>Next beta — follow up to get intake filled out</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Live Links -->
+  <!-- LIVE LINKS -->
   <div class="links-section">
     <div class="links-title">🔗 Live Links</div>
     <div class="links-grid">
@@ -332,6 +370,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <span class="link-name">Chloe's Planner</span>
         <span class="link-url">eauco-mads.github.io/chloe-planner/</span>
         <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://eauco-mads.github.io/andie-planner/" target="_blank">
+        <span class="link-name">Andie's Planner</span>
+        <span class="link-url">eauco-mads.github.io/andie-planner/</span>
+        <span class="link-badge">Live</span>
+      </a>
+      <a class="link-item" href="https://eauco-mads.github.io/chloe-planner/cycle-harmony.html" target="_blank">
+        <span class="link-name">Cycle Harmony Landing</span>
+        <span class="link-url">eauco-mads.github.io/chloe-planner/cycle-harmony.html</span>
+        <span class="link-badge rose">Cycle ♀</span>
       </a>
       <a class="link-item" href="https://eauco-mads.github.io/maddie-planner/free.html" target="_blank">
         <span class="link-name">Free Planner</span>
@@ -354,8 +402,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <span class="link-badge">Live</span>
       </a>
       <a class="link-item" href="https://docs.google.com/spreadsheets/d/13Et-UBWZSdYLgHNm6qca9B28krauU3euHsIjcVEtZIM" target="_blank">
-        <span class="link-name">Subscriber Tracker</span>
-        <span class="link-url">Google Sheet</span>
+        <span class="link-name">Subscriber Sheet</span>
+        <span class="link-url">Google Sheets</span>
         <span class="link-badge">Live</span>
       </a>
       <a class="link-item" href="https://github.com/eauco-mads/maddie-planner" target="_blank">
@@ -366,79 +414,264 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
   </div>
 
-  <div class="updated">✦ Checks save automatically in your browser · Last built June 22, 2026</div>
+  <div class="updated">✦ Checks save to your browser automatically · Updated June 26, 2026 · Click "Enable Sharing" to sync across Maddie, Chloe &amp; Anthony</div>
 
 </div>
 
 <script>
-const STORAGE_KEY = 'eauco-tracker-v1';
+const STORAGE_KEY  = 'eauco-tracker-v2';
+const IDENTITY_KEY = 'eauco-tracker-identity';
+const BLOB_KEY     = 'eauco-tracker-blob';
+const API_BASE     = 'https://jsonblob.com/api/jsonBlob';
+
+// Pre-marked done as of June 26, 2026
+const DEFAULT_DONE = {
+  'p0-1':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p0-2':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p0-3':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p0-4':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p0-5':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p0-6':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p0-7':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p0-8':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p0-9':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p1-1':{ done:true, by:'Maddie', at:'2026-06-22' },
+  'p1-2':{ done:true, by:'Maddie', at:'2026-06-24' },
+  'p1-3':{ done:true, by:'Maddie', at:'2026-06-26' },
+  'p1-4':{ done:true, by:'Maddie', at:'2026-06-26' },
+};
+
+let blobId = null;
+let syncTimer = null;
+let isSyncing = false;
+
+function readLocal() {
+  try {
+    const cur  = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const old  = JSON.parse(localStorage.getItem('eauco-tracker-v1') || '{}');
+    const raw  = { ...old, ...cur };
+    const out  = {};
+    for (const [id, val] of Object.entries(raw)) {
+      if (typeof val === 'boolean') {
+        out[id] = val ? { done:true, by:'?', at:'2026-06-22' } : { done:false };
+      } else if (val && typeof val === 'object') {
+        out[id] = val;
+      }
+    }
+    return out;
+  } catch { return {}; }
+}
+
+function writeLocal(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
 
 function getState() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+  const local = readLocal();
+  const merged = { ...DEFAULT_DONE };
+  for (const [id, val] of Object.entries(local)) merged[id] = val;
+  return merged;
 }
-function saveState(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+
+function getCurrentUser() {
+  return localStorage.getItem(IDENTITY_KEY) || 'Maddie';
+}
+
+function setCurrentUser(name) {
+  localStorage.setItem(IDENTITY_KEY, name);
+}
+
+function fmtDate(iso) {
+  return new Date(iso + 'T12:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric' });
+}
+
+function applyOne(id, val, el) {
+  if (!el) el = document.querySelector('[data-id="' + id + '"]');
+  if (!el) return;
+  const done = val && val.done;
+  el.classList.toggle('done', !!done);
+  let claimer = el.querySelector('.task-claimer');
+  if (done) {
+    if (!claimer) {
+      claimer = document.createElement('div');
+      claimer.className = 'task-claimer';
+      el.querySelector('.task-body').appendChild(claimer);
+    }
+    const name = (val.by && val.by !== '?') ? val.by : null;
+    const date = val.at ? fmtDate(val.at) : null;
+    claimer.textContent = [name, date].filter(Boolean).join(' · ');
+  } else if (claimer) {
+    claimer.remove();
+  }
+}
+
+function applyAll(state) {
+  document.querySelectorAll('[data-id]').forEach(el => applyOne(el.dataset.id, state[el.dataset.id], el));
 }
 
 function toggle(el) {
   const id = el.dataset.id;
   const state = getState();
-  state[id] = !state[id];
-  saveState(state);
-  applyState(id, state[id], el);
+  const cur = state[id];
+  const nowDone = !(cur && cur.done);
+  state[id] = nowDone
+    ? { done:true, by:getCurrentUser(), at:new Date().toISOString().slice(0,10) }
+    : { done:false };
+  writeLocal(state);
+  applyOne(id, state[id], el);
   updateStats();
-}
-
-function applyState(id, done, el) {
-  if (!el) el = document.querySelector(`[data-id="${id}"]`);
-  if (!el) return;
-  if (done) el.classList.add('done');
-  else el.classList.remove('done');
+  if (blobId) pushState(state);
 }
 
 function resetAll() {
-  if (!confirm('Reset all checkboxes? This cannot be undone.')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  document.querySelectorAll('.task-item, .subtask-item').forEach(el => el.classList.remove('done'));
+  if (!confirm('Reset all checkboxes? Cannot be undone.')) return;
+  const fresh = { ...DEFAULT_DONE };
+  writeLocal(fresh);
+  applyAll(fresh);
   updateStats();
+  if (blobId) pushState(fresh);
 }
 
 function updateStats() {
   const state = getState();
-  const phases = [0, 1, 2, 3, 4];
-
   let totalDone = 0, totalAll = 0;
-
-  phases.forEach(p => {
+  [0,1,2,3,4,5].forEach(p => {
     const container = document.getElementById('phase-' + p);
     if (!container) return;
     const items = container.querySelectorAll('[data-id]');
     let done = 0;
-    items.forEach(item => {
-      if (state[item.dataset.id]) done++;
-    });
+    items.forEach(item => { const v = state[item.dataset.id]; if (v && v.done) done++; });
     const pct = items.length ? Math.round(done / items.length * 100) : 0;
     const fill = document.getElementById('prog-' + p);
     const label = document.getElementById('pct-' + p);
     if (fill) fill.style.width = pct + '%';
     if (label) label.textContent = pct + '%';
-    totalDone += done;
-    totalAll += items.length;
+    totalDone += done; totalAll += items.length;
   });
-
   const pct = totalAll ? Math.round(totalDone / totalAll * 100) : 0;
   document.getElementById('stat-done').textContent = totalDone;
   document.getElementById('stat-total').textContent = totalAll;
   document.getElementById('stat-pct').textContent = pct + '%';
 }
 
-// Init — restore saved state
+/* ── Collaboration ── */
+
+function setSyncStatus(msg, ok) {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'sync-badge' + (ok ? ' ok' : '');
+}
+
+function showBanner() {
+  const b = document.getElementById('collab-banner');
+  if (b) b.style.display = 'flex';
+  const btn = document.getElementById('collab-btn');
+  if (btn) btn.textContent = 'Sharing On';
+}
+
+function updateShareUrl() {
+  const url = location.origin + location.pathname + '?sync=' + blobId;
+  const el = document.getElementById('share-url-input');
+  if (el) el.value = url;
+}
+
+function copyShareLink() {
+  const el = document.getElementById('share-url-input');
+  if (!el) return;
+  navigator.clipboard.writeText(el.value).catch(() => { el.select(); document.execCommand('copy'); });
+  const btn = document.getElementById('copy-btn');
+  if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = 'Copy Link', 2000); }
+}
+
+async function enableCollaboration() {
+  setSyncStatus('creating sync…');
+  try {
+    const res = await fetch(API_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'Accept':'application/json' },
+      body: JSON.stringify(getState())
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const loc = res.headers.get('Location') || '';
+    blobId = loc.split('/').pop();
+    if (!blobId) throw new Error('No ID');
+    localStorage.setItem(BLOB_KEY, blobId);
+    history.replaceState(null, '', location.pathname + '?sync=' + blobId);
+    updateShareUrl();
+    showBanner();
+    startPolling();
+    setSyncStatus('synced ✓', true);
+  } catch(e) {
+    setSyncStatus('sharing unavailable — saving locally');
+  }
+}
+
+async function pushState(state) {
+  if (!blobId || isSyncing) return;
+  isSyncing = true;
+  setSyncStatus('saving…');
+  try {
+    const res = await fetch(API_BASE + '/' + blobId, {
+      method: 'PUT',
+      headers: { 'Content-Type':'application/json', 'Accept':'application/json' },
+      body: JSON.stringify(state)
+    });
+    if (res.ok) setSyncStatus('synced ✓', true);
+    else setSyncStatus('saved locally');
+  } catch { setSyncStatus('saved locally'); }
+  isSyncing = false;
+}
+
+async function pullState() {
+  if (!blobId) return;
+  setSyncStatus('syncing…');
+  try {
+    const res = await fetch(API_BASE + '/' + blobId, { headers:{ 'Accept':'application/json' } });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const remote = await res.json();
+    const local = readLocal();
+    const merged = { ...remote };
+    for (const [id, val] of Object.entries(local)) {
+      if (val && val.done && (!remote[id] || !remote[id].done)) merged[id] = val;
+    }
+    writeLocal(merged);
+    applyAll(getState());
+    updateStats();
+    const t = new Date().toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+    setSyncStatus('synced ' + t, true);
+  } catch { setSyncStatus('offline — saved locally'); }
+}
+
+function startPolling() {
+  if (syncTimer) clearInterval(syncTimer);
+  syncTimer = setInterval(pullState, 30000);
+}
+
+function handleCollabBtn() {
+  blobId ? pullState() : enableCollaboration();
+}
+
+/* ── Init ── */
 (function init() {
-  const state = getState();
-  Object.entries(state).forEach(([id, done]) => {
-    if (done) applyState(id, true);
-  });
+  const identity = getCurrentUser();
+  const sel = document.getElementById('identity-select');
+  if (sel) sel.value = identity;
+
+  const params = new URLSearchParams(location.search);
+  const urlBlob = params.get('sync');
+  blobId = urlBlob || localStorage.getItem(BLOB_KEY) || null;
+  if (urlBlob) localStorage.setItem(BLOB_KEY, blobId);
+
+  applyAll(getState());
   updateStats();
+
+  if (blobId) {
+    updateShareUrl();
+    showBanner();
+    startPolling();
+    pullState();
+  }
 })();
 </script>
 </body>
