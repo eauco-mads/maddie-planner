@@ -1,7 +1,21 @@
 # ✦ EAUCO Planner Business — Progress Tracker
 
-> **Last updated:** June 22, 2026  
+> **Last updated:** July 10, 2026  
 > Update this file every session. GitHub renders checkboxes — click them directly on GitHub to mark things done.
+
+---
+
+## ✅ Phase 0.5 — Maddie's Planner: Real Ephemeris + New Sections
+> **Completed:** July 10, 2026
+
+- [x] Real Swiss Ephemeris data pipeline (`tools/generate_ephemeris.py`, `pyswisseph`, Lahiri sidereal, whole-sign houses) — generates `data/ephemeris-2026-2027.json`, inlined into `index.html` at build time
+- [x] Corrected KEY_DATES + monthly transit narratives against real computed positions (`tools/generate_content.py`, `tools/generate_months.py`) — caught and fixed several real errors in the old hand-researched dates (e.g. July 2026 New Moon was dated the 24th, actually the 14th; Jupiter's Oct 2026–Jan 2027 detour into Leo/8th house was missing entirely; Mercury Rx Nov 2026 was off by ~2 weeks)
+- [x] Live daily transit engine (`getTodayTransits()`) — real conjunction/house detection against Maddie's natal chart, surfaced on the Today card
+- [x] New tabs: **Overview** (quick dashboard), **Living Chart** (today's real activations + Story + personalized "how to use this planner" guide + travel/timing tips), **Human Design** (bodygraph + type/authority/profile/channels + HD↔Vedic synthesis), **Cycle + Hormones** (cycle tracker, phase-aware daily card integration, one-month symptom tracker, weekly TCM tongue-check reminder)
+- [ ] Roll the same components out to Chloe's, Andie's, Devin's, and Kyle's planners (next round)
+- [ ] Send each subscriber "add to home screen" instructions once their planner is updated
+
+**Regenerating the ephemeris data (e.g. for a new date range or a new person):** `cd tools && python3 generate_ephemeris.py && python3 generate_content.py && python3 generate_months.py && python3 splice_content.py && python3 splice_engine.py` (requires `pyswisseph`: `pip install pyswisseph`)
 
 ---
 
