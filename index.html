@@ -427,6 +427,22 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .ch-tracker-grid input, .ch-tracker-grid select { width:100%; border:1px solid var(--border); border-radius:6px; padding:4px 5px; font-size:0.72rem; background:var(--surface); color:var(--text); }
 .tongue-card { background:var(--gold-bg); border-radius:12px; padding:14px 16px; margin-top:16px; border-left:3px solid var(--gold); font-size:0.78rem; color:var(--text-dim); line-height:1.75; }
 .tongue-card strong { color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:0.95rem; display:block; margin-bottom:6px; }
+
+/* ── PROGRESSIVE DISCLOSURE: moon-of-the-day teaser + "go deeper" detail ── */
+.moon-teaser { background:linear-gradient(135deg, var(--pink-bg), var(--gold-bg)); border-radius:12px; padding:14px 16px; margin-bottom:10px; border:1px solid var(--border); }
+.moon-teaser-head { font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--text); margin-bottom:5px; }
+.moon-teaser-body { font-size:0.8rem; color:var(--text-dim); line-height:1.7; }
+.moon-teaser-why { font-size:0.75rem; color:var(--pink); margin-top:6px; font-style:italic; }
+.go-deeper-toggle { font-size:0.68rem; letter-spacing:0.06em; color:var(--green); cursor:pointer; padding:6px 2px; user-select:none; display:flex; align-items:center; gap:5px; }
+.go-deeper-toggle .arrow { transition:transform 0.2s; font-size:0.6rem; }
+.go-deeper-toggle.open .arrow { transform:rotate(90deg); }
+.go-deeper-body { display:none; margin-top:6px; margin-bottom:10px; }
+.go-deeper-body.open { display:block; }
+.deeper-item { background:var(--card); border-radius:8px; padding:9px 12px; margin-bottom:6px; box-shadow:0 1px 4px var(--shadow); }
+.deeper-item-label { font-size:0.62rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-light); margin-bottom:3px; }
+.deeper-item-body { font-size:0.75rem; color:var(--text-dim); line-height:1.65; }
+.month-glance { display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
+.month-glance-item { font-size:0.78rem; color:var(--text-dim); line-height:1.6; background:var(--card); border-radius:8px; padding:9px 12px; box-shadow:0 1px 4px var(--shadow); }
 </style>
 </head>
 <body>
@@ -1182,6 +1198,89 @@ const HOUSE_HEADLINE = {
   9:'dharma and higher direction',10:'career and public reputation — your natal Sun/Mercury',
   11:'community and income — your natal Venus',12:'inner life and release — Ketu\'s natal house',
 };
+// ── PLAIN-LANGUAGE TRANSLATION LAYER (Moon-Calendar-app style: short, warm, no jargon) ──
+const MOON_VIBE = {
+  Aries:  { mood:'restless, get-it-done energy', craving:'to finally handle something you\'ve been putting off' },
+  Taurus: { mood:'slow, sensory, grounded energy — this is your natal Moon sign, so it may feel extra vivid', craving:'comfort, beauty, and a little indulgence' },
+  Gemini: { mood:'chatty, curious, quick-thinking energy', craving:'conversation and new information' },
+  Cancer: { mood:'tender, home-focused, intuitive energy', craving:'closeness and emotional safety' },
+  Leo:    { mood:'warm, expressive, wanting-to-be-seen energy', craving:'a little spotlight and creative play' },
+  Virgo:  { mood:'detail-focused, tidy-up-your-life energy', craving:'order and a sense of things being handled' },
+  Libra:  { mood:'relational, beauty-seeking, people-pleasing energy', craving:'harmony and connection' },
+  Scorpio:{ mood:'intense, all-or-nothing, go-beneath-the-surface energy', craving:'depth and honesty, not small talk' },
+  Sagittarius:{ mood:'big-picture, restless-for-freedom energy', craving:'a wider view and a little adventure' },
+  Capricorn:{ mood:'focused, disciplined, business-mode energy — this is your Rising sign, so today can feel extra "on"', craving:'progress on something that actually matters' },
+  Aquarius:{ mood:'independent, idea-driven, slightly detached energy', craving:'space to think your own thoughts' },
+  Pisces: { mood:'dreamy, sensitive, imagination-forward energy', craving:'rest and a little escape' },
+};
+const MOON_HOUSE_WHY = {
+  1:'today\'s mood is coloring how you show up and see yourself',
+  2:'money, self-worth, or what you\'re saying about your own value may be on your mind',
+  3:'expect a chattier-than-usual day — texts, small talk, quick decisions',
+  4:'you may be craving home, family, or just your own space today',
+  5:'this lights up your natural creative zone — Moon, Jupiter, and Saturn all live here for you, so it can hit a little deeper than usual',
+  6:'your daily routine, health, or workload is likely front of mind',
+  7:'a relationship or collaboration may feel more emotionally loaded than usual today',
+  8:'something under the surface may be asking for your attention — go easy on yourself',
+  9:'you may find yourself thinking bigger than usual, or wanting to learn / travel / believe in something',
+  10:'career or "how the world sees me" thoughts may be louder than usual today',
+  11:'friends, community, or future goals are likely on your mind',
+  12:'you may need more rest or alone time than usual — honor it if you can',
+};
+const PHASE_VIBE = {
+  'New Moon':'a fresh-start feeling — good day to set an intention, even a small one',
+  'Waxing Crescent':'a building, taking-first-steps feeling',
+  'First Quarter':'a decision-point feeling — something may need a push',
+  'Waxing Gibbous':'a refining, almost-there feeling',
+  'Full Moon':'an intense, everything-is-illuminated feeling — emotions may run higher than usual',
+  'Waning Gibbous':'a sharing, processing, "what did I learn" feeling',
+  'Last Quarter':'a releasing feeling — good day to let something go',
+  'Balsamic Moon':'a quiet, rest-before-renewal feeling',
+};
+const PLANET_VIBE = {
+  sun:'your core sense of self', moon:'your emotions', mercury:'your thoughts and words',
+  venus:'love, beauty, and what feels good', mars:'your drive and where friction shows up',
+  jupiter:'growth, luck, and expansion', saturn:'responsibility and hard-won progress',
+  rahu:'a restless hunger for what\'s next', ketu:'release, and old patterns surfacing',
+};
+function moonDayReading(dateStr){
+  const md = getMoonData(dateStr);
+  if(!md) return null;
+  const vibe = MOON_VIBE[md.vedSign];
+  const phraseVibe = PHASE_VIBE[md.phaseName] || '';
+  return {
+    emoji: md.emoji, phaseName: md.phaseName, sign: md.vedSign,
+    headline: `${md.emoji} Moon in ${md.vedSign}`,
+    body: `Today has ${vibe.mood}. You might find yourself craving ${vibe.craving}. It's also ${phraseVibe}.`,
+    why: md.house ? MOON_HOUSE_WHY[md.house] : ''
+  };
+}
+function plainConjunctionSentence(transitingPlanet, natalPlanet, sign){
+  const t = PLANET_VIBE[transitingPlanet], n = PLANET_VIBE[natalPlanet];
+  return `${cap(transitingPlanet)} is lining up with your natal ${cap(natalPlanet)} today, both in ${sign} — think of it as ${t} colliding with ${n}. It's a "that explains a lot" kind of day, not just a mood.`;
+}
+function plainDailyReading(dateStr){
+  const day = EPHEMERIS.daily[dateStr];
+  if(!day) return null;
+  const dasha = dashaContextFor(dateStr);
+  const teaser = moonDayReading(dateStr);
+  const deeper = [];
+  const PLANETS = ['sun','moon','mercury','venus','mars','jupiter','saturn','rahu','ketu'];
+  for(const p of PLANETS){
+    const t = day[p];
+    for(const np of PLANETS){
+      const natal = NATAL[np];
+      if(t.sign === natal.sign && Math.abs(t.deg - natal.deg) <= 3 && p !== np){
+        deeper.push({ label:`${cap(p)} ↔ your natal ${cap(np)}`, body: plainConjunctionSentence(p, np, t.sign) });
+      }
+    }
+  }
+  deeper.push({ label:'Moon detail', body:`The Moon is moving through ${day.moon.nakshatra} nakshatra right now (a more precise, 27-part reading of the sky than sign alone) in your ${ordinal(day.moon.house)} house — ${HOUSE_HEADLINE[day.moon.house]}.` });
+  if(dasha){
+    deeper.push({ label:'The bigger chapter you\'re in', body:`Zooming out from today: you're in a multi-year life chapter ruled by ${dasha.mahadasha} (astrologers call this your Mahadasha), currently flavored by a shorter ${dasha.antardasha} sub-chapter. Think of it as the "background music" for this whole season, not something that changes day to day.` });
+  }
+  return { teaser, deeper, dasha };
+}
 function dashaContextFor(dateStr){
   for(const maha of (EPHEMERIS.dasha||[])){
     if(maha.start.slice(0,10) <= dateStr && dateStr <= maha.end.slice(0,10)){
@@ -1193,33 +1292,6 @@ function dashaContextFor(dateStr){
     }
   }
   return null;
-}
-function getTodayTransits(dateStr){
-  const day = EPHEMERIS.daily[dateStr];
-  if(!day) return null;
-  const dasha = dashaContextFor(dateStr);
-  const headlines = [];
-  // conjunctions: transiting planet within 3° of a natal point, same sign
-  const PLANETS = ['sun','moon','mercury','venus','mars','jupiter','saturn','rahu','ketu'];
-  for(const p of PLANETS){
-    const t = day[p];
-    for(const np of PLANETS){
-      const natal = NATAL[np];
-      if(t.sign === natal.sign && Math.abs(t.deg - natal.deg) <= 3 && p !== np){
-        headlines.push(`Transiting ${cap(p)} is conjunct your natal ${cap(np)} in ${t.sign} today — a direct, felt activation.`);
-      }
-    }
-    if(t.retrograde && ['mercury','venus','mars','jupiter','saturn'].includes(p)){
-      // retrograde flag alone isn't headline-worthy every day; stations are surfaced via KEY_DATES
-    }
-  }
-  // Moon's house today is the single most-changing, most "today"-relevant signal
-  const moonHouse = day.moon.house;
-  headlines.push(`Today's Moon is in ${day.moon.sign} (${day.moon.nakshatra}) — your ${ordinal(moonHouse)} house of ${HOUSE_HEADLINE[moonHouse]}.`);
-  if(dasha){
-    headlines.push(`You're in your ${dasha.mahadasha} Mahadasha, ${dasha.antardasha} Antardasha.`);
-  }
-  return { headlines, dasha, day };
 }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 function ordinal(n){ return {1:'1st',2:'2nd',3:'3rd',4:'4th',5:'5th',6:'6th',7:'7th',8:'8th',9:'9th',10:'10th',11:'11th',12:'12th'}[n]||n+'th'; }
@@ -1305,7 +1377,7 @@ function buildTodayCard() {
     <div class="today-msg">${pd.msg}</div>
     ${guide ? `<div style="background:var(--gold-bg);border-radius:9px;padding:11px 14px;margin-bottom:10px;border-left:3px solid var(--gold);font-size:0.79rem;color:var(--text-dim);line-height:1.65"><strong style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:0.95rem;display:block;margin-bottom:4px">✦ ${guide.title}</strong>${guide.guidance}<div style="margin-top:8px;font-size:0.76rem;color:var(--green);border-left:2px solid var(--green);padding-left:9px"><strong style="display:block;margin-bottom:2px;font-family:'Cormorant Garamond',serif">Today's Action</strong>${guide.action}</div></div>` : ''}
     ${event && !guide ? `<div style="background:var(--gold-bg);border-radius:9px;padding:11px 14px;margin-bottom:10px;border-left:3px solid var(--gold);font-size:0.79rem;color:var(--text-dim);line-height:1.65"><strong style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:0.95rem;display:block;margin-bottom:4px">✦ ${event.title}</strong>${event.guidance}</div>` : ''}
-    ${(()=>{const tt=getTodayTransits(todayStr); if(!tt) return ''; return `<div style="background:var(--green-bg);border-radius:9px;padding:11px 14px;margin-bottom:10px;border-left:3px solid var(--green);font-size:0.75rem;color:var(--text-dim);line-height:1.7"><strong style="color:var(--green);font-family:'Cormorant Garamond',serif;font-size:0.88rem;display:block;margin-bottom:5px">✦ The Live Sky, Right Now</strong>${tt.headlines.map(h=>`<div style="margin-bottom:3px">${h}</div>`).join('')}</div>`;})()}
+    ${(()=>{const pr=plainDailyReading(todayStr); if(!pr) return ''; return renderMoonTeaserHTML(pr.teaser) + renderDeeperHTML(pr.deeper,'todayDeeperToggle');})()}
     ${(()=>{const day=chCycleDay(); if(!day) return ''; const phase=CH_PHASES[getCyclePhase(day)]; return `<div style="background:${phase.color}18;border-radius:9px;padding:9px 13px;margin-bottom:10px;border-left:3px solid ${phase.color};font-size:0.74rem;color:var(--text-dim);display:flex;justify-content:space-between;align-items:center;gap:8px"><span><strong style="color:${phase.color}">Cycle Day ${day} · ${phase.name}</strong> — ${phase.season}</span><span style="font-size:0.62rem;color:var(--text-light);white-space:nowrap;cursor:pointer" onclick="showMonth('cycle')">details →</span></div>`;})()}
     <div class="today-tip">
       <strong>${tip.planet}</strong>
@@ -1334,6 +1406,19 @@ function buildNav() {
   });
 }
 function toggleAstro(el){ el.classList.toggle('open'); }
+function toggleDeeper(el){ el.classList.toggle('open'); const body=el.nextElementSibling; if(body) body.classList.toggle('open'); }
+function renderDeeperHTML(deeper, toggleId){
+  return `<div class="go-deeper-toggle" id="${toggleId}" onclick="toggleDeeper(this)"><span class="arrow">▸</span> See what's activating today, in detail</div>
+    <div class="go-deeper-body">${deeper.map(d=>`<div class="deeper-item"><div class="deeper-item-label">${d.label}</div><div class="deeper-item-body">${d.body}</div></div>`).join('')}</div>`;
+}
+function renderMoonTeaserHTML(teaser){
+  if(!teaser) return '';
+  return `<div class="moon-teaser">
+    <div class="moon-teaser-head">${teaser.headline}</div>
+    <div class="moon-teaser-body">${teaser.body}</div>
+    ${teaser.why ? `<div class="moon-teaser-why">✦ Why: ${teaser.why}</div>` : ''}
+  </div>`;
+}
 
 function showMonth(id) {
   document.querySelectorAll('.month-section').forEach(s => s.classList.remove('active'));
@@ -1392,24 +1477,30 @@ function buildMonthHTML(m) {
   const checks = buildChecklist(m.id);
   const journalVal = localStorage.getItem('journal-'+m.id)||'';
 
+  const glanceItems = m.vedic.transits.slice(0,3).map(t=>`<div class="month-glance-item">✦ ${t.replace(/\s*\([^()]*\)/g,'').replace(/\s*\(([^()]|\([^()]*\))*\)/g,'')}</div>`).join('');
+
   return `
 <div class="month-header">
   <h2>${m.name}</h2>
   <div class="month-theme">${m.theme}</div>
   <div class="month-mantra">${m.mantra}</div>
 </div>
-<div class="overview-grid">
-  <div class="ov-card"><h4>Vedic (Jyotish) Overview</h4><p>${m.vedic.overview}</p><div class="transit-tags">${vTags}</div></div>
-  <div class="ov-card western"><h4>Western Astrology Note</h4><p>${m.western.note}</p><div class="transit-tags"><span class="ttag w">Tropical · Aquarius Rising · Placidus</span></div></div>
-</div>
-<div class="opp-caut">
-  <div class="opp-box"><h4>Opportunities This Month</h4><ul>${opps}</ul></div>
-  <div class="caut-box"><h4>Approach With Care</h4><ul>${cauts}</ul></div>
-</div>
-<div class="section-label">Weekly Breakdown</div>
-${weeks}
-<div class="section-label">Calendar — Tap Any Day for Your Daily Tip, Prompt + Notes</div>
+<div class="month-glance">${glanceItems}</div>
+<div class="section-label">Calendar — Tap Any Day for Your Reading, Prompt + Notes</div>
 ${cal}
+<div class="go-deeper-toggle" onclick="toggleDeeper(this)"><span class="arrow">▸</span> Read the full month reading, opportunities + cautions</div>
+<div class="go-deeper-body">
+  <div class="overview-grid">
+    <div class="ov-card"><h4>Vedic (Jyotish) Overview</h4><p>${m.vedic.overview}</p><div class="transit-tags">${vTags}</div></div>
+    <div class="ov-card western"><h4>Western Astrology Note</h4><p>${m.western.note}</p><div class="transit-tags"><span class="ttag w">Tropical · Aquarius Rising · Placidus</span></div></div>
+  </div>
+  <div class="opp-caut">
+    <div class="opp-box"><h4>Opportunities This Month</h4><ul>${opps}</ul></div>
+    <div class="caut-box"><h4>Approach With Care</h4><ul>${cauts}</ul></div>
+  </div>
+  <div class="section-label">Weekly Breakdown</div>
+  ${weeks}
+</div>
 <div class="daily-msg-section">
   <h4>Daily Energy by Day of Week</h4>
   <div class="daily-msg-grid">${dayMsgs}</div>
@@ -1687,14 +1778,8 @@ function openDayModal(ds){
     </div>
     ${guideHtml}`;
 
-  const moonData = getMoonData(ds);
-  const moonHtml = moonData ? `
-    <div class="moon-info-block">
-      <div class="moon-info-phase">${moonData.emoji} ${moonData.phaseName} · Moon in ${moonData.vedSign} <span style="opacity:0.5;font-size:0.65rem">(${moonData.tropSign} tropical)</span></div>
-      <div class="moon-info-sign">Vedic · Sidereal Position</div>
-      <div class="moon-info-meaning">${moonData.phaseMeaning}</div>
-      <div class="moon-info-meaning" style="margin-top:6px;border-top:1px solid rgba(255,255,255,0.1);padding-top:6px">${moonData.meaning}</div>
-    </div>` : '';
+  const dayReading = plainDailyReading(ds);
+  const moonHtml = dayReading ? renderMoonTeaserHTML(dayReading.teaser) + renderDeeperHTML(dayReading.deeper, 'dayModalDeeperToggle-'+ds) : '';
 
   const hdc = HD_CHECKINS[d.getDay()];
   const hdHtml = !isBirthday ? `<div class="hd-checkin"><div class="hd-checkin-title">${hdc.title}</div>${hdc.msg}</div>` : '';
@@ -1882,7 +1967,7 @@ document.getElementById('pexModal').addEventListener('click', e=>{ if(e.target==
 // ═══════════════════════════════════════════════════════════════════════════
 function buildOverviewHTML(){
   const dasha = dashaContextFor(todayStr);
-  const tt = getTodayTransits(todayStr);
+  const pr = plainDailyReading(todayStr);
   return `
     <div class="section-heading">Overview</div>
     <p style="font-size:0.8rem;color:var(--text-light);line-height:1.8;margin-bottom:20px;">If you only read one tab today, read this one. Everything else in this planner unpacks what's summarized here.</p>
@@ -1898,8 +1983,8 @@ function buildOverviewHTML(){
     </div>
 
     <div class="week-nudge">
-      <strong>✦ Today's Headline</strong>
-      ${tt ? tt.headlines[0] : 'Loading real-time transit data...'}
+      <strong>✦ Today, In Short</strong>
+      ${pr ? pr.teaser.body : 'Loading...'}
       <div style="margin-top:6px;font-size:0.72rem;color:var(--text-light)">Full breakdown in ✦ Living Chart.</div>
     </div>
 
@@ -1913,16 +1998,13 @@ function buildOverviewHTML(){
 // LIVING CHART — today's real activations + Story + usage guide + travel tips
 // ═══════════════════════════════════════════════════════════════════════════
 function buildLivingChartHTML(){
-  const tt = getTodayTransits(todayStr);
+  const pr = plainDailyReading(todayStr);
   const dasha = dashaContextFor(todayStr);
   return `
     <div class="section-heading">Living Chart</div>
     <p style="font-size:0.8rem;color:var(--text-light);line-height:1.8;margin-bottom:20px;">Your natal chart is fixed. This page isn't — it reads real, computed planetary positions against your chart every day, so what you see here is what's actually activating right now, not a static snapshot.</p>
 
-    <div class="hd-synth" style="border-left-color:var(--pink);background:var(--pink-bg);">
-      <div class="hd-synth-label">Right Now — ${today.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</div>
-      ${tt ? tt.headlines.map(h=>`<div class="hd-synth-item-body" style="margin-bottom:6px;">${h}</div>`).join('') : ''}
-    </div>
+    ${pr ? renderMoonTeaserHTML(pr.teaser) + renderDeeperHTML(pr.deeper,'livingChartDeeperToggle') : ''}
 
     <div class="glyph-divider">✦ · ✦ · ✦</div>
 
