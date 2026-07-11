@@ -445,22 +445,12 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .month-glance-item { font-size:0.78rem; color:var(--text-dim); line-height:1.6; background:var(--card); border-radius:8px; padding:9px 12px; box-shadow:0 1px 4px var(--shadow); }
 
 /* ── MOON HERO CARD (Moon-Calendar-style overview, EAUCO voice) ── */
-.moon-hero { background:linear-gradient(135deg, var(--pink-bg) 0%, var(--gold-bg) 100%); border:1px solid var(--border); border-radius:14px; padding:18px 20px 16px; margin-bottom:12px; color:var(--text); box-shadow:0 2px 12px var(--shadow); }
-.moon-hero-row { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
-.moon-hero-side { text-align:center; font-size:0.68rem; color:var(--text-light); line-height:1.5; flex:1; }
-.moon-hero-glyph { font-size:1.4rem; color:var(--pink); display:block; margin-bottom:2px; }
-.moon-hero-emoji { font-size:2.2rem; line-height:1; flex-shrink:0; }
-.moon-hero-phase { text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.05rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
-.moon-hero-personal { background:var(--card); border-radius:10px; padding:11px 14px; margin-bottom:10px; border-left:3px solid var(--pink); font-size:0.82rem; color:var(--text-dim); line-height:1.7; }
-.moon-hero-personal strong { color:var(--pink); font-family:'Cormorant Garamond',serif; font-size:0.9rem; display:block; margin-bottom:3px; }
-.moon-hero-body { font-size:0.79rem; color:var(--text-dim); line-height:1.7; margin-bottom:4px; }
-.moon-hero-why { font-size:0.72rem; color:var(--pink); font-style:italic; margin-bottom:10px; }
-.moon-hero-vibes { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; padding-top:12px; border-top:1px solid var(--border-light); }
-.moon-hero-vcol-label { font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:5px; }
-.moon-hero-vcol-label.lean { color:var(--green); }
-.moon-hero-vcol-label.ease { color:var(--gold); }
-.moon-hero-vcol { font-size:0.72rem; color:var(--text-dim); line-height:1.6; }
-.moon-hero-vcol div { margin-bottom:3px; }
+.day-overview-card { background:linear-gradient(135deg, var(--pink-bg) 0%, var(--gold-bg) 100%); border:1px solid var(--border); border-radius:14px; padding:16px 18px; margin-bottom:12px; color:var(--text); box-shadow:0 2px 12px var(--shadow); }
+.day-overview-para { font-size:0.85rem; color:var(--text-dim); line-height:1.85; margin-bottom:6px; }
+.moon-footer { display:flex; align-items:center; gap:8px; margin-top:12px; padding-top:10px; border-top:1px solid var(--border-light); font-size:0.7rem; color:var(--text-light); flex-wrap:wrap; }
+.moon-footer-emoji { font-size:1.1rem; }
+.moon-footer-text { font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--text); }
+.moon-footer-next { margin-left:auto; color:var(--text-light); }
 .today-stat-strip { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
 .today-stat-chip { flex:1; min-width:90px; background:var(--card); border-radius:9px; padding:8px 10px; box-shadow:0 1px 4px var(--shadow); text-align:center; cursor:pointer; }
 .today-stat-explain { display:none; font-size:0.66rem; color:var(--text-light); line-height:1.5; margin-top:5px; padding-top:5px; border-top:1px solid var(--border-light); text-align:left; }
@@ -1225,21 +1215,6 @@ const HOUSE_HEADLINE = {
   11:'community and income — your natal Venus',12:'inner life and release — Ketu\'s natal house',
 };
 // ── PLAIN-LANGUAGE TRANSLATION LAYER (Moon-Calendar-app style: short, warm, no jargon) ──
-const MOON_VIBE = {
-  Aries:  { mood:'restless, get-it-done energy', craving:'to finally handle something you\'ve been putting off', lean:['Start the thing','Move your body','Say it directly'], ease:['Picking fights for the sake of it','Rushing a decision that deserves a beat'] },
-  Taurus: { mood:'slow, sensory, grounded energy — this is your natal Moon sign, so it may feel extra vivid', craving:'comfort, beauty, and a little indulgence', lean:['Slow, good food','Making something beautiful','Resting without guilt'], ease:['Forcing speed','Skipping meals or comfort to "power through"'] },
-  Gemini: { mood:'chatty, curious, quick-thinking energy', craving:'conversation and new information', lean:['Texts, calls, catching up','Learning something new','Writing it down'], ease:['Overcommitting to plans','Believing every thought is the final answer'] },
-  Cancer: { mood:'tender, home-focused, intuitive energy', craving:'closeness and emotional safety', lean:['Time at home','Reaching out to someone close','Letting yourself feel it'], ease:['Isolating when you actually need closeness','Taking things too personally'] },
-  Leo:    { mood:'warm, expressive, wanting-to-be-seen energy', craving:'a little spotlight and creative play', lean:['Creative work','Being a little extra','Genuine praise, given and received'], ease:['Needing everyone\'s approval','Making it a competition'] },
-  Virgo:  { mood:'detail-focused, tidy-up-your-life energy', craving:'order and a sense of things being handled', lean:['Small resets — inbox, space, body','Finishing loose ends'], ease:['Perfectionism as a stall tactic','Being hard on yourself for what\'s undone'] },
-  Libra:  { mood:'relational, beauty-seeking, people-pleasing energy', craving:'harmony and connection', lean:['Quality time','Making something look and feel good','Fair, honest conversation'], ease:['Avoiding conflict that actually needs air','Saying yes to keep the peace'] },
-  Scorpio:{ mood:'intense, all-or-nothing, go-beneath-the-surface energy', craving:'depth and honesty, not small talk', lean:['The real conversation','Alone time to process','Trusting your gut read on people'], ease:['Assuming the worst','Testing people instead of asking directly'] },
-  Sagittarius:{ mood:'big-picture, restless-for-freedom energy', craving:'a wider view and a little adventure', lean:['Planning something to look forward to','Zooming out','Learning / reading / a new idea'], ease:['Overpromising because it sounds exciting','Restlessness that skips the follow-through'] },
-  Capricorn:{ mood:'focused, disciplined, business-mode energy — this is your Rising sign, so today can feel extra "on"', craving:'progress on something that actually matters', lean:['The unglamorous, important task','Structure and a clear plan'], ease:['All work, no rest','Measuring today by output alone'] },
-  Aquarius:{ mood:'independent, idea-driven, slightly detached energy', craving:'space to think your own thoughts', lean:['Solo time to think','An unconventional idea or approach','Community, on your own terms'], ease:['Detaching from people who need you present','Overthinking instead of feeling'] },
-  Pisces: { mood:'dreamy, sensitive, imagination-forward energy', craving:'rest and a little escape', lean:['Rest, music, a little daydreaming','Creative or spiritual practice'], ease:['Avoidance dressed up as "going with the flow"','Absorbing everyone else\'s mood'] },
-};
-const ZODIAC_GLYPH = { Aries:'♈',Taurus:'♉',Gemini:'♊',Cancer:'♋',Leo:'♌',Virgo:'♍',Libra:'♎',Scorpio:'♏',Sagittarius:'♐',Capricorn:'♑',Aquarius:'♒',Pisces:'♓' };
 function moonIllumination(elongationDeg){
   const rad = elongationDeg * Math.PI / 180;
   return Math.round((1 - Math.cos(rad)) / 2 * 100);
@@ -1282,56 +1257,114 @@ function moonDayReading(dateStr){
   const md = getMoonData(dateStr);
   const day = EPHEMERIS.daily[dateStr];
   if(!md) return null;
-  const vibe = MOON_VIBE[md.vedSign];
-  const phraseVibe = PHASE_VIBE[md.phaseName] || '';
   const next = nextLunation(dateStr);
   return {
     emoji: md.emoji, phaseName: md.phaseName, sign: md.vedSign,
-    glyph: ZODIAC_GLYPH[md.vedSign] || '',
     deg: day ? Math.floor(day.moon.deg) : null,
     illum: day ? moonIllumination(day.moon_elongation) : null,
     next: next ? { label: next.type==='new_moon'?'New Moon':'Full Moon', date: new Date(next.iso).toLocaleDateString('en-US',{month:'long',day:'numeric'}) } : null,
-    headline: `${md.emoji} Moon in ${md.vedSign}`,
-    body: `Today has ${vibe.mood}. You might find yourself craving ${vibe.craving}. It's also ${phraseVibe}.`,
-    lean: vibe.lean, ease: vibe.ease,
-    why: md.house ? MOON_HOUSE_WHY[md.house] : ''
   };
 }
-function plainConjunctionSentence(transitingPlanet, natalPlanet, sign){
-  const t = PLANET_VIBE[transitingPlanet], n = PLANET_VIBE[natalPlanet];
-  return `${cap(transitingPlanet)} is lining up with your natal ${cap(natalPlanet)} today, both in ${sign} — think of it as ${t} colliding with ${n}. It's a "that explains a lot" kind of day, not just a mood.`;
+const RETURN_EXPLANATION = {
+  moon: (sign,house) => `Today is your Lunar Return — the Moon has circled all the way back to exactly where it sat the moment you were born, in ${sign}. It happens roughly once a month and astrologers treat it as a personal monthly reset: a good day to check in honestly with how you're feeling, since your emotional baseline is unusually clear and "you" today, and to set a private intention for the four weeks ahead.`,
+  sun: (sign,house) => `Today is your Solar Return — the Sun has come back to exactly where it was when you were born. This is the astrological heart of your birthday: a once-a-year reset point for your identity and sense of self. Worth marking, even quietly.`,
+  mercury: (sign,house) => `Today your Mercury Return is exact — Mercury is back where it sat at your birth. A good day to notice how you're communicating and thinking; it tends to feel unusually "like yourself" mentally.`,
+  venus: (sign,house) => `Today your Venus Return is exact — Venus is back where it sat at your birth. A good day to notice what you're drawn to and what feels good; your natural taste and values are especially clear.`,
+  mars: (sign,house) => `Today your Mars Return is exact — Mars is back where it sat at your birth. A good day to notice where your drive and energy actually want to go, before anyone else's agenda gets in the way.`,
+};
+function plainConjunctionClause(transitingPlanets, natalPlanet, sign){
+  const n = PLANET_VIBE[natalPlanet];
+  const subject = transitingPlanets.length>1 ? `your ${transitingPlanets.map(cap).join(' and ')}` : `${cap(transitingPlanets[0])}`;
+  const verb = transitingPlanets.length>1 ? 'are' : 'is';
+  return `${subject} ${verb} landing on your natal ${cap(natalPlanet)} today (both in ${sign}) — expect ${n} to feel unusually direct and immediate`;
 }
-function plainConjunctionShort(transitingPlanet, natalPlanet){
-  const t = PLANET_VIBE[transitingPlanet], n = PLANET_VIBE[natalPlanet];
-  return `${cap(transitingPlanet)} is activating your natal ${cap(natalPlanet)} — ${t} meeting ${n}.`;
+function findReturns(day){
+  const PLANETS = ['sun','moon','mercury','venus','mars','jupiter','saturn'];
+  const out = [];
+  for(const p of PLANETS){
+    const t = day[p], natal = NATAL[p];
+    if(t.sign === natal.sign && Math.abs(t.deg - natal.deg) <= 3) out.push(p);
+  }
+  return out;
 }
-const SIGNIFICANT_HOUSES = {1:'your Rising sign — identity is front and center', 5:'your natal Moon/Jupiter/Saturn stellium — this can hit deeper than a normal day', 7:'partnership house', 10:'your natal Sun/Mercury — career house'};
+function findConjunctions(day){
+  const PLANETS = ['sun','moon','mercury','venus','mars','jupiter','saturn','rahu','ketu'];
+  const byTarget = {};
+  for(const p of PLANETS){
+    const t = day[p];
+    for(const np of PLANETS){
+      if(p === np) continue;
+      const natal = NATAL[np];
+      if(t.sign === natal.sign && Math.abs(t.deg - natal.deg) <= 3){
+        (byTarget[np] = byTarget[np] || []).push(p);
+      }
+    }
+  }
+  return byTarget;
+}
+function daysToExactReturn(dateStr, planet){
+  // scan forward up to 3 days to see if this planet's return lands very soon (for a "heads up" note)
+  const natal = NATAL[planet];
+  const d = new Date(dateStr+'T12:00:00');
+  for(let i=1;i<=3;i++){
+    const c = new Date(d); c.setDate(c.getDate()+i);
+    const ds = `${c.getFullYear()}-${String(c.getMonth()+1).padStart(2,'0')}-${String(c.getDate()).padStart(2,'0')}`;
+    const day2 = EPHEMERIS.daily[ds];
+    if(!day2) continue;
+    const t = day2[planet];
+    if(t.sign === natal.sign && Math.abs(t.deg - natal.deg) <= 3) return {days:i, date:c};
+  }
+  return null;
+}
 function plainDailyReading(dateStr){
   const day = EPHEMERIS.daily[dateStr];
   if(!day) return null;
   const dasha = dashaContextFor(dateStr);
   const teaser = moonDayReading(dateStr);
-  const deeper = [];
-  const personal = [];
-  const PLANETS = ['sun','moon','mercury','venus','mars','jupiter','saturn','rahu','ketu'];
-  for(const p of PLANETS){
-    const t = day[p];
-    for(const np of PLANETS){
-      const natal = NATAL[np];
-      if(t.sign === natal.sign && Math.abs(t.deg - natal.deg) <= 3 && p !== np){
-        deeper.push({ label:`${cap(p)} ↔ your natal ${cap(np)}`, body: plainConjunctionSentence(p, np, t.sign) });
-        personal.push(plainConjunctionShort(p, np));
-      }
+  const moonSign = day.moon.sign, moonHouse = day.moon.house;
+  const returns = findReturns(day);
+  const conjunctions = findConjunctions(day);
+
+  const sentences = [];
+  sentences.push(`The Moon is in ${moonSign} today, moving through your ${ordinal(moonHouse)} house — ${MOON_HOUSE_WHY[moonHouse]}.`);
+  if(PHASE_VIBE[teaser.phaseName]) sentences.push(`It's also ${PHASE_VIBE[teaser.phaseName]}.`);
+
+  let featuredTarget = null;
+  if(returns.includes('moon')){
+    sentences.push(RETURN_EXPLANATION.moon(moonSign, moonHouse));
+  } else if(returns.length){
+    const p = returns[0];
+    sentences.push(RETURN_EXPLANATION[p] ? RETURN_EXPLANATION[p](day[p].sign, day[p].house) : `Your ${cap(p)} Return is exact today — ${cap(p)} is back where it sat at your birth.`);
+  } else {
+    // no exact return today — mention the single most significant conjunction, if any
+    const priority = ['sun','moon','saturn','jupiter','mars','mercury','venus','rahu','ketu'];
+    const targets = Object.keys(conjunctions).sort((a,b)=>priority.indexOf(a)-priority.indexOf(b));
+    if(targets.length){
+      featuredTarget = targets[0];
+      const sign = day[conjunctions[featuredTarget][0]].sign;
+      sentences.push(cap(plainConjunctionClause(conjunctions[featuredTarget], featuredTarget, sign)) + '.');
+    }
+    // heads-up if the lunar return is landing in the next couple days
+    const upcoming = daysToExactReturn(dateStr, 'moon');
+    if(upcoming){
+      const when = upcoming.days === 1 ? 'tomorrow' : `in ${upcoming.days} days`;
+      sentences.push(`Heads up: your exact Lunar Return lands ${when} — worth watching for.`);
     }
   }
-  if(SIGNIFICANT_HOUSES[day.moon.house]){
-    personal.push(`Today's Moon is sitting right on ${SIGNIFICANT_HOUSES[day.moon.house]}.`);
+
+  // "go deeper" — genuinely new detail, not a restatement: nakshatra, dasha, any OTHER conjunctions not already featured
+  const deeper = [];
+  deeper.push({ label:'Moon detail', body:`The Moon is moving through ${day.moon.nakshatra} nakshatra right now (a more precise, 27-part reading of the sky than sign alone).` });
+  for(const np of Object.keys(conjunctions)){
+    if(np === featuredTarget) continue;
+    const sign = day[conjunctions[np][0]].sign;
+    deeper.push({ label:`${conjunctions[np].map(cap).join(' + ')} ↔ natal ${cap(np)}`, body: plainConjunctionClause(conjunctions[np], np, sign) + '.' });
   }
-  deeper.push({ label:'Moon detail', body:`The Moon is moving through ${day.moon.nakshatra} nakshatra right now (a more precise, 27-part reading of the sky than sign alone) in your ${ordinal(day.moon.house)} house — ${HOUSE_HEADLINE[day.moon.house]}.` });
   if(dasha){
-    deeper.push({ label:'The bigger chapter you\'re in', body:`Zooming out from today: you're in a multi-year life chapter ruled by ${dasha.mahadasha} (astrologers call this your Mahadasha), currently flavored by a shorter ${dasha.antardasha} sub-chapter. Think of it as the "background music" for this whole season, not something that changes day to day.` });
+    deeper.push({ label:'The bigger chapter you\'re in', body:`You're in a multi-year life chapter ruled by ${dasha.mahadasha} (your Mahadasha), currently flavored by a shorter ${dasha.antardasha} sub-chapter. Think of it as the "background music" for this whole season, not something that changes day to day.` });
   }
-  return { teaser, deeper, personal, dasha };
+
+  return { teaser, sentences, deeper, dasha, moonSign, moonHouse };
 }
 function dashaContextFor(dateStr){
   for(const maha of (EPHEMERIS.dasha||[])){
@@ -1427,7 +1460,7 @@ function buildTodayCard() {
       <h3>✦ Today</h3>
       <span class="today-date">${dateFormatted}</span>
     </div>
-    ${(()=>{const pr=plainDailyReading(todayStr); if(!pr) return ''; return renderMoonTeaserHTML(pr.teaser, pr.personal) + renderDeeperHTML(pr.deeper,'todayDeeperToggle');})()}
+    ${(()=>{const pr=plainDailyReading(todayStr); if(!pr) return ''; return renderMoonTeaserHTML(pr,'todayDeeperToggle');})()}
     ${guide ? `<div style="background:var(--gold-bg);border-radius:9px;padding:11px 14px;margin-bottom:10px;border-left:3px solid var(--gold);font-size:0.79rem;color:var(--text-dim);line-height:1.65"><strong style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:0.95rem;display:block;margin-bottom:4px">✦ ${guide.title}</strong>${guide.guidance}<div style="margin-top:8px;font-size:0.76rem;color:var(--green);border-left:2px solid var(--green);padding-left:9px"><strong style="display:block;margin-bottom:2px;font-family:'Cormorant Garamond',serif">Today's Action</strong>${guide.action}</div></div>` : ''}
     ${event && !guide ? `<div style="background:var(--gold-bg);border-radius:9px;padding:11px 14px;margin-bottom:10px;border-left:3px solid var(--gold);font-size:0.79rem;color:var(--text-dim);line-height:1.65"><strong style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:0.95rem;display:block;margin-bottom:4px">✦ ${event.title}</strong>${event.guidance}</div>` : ''}
     <div class="today-stat-strip">
@@ -1465,29 +1498,21 @@ function buildNav() {
 }
 function toggleAstro(el){ el.classList.toggle('open'); }
 function toggleDeeper(el){ el.classList.toggle('open'); const body=el.nextElementSibling; if(body) body.classList.toggle('open'); }
-function renderDeeperHTML(deeper, toggleId){
-  return `<div class="go-deeper-toggle" id="${toggleId}" onclick="toggleDeeper(this)"><span class="arrow">▸</span> See what's activating today, in detail</div>
-    <div class="go-deeper-body">${deeper.map(d=>`<div class="deeper-item"><div class="deeper-item-label">${d.label}</div><div class="deeper-item-body">${d.body}</div></div>`).join('')}</div>`;
+function renderMoonTeaserHTML(reading, toggleId){
+  if(!reading) return '';
+  const deeper = reading.deeper || [];
+  return `<div class="day-overview-card">
+    <div class="day-overview-para">${(reading.sentences||[]).join(' ')}</div>
+    ${deeper.length ? `<div class="go-deeper-toggle" id="${toggleId}" onclick="toggleDeeper(this)"><span class="arrow">▸</span> A bit more, if you're curious</div>
+    <div class="go-deeper-body">${deeper.map(d=>`<div class="deeper-item"><div class="deeper-item-label">${d.label}</div><div class="deeper-item-body">${d.body}</div></div>`).join('')}</div>` : ''}
+    ${reading.teaser ? renderMoonFooterHTML(reading.teaser) : ''}
+  </div>`;
 }
-function renderMoonTeaserHTML(teaser, personal){
-  if(!teaser) return '';
-  const pers = personal||[];
-  const shown = pers.slice(0,2);
-  const rest = pers.length - shown.length;
-  return `<div class="moon-hero">
-    <div class="moon-hero-row">
-      <div class="moon-hero-side"><span class="moon-hero-glyph">${teaser.glyph}</span>${teaser.deg}° ${teaser.sign}<br>${teaser.illum}% illuminated</div>
-      <div class="moon-hero-emoji">${teaser.emoji}</div>
-      <div class="moon-hero-side">${teaser.next ? `Next ${teaser.next.label}:<br>${teaser.next.date}` : ''}</div>
-    </div>
-    <div class="moon-hero-phase">${teaser.phaseName} Phase</div>
-    ${shown.length ? `<div class="moon-hero-personal"><strong>✦ Your Chart, Today</strong>${shown.join(' ')}${rest>0?` <span style="cursor:pointer;color:var(--pink)" onclick="toggleDeeper(document.getElementById('todayDeeperToggle')||document.getElementById('livingChartDeeperToggle'))">+${rest} more →</span>`:''}</div>` : ''}
-    <div class="moon-hero-body">${teaser.body}</div>
-    ${teaser.why ? `<div class="moon-hero-why">✦ Why: ${teaser.why}</div>` : ''}
-    <div class="moon-hero-vibes">
-      <div><div class="moon-hero-vcol-label lean">Lean Into</div><div class="moon-hero-vcol">${(teaser.lean||[]).map(l=>`<div>✦ ${l}</div>`).join('')}</div></div>
-      <div><div class="moon-hero-vcol-label ease">Ease Off</div><div class="moon-hero-vcol">${(teaser.ease||[]).map(e=>`<div>✦ ${e}</div>`).join('')}</div></div>
-    </div>
+function renderMoonFooterHTML(teaser){
+  return `<div class="moon-footer">
+    <span class="moon-footer-emoji">${teaser.emoji}</span>
+    <span class="moon-footer-text">${teaser.phaseName} · Moon in ${teaser.sign}</span>
+    ${teaser.next ? `<span class="moon-footer-next">Next ${teaser.next.label}: ${teaser.next.date}</span>` : ''}
   </div>`;
 }
 function toggleStatChip(el){ el.classList.toggle('open'); }
@@ -1849,7 +1874,7 @@ function openDayModal(ds){
     ${guideHtml}`;
 
   const dayReading = plainDailyReading(ds);
-  const moonHtml = dayReading ? renderMoonTeaserHTML(dayReading.teaser, dayReading.personal) + renderDeeperHTML(dayReading.deeper, 'dayModalDeeperToggle-'+ds) : '';
+  const moonHtml = dayReading ? renderMoonTeaserHTML(dayReading, 'dayModalDeeperToggle-'+ds) : '';
 
   const hdc = HD_CHECKINS[d.getDay()];
   const hdHtml = !isBirthday ? `<div class="hd-checkin"><div class="hd-checkin-title">${hdc.title}</div>${hdc.msg}</div>` : '';
@@ -2045,7 +2070,7 @@ function buildLivingChartHTML(){
     <div class="section-heading">Living Chart</div>
     <p style="font-size:0.8rem;color:var(--text-light);line-height:1.8;margin-bottom:16px;">Your natal chart is fixed. This page isn't — it reads real, computed planetary positions against your chart every day, so what you see here is what's actually activating right now, not a static snapshot.</p>
 
-    ${pr ? renderMoonTeaserHTML(pr.teaser, pr.personal) + renderDeeperHTML(pr.deeper,'livingChartDeeperToggle') : ''}
+    ${pr ? renderMoonTeaserHTML(pr,'livingChartDeeperToggle') : ''}
 
     <div class="glyph-divider">✦ · ✦ · ✦</div>
 
