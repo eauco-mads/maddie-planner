@@ -210,11 +210,76 @@ def find_stations(start_jd, end_jd):
                     'direction': 'retrograde' if speed < 0 else 'direct',
                     'sign_sidereal': sign_of(lon_sid),
                     'house': whole_sign_house(sign_of(lon_sid)),
+                    'lon_abs': round(lon_sid, 4),
                 })
             prev_jd, prev_speed = jd, speed
             jd += 1
     stations.sort(key=lambda s: s['jd'])
     return stations
+
+
+PLANET_CODE_BY_NAME = {'mercury': swe.MERCURY, 'venus': swe.VENUS, 'mars': swe.MARS,
+                        'jupiter': swe.JUPITER, 'saturn': swe.SATURN}
+
+
+def find_shadow_periods(stations, search_min_jd, search_max_jd):
+    """For each retrograde->direct station pair (personal planets only: mercury/venus/mars),
+    find the pre-shadow start (when the planet, moving direct, first crosses the degree it
+    will later station-direct at) and post-shadow end (when it clears the degree it
+    originally stationed retrograde at, moving direct again)."""
+    shadows = []
+    by_planet = {}
+    for s in stations:
+        if s['planet'] not in ('mercury', 'venus', 'mars'):
+            continue
+        by_planet.setdefault(s['planet'], []).append(s)
+
+    def lon_at(jd, code):
+        lon, _ = sidereal_lon(jd, code)
+        return lon
+
+    def find_crossing(code, target_lon, jd_start, jd_end, step_days):
+        """Bisect for the date planet's longitude first equals target_lon, scanning from
+        jd_start toward jd_end in step_days increments (direct motion assumed)."""
+        jd = jd_start
+        prev_lon = lon_at(jd, code)
+        while (jd_end - jd) * step_days > 0:
+            nxt = jd + step_days
+            cur_lon = lon_at(nxt, code)
+            # handle simple forward crossing (no wraparound assumed within a shadow window)
+            if (prev_lon - target_lon) * (cur_lon - target_lon) <= 0 and abs(cur_lon - prev_lon) < 180:
+                lo, hi = jd, nxt
+                for _ in range(40):
+                    mid = (lo + hi) / 2
+                    mid_lon = lon_at(mid, code)
+                    if (mid_lon - target_lon) * (prev_lon - target_lon) >= 0:
+                        lo = mid
+                    else:
+                        hi = mid
+                return (lo + hi) / 2
+            jd, prev_lon = nxt, cur_lon
+        return None
+
+    for planet, evs in by_planet.items():
+        code = PLANET_CODE_BY_NAME[planet]
+        for i, s in enumerate(evs):
+            if s['direction'] != 'retrograde':
+                continue
+            retro = s
+            direct = evs[i + 1] if i + 1 < len(evs) and evs[i + 1]['direction'] == 'direct' else None
+            if not direct:
+                continue
+            pre_shadow_jd = find_crossing(code, direct['lon_abs'], retro['jd'], search_min_jd, -1.0)
+            post_shadow_jd = find_crossing(code, retro['lon_abs'], direct['jd'], search_max_jd, 1.0)
+            shadows.append({
+                'planet': planet,
+                'retro_start': retro['iso'], 'retro_end': direct['iso'],
+                'pre_shadow_start': jd_to_iso(pre_shadow_jd) if pre_shadow_jd else None,
+                'post_shadow_end': jd_to_iso(post_shadow_jd) if post_shadow_jd else None,
+                'retro_sign': retro['sign_sidereal'], 'retro_house': retro['house'],
+                'direct_sign': direct['sign_sidereal'], 'direct_house': direct['house'],
+            })
+    return shadows
 
 
 def vimshottari_dasha(natal_jd, natal_moon_lon, span_start_jd, span_end_jd):
@@ -296,6 +361,7 @@ def main():
     lunations = find_lunations(start_jd, end_jd)
     eclipses = find_eclipses(start_jd, end_jd)
     stations = find_stations(start_jd, end_jd)
+    shadows = find_shadow_periods(stations, start_jd - 45, end_jd + 45)
     natal_moon_sid, _ = sidereal_lon(BIRTH_JD, swe.MOON)
     dasha = vimshottari_dasha(BIRTH_JD, natal_moon_sid, start_jd, end_jd)
 
@@ -309,6 +375,7 @@ def main():
         'lunations': [{k: v for k, v in ev.items() if k != 'jd'} for ev in lunations],
         'eclipses': [{k: v for k, v in ev.items() if k != 'jd'} for ev in eclipses],
         'stations': [{k: v for k, v in ev.items() if k != 'jd'} for ev in stations],
+        'shadows': shadows,
         'dasha': dasha,
     }
 
