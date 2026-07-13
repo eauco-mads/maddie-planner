@@ -1020,7 +1020,7 @@ const GLOSSARY = {
   retrograde:{ term:'Mercury Retrograde', also:'Vakri · Apparent Backward Motion', cat:'Cycles + Events',
     short:'Mercury\'s ~3-week apparent backward motion — review, refine, revisit. Not for launching new things.',
     def:'Planets don\'t move backward — but from Earth\'s perspective they appear to, due to orbital mechanics. When Mercury is retrograde (Vakri in Sanskrit), the planet of communication, contracts, travel, and logic turns inward. In Jyotish, retrograde planets are considered intensified and internalized. Mercury Retrograde is ideal for reviewing, revisiting, refining, and completing — not for launching new projects, signing contracts, or making major announcements. It occurs 3–4 times per year for ~3 weeks each time.',
-    maddie:'Two Mercury Retrogrades in this planner: Nov 9–29, 2026 (11th–10th houses — community/income and career presence review) and Mar 15–Apr 7, 2027 (3rd–2nd houses — communication voice and self-worth review). Both are built into Maddie\'s monthly guidance as review and refinement periods rather than launch windows.' },
+    maddie:'Mercury Retrogrades in this planner: Jun 29–Jul 23, 2026 (7th–6th houses — partnership and daily-work review), Oct 24–Nov 13, 2026 (10th house — career and public presence review), Feb 9–Mar 3, 2027 (2nd–1st houses — self-worth and identity review), and Jun 10–Jul 4, 2027 (6th house — daily work review). All are built into Maddie\'s monthly guidance as review and refinement periods rather than launch windows.' },
   houses:{ term:'Houses', also:'Bhavas · The 12 Life Areas', cat:'Your Chart',
     short:'The 12 divisions of the birth chart, each ruling a specific domain of human experience.',
     def:'The 12 houses (Bhavas) represent 12 distinct areas of life. In Whole Sign Houses: 1st = self, body, identity; 2nd = resources, speech, values; 3rd = communication, siblings, courage; 4th = home, roots, emotional foundation; 5th = creativity, romance, intelligence, children; 6th = daily work, health, service, enemies; 7th = partnerships, marriage, one-on-one relationships; 8th = transformation, depth, hidden knowledge, longevity; 9th = philosophy, teachers, higher learning, luck; 10th = career, public reputation, authority; 11th = community, networks, income, gains; 12th = spirituality, isolation, foreign travel, liberation.',
@@ -1073,7 +1073,15 @@ const GLOSSARY = {
   transit:{ term:'Transit', also:'Gochar · Planetary Movement', cat:'Cycles + Events',
     short:'The current real-time position of a planet as it moves through the zodiac over your natal chart.',
     def:'A transit (Gochar) is where a planet is right now in the sky, as opposed to its natal (birth chart) position. When a transiting planet moves over a sensitive natal point — a natal planet, your Rising sign, or an important house cusp — it activates that area of life. Transits are temporary visitors; their effects depend on the planet, which house they\'re in, and what natal points they contact. Jupiter transits one sign per year. Saturn takes ~2.5 years per sign. The Moon transits a new sign every 2.5 days.',
-    maddie:'The defining transit of this entire planner: Jupiter in Cancer (June 2026 – late June 2027) in Maddie\'s 7th house of partnership — Hamsa Yoga active, the most extraordinary partnership year her chart can hold. Secondary defining transit: Rahu entering Capricorn (Oct 2026, her 1st house/Rising sign) while Ketu enters Cancer (7th house) — identity acceleration + partnership spiritual release simultaneously, creating one of the most transformative axis activations a chart can experience.' }
+    maddie:'The defining transit of this entire planner: Jupiter in Cancer (June 2026 – late 2026, then again Jan–June 2027) in Maddie\'s 7th house of partnership — Hamsa Yoga active, the most extraordinary partnership year her chart can hold, with a depth-focused detour through Leo (8th house) in between. Secondary defining transit: Rahu entering Capricorn (early Dec 2026, her 1st house/Rising sign) while Ketu enters Cancer (7th house) — identity acceleration + partnership spiritual release simultaneously.' },
+  conjunction:{ term:'Conjunction', also:'Same Sign, Close Degree · A Direct Hit', cat:'Cycles + Events',
+    short:'When a moving (transiting) planet lands on the exact same degree as one of your natal planets — the most direct, felt kind of activation.',
+    def:'A conjunction happens when two planets sit at (or very close to) the same point in the zodiac. When a transiting planet is conjunct one of your natal planets, it\'s standing right on top of a spot that already means something specific in your chart — so its energy blends directly with whatever that natal planet already represents for you. It\'s considered the strongest, most immediate kind of planetary contact (compared to other angles like squares or trines), which is why it tends to feel like an unusually "on the nose" day rather than a vague mood.',
+    maddie:'Maddie\'s chart gets conjunction activations most often around her natal Rahu (Gemini, 6th house), her 5th house stellium (Moon + Jupiter + Saturn in Taurus), and her 10th house pair (Sun + Mercury in Libra) — any transiting planet passing through those exact degrees will read as an unusually direct, felt day tied to whatever that house governs.' },
+  'planetary-return':{ term:'Planetary Return', also:'Return · Solar Return · Lunar Return', cat:'Cycles + Events',
+    short:'The day a planet travels all the way around the zodiac and lands back on the exact degree it held the moment you were born.',
+    def:'A "return" happens when a transiting planet completes a full lap of the zodiac and arrives back at the precise degree it occupied at your birth. Every planet has its own return cycle length: the Moon returns roughly every 27–28 days (Lunar Return), the Sun once a year around your birthday (Solar Return), Mercury and Venus roughly annually, Mars about every 2 years, and the slow outer planets only once or twice in a lifetime (a Saturn Return, for example, lands around ages 29 and 58). Returns are considered personal reset points — a moment when that planet\'s natal energy is, briefly, exactly "home" again.',
+    maddie:'The most frequent return in Maddie\'s day-to-day life is her Lunar Return (~every 27–28 days, since the Moon moves fastest) — a recurring monthly checkpoint. Her Solar Return lands each year on or near October 17, her birthday.' }
 };
 
 // ── STATE + HELPERS ──────────────────────────────────────────────────────────
@@ -1265,18 +1273,21 @@ function moonDayReading(dateStr){
     next: next ? { label: next.type==='new_moon'?'New Moon':'Full Moon', date: new Date(next.iso).toLocaleDateString('en-US',{month:'long',day:'numeric'}) } : null,
   };
 }
+function termLink(label, key){
+  return `<span class="term-sidebar" onclick="event.stopPropagation();openTermModal('${key}')">${label}</span>`;
+}
 const RETURN_EXPLANATION = {
-  moon: (sign,house) => `Today is your Lunar Return — the Moon has circled all the way back to exactly where it sat the moment you were born, in ${sign}. It happens roughly once a month and astrologers treat it as a personal monthly reset: a good day to check in honestly with how you're feeling, since your emotional baseline is unusually clear and "you" today, and to set a private intention for the four weeks ahead.`,
-  sun: (sign,house) => `Today is your Solar Return — the Sun has come back to exactly where it was when you were born. This is the astrological heart of your birthday: a once-a-year reset point for your identity and sense of self. Worth marking, even quietly.`,
-  mercury: (sign,house) => `Today your Mercury Return is exact — Mercury is back where it sat at your birth. A good day to notice how you're communicating and thinking; it tends to feel unusually "like yourself" mentally.`,
-  venus: (sign,house) => `Today your Venus Return is exact — Venus is back where it sat at your birth. A good day to notice what you're drawn to and what feels good; your natural taste and values are especially clear.`,
-  mars: (sign,house) => `Today your Mars Return is exact — Mars is back where it sat at your birth. A good day to notice where your drive and energy actually want to go, before anyone else's agenda gets in the way.`,
+  moon: (sign,house) => `Today is your ${termLink('Lunar Return','planetary-return')} — the Moon has circled all the way back to exactly where it sat the moment you were born, in ${sign}. It happens roughly once a month and astrologers treat it as a personal monthly reset: a good day to check in honestly with how you're feeling, since your emotional baseline is unusually clear and "you" today, and to set a private intention for the four weeks ahead.`,
+  sun: (sign,house) => `Today is your ${termLink('Solar Return','planetary-return')} — the Sun has come back to exactly where it was when you were born. This is the astrological heart of your birthday: a once-a-year reset point for your identity and sense of self. Worth marking, even quietly.`,
+  mercury: (sign,house) => `Today your ${termLink('Mercury Return','planetary-return')} is exact — Mercury is back where it sat at your birth. A good day to notice how you're communicating and thinking; it tends to feel unusually "like yourself" mentally.`,
+  venus: (sign,house) => `Today your ${termLink('Venus Return','planetary-return')} is exact — Venus is back where it sat at your birth. A good day to notice what you're drawn to and what feels good; your natural taste and values are especially clear.`,
+  mars: (sign,house) => `Today your ${termLink('Mars Return','planetary-return')} is exact — Mars is back where it sat at your birth. A good day to notice where your drive and energy actually want to go, before anyone else's agenda gets in the way.`,
 };
 function plainConjunctionClause(transitingPlanets, natalPlanet, sign){
   const n = PLANET_VIBE[natalPlanet];
   const subject = transitingPlanets.length>1 ? `your ${transitingPlanets.map(cap).join(' and ')}` : `${cap(transitingPlanets[0])}`;
   const verb = transitingPlanets.length>1 ? 'are' : 'is';
-  return `${subject} ${verb} landing on your natal ${cap(natalPlanet)} today (both in ${sign}) — expect ${n} to feel unusually direct and immediate`;
+  return `${subject} ${verb} ${termLink('landing on','conjunction')} your natal ${cap(natalPlanet)} today (both in ${sign}) — expect ${n} to feel unusually direct and immediate`;
 }
 function findReturns(day){
   const PLANETS = ['sun','moon','mercury','venus','mars','jupiter','saturn'];
@@ -1348,20 +1359,29 @@ function plainDailyReading(dateStr){
     const upcoming = daysToExactReturn(dateStr, 'moon');
     if(upcoming){
       const when = upcoming.days === 1 ? 'tomorrow' : `in ${upcoming.days} days`;
-      sentences.push(`Heads up: your exact Lunar Return lands ${when} — worth watching for.`);
+      sentences.push(`Heads up: your exact ${termLink('Lunar Return','planetary-return')} lands ${when} — worth watching for.`);
     }
+  }
+
+  // Closing: how to actually use this, tied to her HD design — "here is what it is" -> "here's how to work with it"
+  if(returns.includes('moon')){
+    sentences.push(`How to honor it: since you're a Generator with Emotional Authority, use today to notice how you feel rather than deciding anything big — let today's clarity be information, not a verdict.`);
+  } else if(featuredTarget){
+    sentences.push(`How to work with it: let this settle before you act on it — respond to what's actually in front of you today rather than pushing from your head.`);
+  } else {
+    sentences.push(`A good day to simply notice what your body already knows, and let your Sacral do the deciding.`);
   }
 
   // "go deeper" — genuinely new detail, not a restatement: nakshatra, dasha, any OTHER conjunctions not already featured
   const deeper = [];
-  deeper.push({ label:'Moon detail', body:`The Moon is moving through ${day.moon.nakshatra} nakshatra right now (a more precise, 27-part reading of the sky than sign alone).` });
+  deeper.push({ label:'Moon detail', body:`The Moon is moving through ${day.moon.nakshatra} ${termLink('nakshatra','nakshatra')} right now — a more precise, 27-part reading of the sky than sign alone.` });
   for(const np of Object.keys(conjunctions)){
     if(np === featuredTarget) continue;
     const sign = day[conjunctions[np][0]].sign;
     deeper.push({ label:`${conjunctions[np].map(cap).join(' + ')} ↔ natal ${cap(np)}`, body: plainConjunctionClause(conjunctions[np], np, sign) + '.' });
   }
   if(dasha){
-    deeper.push({ label:'The bigger chapter you\'re in', body:`You're in a multi-year life chapter ruled by ${dasha.mahadasha} (your Mahadasha), currently flavored by a shorter ${dasha.antardasha} sub-chapter. Think of it as the "background music" for this whole season, not something that changes day to day.` });
+    deeper.push({ label:'The bigger chapter you\'re in', body:`You're in a multi-year life chapter ruled by ${dasha.mahadasha} (your ${termLink('Mahadasha','mahadasha')}), currently flavored by a shorter ${dasha.antardasha} sub-chapter (your ${termLink('Antardasha','antardasha')}). Think of it as the "background music" for this whole season, not something that changes day to day.` });
   }
 
   return { teaser, sentences, deeper, dasha, moonSign, moonHouse };
@@ -1505,6 +1525,20 @@ function renderMoonTeaserHTML(reading, toggleId){
     <div class="day-overview-para">${(reading.sentences||[]).join(' ')}</div>
     ${deeper.length ? `<div class="go-deeper-toggle" id="${toggleId}" onclick="toggleDeeper(this)"><span class="arrow">▸</span> A bit more, if you're curious</div>
     <div class="go-deeper-body">${deeper.map(d=>`<div class="deeper-item"><div class="deeper-item-label">${d.label}</div><div class="deeper-item-body">${d.body}</div></div>`).join('')}</div>` : ''}
+    ${reading.teaser ? renderMoonFooterHTML(reading.teaser) : ''}
+  </div>`;
+}
+function renderDayModalTeaserHTML(reading, toggleId){
+  if(!reading) return '';
+  const [first, ...rest] = reading.sentences;
+  const deeper = reading.deeper || [];
+  return `<div class="day-overview-card">
+    <div class="day-overview-para">${first}</div>
+    <div class="go-deeper-toggle" id="${toggleId}" onclick="toggleDeeper(this)"><span class="arrow">▸</span> Read the full day reading</div>
+    <div class="go-deeper-body">
+      ${rest.length ? `<div class="day-overview-para" style="margin-bottom:10px">${rest.join(' ')}</div>` : ''}
+      ${deeper.map(d=>`<div class="deeper-item"><div class="deeper-item-label">${d.label}</div><div class="deeper-item-body">${d.body}</div></div>`).join('')}
+    </div>
     ${reading.teaser ? renderMoonFooterHTML(reading.teaser) : ''}
   </div>`;
 }
@@ -1874,7 +1908,7 @@ function openDayModal(ds){
     ${guideHtml}`;
 
   const dayReading = plainDailyReading(ds);
-  const moonHtml = dayReading ? renderMoonTeaserHTML(dayReading, 'dayModalDeeperToggle-'+ds) : '';
+  const moonHtml = dayReading ? renderDayModalTeaserHTML(dayReading, 'dayModalDeeperToggle-'+ds) : '';
 
   const hdc = HD_CHECKINS[d.getDay()];
   const hdHtml = !isBirthday ? `<div class="hd-checkin"><div class="hd-checkin-title">${hdc.title}</div>${hdc.msg}</div>` : '';
@@ -1884,12 +1918,12 @@ function openDayModal(ds){
     <h3 style="${isBirthday?'color:var(--pink);text-align:center;font-size:1.5rem':''}${!isBirthday?'':''}">
       ${isBirthday?'✦ Happy Birthday ✦':fmt}
     </h3>
-    ${!isBirthday?`<div class="modal-date-str" style="color:${pd.color};margin-bottom:8px">${pd.name}</div><div class="modal-guidance">${pd.msg}</div>`:'<div class="modal-date-str" style="text-align:center;margin-bottom:12px">'+fmt+'</div>'}
-    ${dailySection}
+    ${!isBirthday?`<div class="modal-date-str" style="color:${pd.color};margin-bottom:8px">${pd.name}</div>`:'<div class="modal-date-str" style="text-align:center;margin-bottom:12px">'+fmt+'</div>'}
     ${moonHtml}
-    ${countdownHtml}
     ${eventHtml}
+    ${dailySection}
     ${hdHtml}
+    ${countdownHtml}
     ${buildTodosHtml(ds)}
     ${buildMoodHtml(ds)}
     <hr class="modal-divider">
