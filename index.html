@@ -432,8 +432,17 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .ch-phase-pill.active[style*="3da8c8"] { background:#3da8c8; }
 .ch-phase-pill.active[style*="d07028"] { background:#d07028; }
 .ch-phase-pill.active[style*="066664"] { background:#066664; }
+.ch-ewm-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:10px; }
+.ch-ewm-card { background:var(--card); border-radius:10px; padding:12px 13px; box-shadow:0 1px 6px var(--shadow); }
+.ch-ewm-label { font-size:0.68rem; font-weight:600; margin-bottom:7px; }
+@media (max-width:640px){ .ch-ewm-grid{ grid-template-columns:1fr; } }
 .tongue-card { background:var(--gold-bg); border-radius:12px; padding:14px 16px; margin-top:16px; border-left:3px solid var(--gold); font-size:0.78rem; color:var(--text-dim); line-height:1.75; }
 .tongue-card strong { color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:0.95rem; display:block; margin-bottom:6px; }
+.tongue-card.done { background:var(--green-bg); border-left-color:var(--green); padding:10px 16px; }
+.ch-tongue-check { display:flex; align-items:center; gap:9px; cursor:pointer; font-size:0.78rem; color:var(--text); margin-top:10px; }
+.ch-tongue-check.done { margin-top:0; color:var(--green); font-weight:500; }
+.ch-tongue-check input[type="checkbox"] { width:18px; height:18px; accent-color:var(--gold); cursor:pointer; flex-shrink:0; }
+.ch-tongue-check.done input[type="checkbox"] { accent-color:var(--green); }
 
 /* ── PROGRESSIVE DISCLOSURE: moon-of-the-day teaser + "go deeper" detail ── */
 .moon-teaser { background:linear-gradient(135deg, var(--pink-bg), var(--gold-bg)); border-radius:12px; padding:14px 16px; margin-bottom:10px; border:1px solid var(--border); }
@@ -2359,28 +2368,40 @@ const CH_PHASES = {
     chart:'Saturn — your chart ruler, sitting retrograde in your 5th house — governs what "earned rest" looks like for you. Rest during this phase isn\'t a break from your Saturn work. It IS the Saturn work: the discipline of actually stopping instead of pushing through.',
     do:['Rest without guilt','Journal / reflect','Gentle movement only','Say no to new commitments'],
     ease:['Big decisions or hard conversations','New commitments','Comparing your output to other weeks'],
-    body:'Iron-rich, warming foods (bone broth, dark leafy greens, red meat if you eat it) — you\'re actively losing iron. Gentle heat on the lower abdomen if cramping. This is the week to under-schedule, not push through.' },
+    body:'Iron-rich, warming foods (bone broth, dark leafy greens, red meat if you eat it) — you\'re actively losing iron. Gentle heat on the lower abdomen if cramping. This is the week to under-schedule, not push through.',
+    eat:['Iron + B12: red meat, lentils, dark leafy greens','Warming, cooked foods over cold/raw','Cacao or dark chocolate — genuinely helps cramps for a lot of people','Hydrate well; less caffeine if cramping is rough'],
+    work:['Admin, inbox, low-stakes review tasks','Reflect on the last cycle before planning the next one','Protect at least one no-meeting day if you can','Batch small tasks rather than starting anything that needs a fresh idea'],
+    move:['Walking, gentle yoga, stretching','Skip HIIT / heavy lifting this week if you can','Rest days without guilt count as training too'] },
   follicular: { name:'Follicular', season:'Inner Spring', color:'#3da8c8', days:'Days 6–13',
     desc:'Rising energy, rising optimism. Estrogen climbs steadily as FSH stimulates new follicle growth — your body is quite literally building toward something. Your Sacral response tends to feel clearer and more available here. Good window for new ideas — just remember Strategy is still Respond, not initiate cold.',
     hd:'As energy returns, your Root-driven channels (32-54, 42-53, 41-30) start reactivating — this is a genuinely good window to re-test ideas that surfaced during menstrual reflection. Ask your Sacral again now that energy is back: does this still feel like a real yes?',
     chart:'This phase echoes New Moon energy — plant, don\'t harvest yet. Jupiter retrograde in your 5th house (your creative wisdom, turned inward) becomes more externally available as your energy climbs — good window to actually start the creative thing you\'ve been quietly turning over.',
     do:['Start new projects','Brainstorm','Social plans','Try something new'],
     ease:['Overcommitting just because it feels easy right now','Skipping the response step because ideas come fast'],
-    body:'Lighter, fresher foods as digestion tends to run more efficiently here. Good window to build back up movement intensity if you eased off during menstrual.' },
+    body:'Lighter, fresher foods as digestion tends to run more efficiently here. Good window to build back up movement intensity if you eased off during menstrual.',
+    eat:['Lighter, fresher meals — salads, sprouted grains, fermented foods for gut support','Good window to experiment with new recipes/ingredients','Lean protein to support rising energy'],
+    work:['Kick off the project you\'ve been sitting on','Brainstorms, planning sessions, creative strategy','Schedule the harder conversations for ovulatory instead — save this week for building'],
+    move:['Build intensity back up — this is a good week to add a new class or format','Strength training responds well here as energy climbs'] },
   ovulatory:  { name:'Ovulatory', season:'Inner Summer', color:'#d07028', days:'Days 14–16',
     desc:'Peak energy, peak communication. Estrogen peaks, an LH surge triggers ovulation, and testosterone peaks too — which is the biological driver behind the extra confidence and magnetism a lot of people feel right here.',
     hd:'Your 1-8 channel (G Center to Throat — the identity-to-expression highway that makes you a natural creative role model) tends to feel most "on" during this window. Being seen, speaking up, showing your actual self isn\'t extra effort right now — it\'s the path of least resistance.',
     chart:'This is when your Sun + Mercury in Libra, 10th house (Budha-Aditya Yoga — your career and public-presence signature) is most naturally supported by your body chemistry. If you have a pitch, a launch, or a visible moment to choose, this 2–3 day window is genuinely your best shot at it landing effortlessly.',
     do:['Big conversations','Pitch / present','Collaborate','Be seen'],
     ease:['Assuming the confidence here means every decision is automatically right — still let the wave settle on anything major'],
-    body:'Whatever movement feels good tends to feel best here — most people\'s physical performance peaks around ovulation. Stay well hydrated; this is often the most fertile-mucus, highest-basal-temperature window of the month.' },
+    body:'Whatever movement feels good tends to feel best here — most people\'s physical performance peaks around ovulation. Stay well hydrated; this is often the most fertile-mucus, highest-basal-temperature window of the month.',
+    eat:['Light, fiber-rich foods — your body is efficiently metabolizing right now','Cruciferous veggies (broccoli, cauliflower) support healthy estrogen clearance','Stay ahead of hydration, not just reactive to thirst'],
+    work:['Book the pitch, the launch, the visible moment for this window if you can choose','Interviews, hard asks, anything needing you at your most magnetic','Network / put yourself in rooms — this is your natural social peak'],
+    move:['Peak performance window — good time for a PR attempt or your hardest workout of the month','High-intensity training tends to feel best and recover fastest right now'] },
   luteal:     { name:'Luteal', season:'Inner Autumn', color:'#066664', days:'Days 17–28',
     desc:'Energy tapers, discernment sharpens. Progesterone rises through the first half of this phase, then both progesterone and estrogen drop sharply in the final days before your period — that hormonal drop is the biological driver of PMS, and it directly intensifies emotional sensitivity.',
     hd:'Your Solar Plexus — your actual seat of Emotional Authority — runs hotter here almost by hormonal default. Your 41-30 channel (Root to Solar Plexus, "the Dream Engine") can make wanting something feel more urgent than usual in the back half of this phase. Urgency is not the same as clarity. Let the wave pass regardless of how loud it feels.',
     chart:'This phase parallels a waning moon — editing, completing, releasing rather than starting. Treat any strong "no" or "yes" that shows up now as data to revisit after your period starts, not a final answer; your own body chemistry is working against same-day clarity here.',
     do:['Finish existing projects','Edit / refine','Set boundaries','Slow down deliberately'],
     ease:['Starting anything you\'re not willing to revisit after your period begins','Treating a luteal-phase feeling as the final verdict'],
-    body:'Magnesium and B6 can genuinely take the edge off PMS symptoms for a lot of people — worth trying in the final week. Warming foods again as you head back toward menstrual. Reduce caffeine/sugar in the last few days if you notice mood swings track with them.' },
+    body:'Magnesium and B6 can genuinely take the edge off PMS symptoms for a lot of people — worth trying in the final week. Warming foods again as you head back toward menstrual. Reduce caffeine/sugar in the last few days if you notice mood swings track with them.',
+    eat:['Magnesium-rich foods — dark chocolate, pumpkin seeds, leafy greens','Complex carbs (sweet potato, oats) can help stabilize mood swings','Cut back caffeine and sugar in the final week if you notice a mood link','Warming foods again as you head toward menstrual'],
+    work:['Finish, edit, ship — not start','Say the boundary you\'ve been avoiding; luteal discernment is real signal, just let it settle first','Batch decision-heavy work early in this phase, before the final PMS week hits'],
+    move:['Steady-state cardio, pilates, moderate strength — dial down intensity in the final week','Walking outside can genuinely help mood in the last few days'] },
 };
 function getCyclePhase(day){
   if(day<=5) return 'menstrual';
@@ -2403,18 +2424,20 @@ function chCycleDay(){
 function chTrackerKey(field){ return `ch-track-${todayStr}-${field}`; }
 function chSaveTrack(field, val){ localStorage.setItem(chTrackerKey(field), val); }
 function chGetTrack(field){ return localStorage.getItem(chTrackerKey(field))||''; }
-function chTongueLastPrompt(){
-  let last = localStorage.getItem('ch-tongue-last');
-  if(!last){
-    // first-ever visit: seed to today so it doesn't read as "due" immediately — genuinely weekly from here
-    last = todayStr;
-    localStorage.setItem('ch-tongue-last', last);
+function chEnsureTongueSeed(){
+  // first-ever visit only: seed "last checked" to today so it doesn't read as due immediately.
+  // Gated by a separate flag so unchecking later (chUndoTongueDone) doesn't get re-seeded.
+  if(!localStorage.getItem('ch-tongue-seeded')){
+    localStorage.setItem('ch-tongue-seeded','1');
+    if(!localStorage.getItem('ch-tongue-last')) localStorage.setItem('ch-tongue-last', todayStr);
   }
-  return last;
 }
+function chTongueLastPrompt(){ return localStorage.getItem('ch-tongue-last')||''; }
 function chMarkTongueDone(){ localStorage.setItem('ch-tongue-last', todayStr); buildCycleHarmony(); }
+function chUndoTongueDone(){ localStorage.removeItem('ch-tongue-last'); buildCycleHarmony(); }
 function chTongueDue(){
   const last = chTongueLastPrompt();
+  if(!last) return true;
   const days = Math.floor((new Date(todayStr+'T12:00:00') - new Date(last+'T12:00:00'))/86400000);
   return days >= 7;
 }
@@ -2454,6 +2477,11 @@ function renderPhaseDetailHTML(key, currentDay){
         <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:${phase.color};margin-bottom:4px;">Body + Nutrition</div>
         <p>${phase.body}</p>
       </div>
+    </div>
+    <div class="ch-ewm-grid">
+      <div class="ch-ewm-card"><div class="ch-ewm-label" style="color:${phase.color}">🍽 Eat</div>${(phase.eat||[]).map(t=>`<div class="ch-rec-item">✦ ${t}</div>`).join('')}</div>
+      <div class="ch-ewm-card"><div class="ch-ewm-label" style="color:${phase.color}">💼 Work</div>${(phase.work||[]).map(t=>`<div class="ch-rec-item">✦ ${t}</div>`).join('')}</div>
+      <div class="ch-ewm-card"><div class="ch-ewm-label" style="color:${phase.color}">🏃 Move</div>${(phase.move||[]).map(t=>`<div class="ch-rec-item">✦ ${t}</div>`).join('')}</div>
     </div>`;
 }
 function chExplorePhase(key, currentDay){
@@ -2487,6 +2515,7 @@ function chPatternRecap(){
   <div style="font-size:0.7rem;color:var(--text-light);margin-top:8px;">Based on your last ${entries.length} logged day${entries.length===1?'':'s'}. Keep logging daily — patterns by cycle phase get clearer the longer this runs.</div>`;
 }
 function buildCycleHarmonyHTML(){
+  chEnsureTongueSeed();
   const start = chGetStartDate();
   const day = chCycleDay();
   const phaseKey = day ? getCyclePhase(day) : null;
@@ -2540,16 +2569,24 @@ function buildCycleHarmonyHTML(){
 
     <div class="glyph-divider">✦ · ✦ · ✦</div>
 
-    <div class="tongue-card">
+    <div class="tongue-card${tongueDue?'':' done'}">
+      ${tongueDue ? `
       <strong>✦ Weekly Tongue Check — Traditional Chinese Medicine</strong>
-      ${tongueDue ? `It's been a week — take a quick photo of your tongue today, first thing, before eating or drinking anything.` : `✓ Last logged ${chTongueLastPrompt()}. Next check due ${chNextTongueDate()}.`}
+      It's been a week — take a quick photo of your tongue today, first thing, before eating or drinking anything.
       <div style="margin-top:10px;font-size:0.75rem;">
         <strong style="color:var(--text);display:block;margin-bottom:4px;">What to look for:</strong>
         <div style="margin-bottom:3px;">• <strong>Coating</strong> — thick/white can point to digestive sluggishness; yellow can point to heat/inflammation; little to no coating can point to depleted fluids.</div>
         <div style="margin-bottom:3px;">• <strong>Color</strong> — pale can point to low energy/blood; red or purple-tinged can point to heat or stagnation.</div>
         <div style="margin-bottom:3px;">• <strong>Shape</strong> — scalloped edges (teeth marks) often point to fluid retention or a tired spleen system; cracks can point to depleted fluids/long-term stress.</div>
       </div>
-      ${tongueDue ? `<button class="ch-cta" style="margin-top:10px;" onclick="chMarkTongueDone()">Mark today's check done</button>` : ''}
+      <label class="ch-tongue-check">
+        <input type="checkbox" onchange="chMarkTongueDone()"> <span>I checked my tongue today</span>
+      </label>
+      ` : `
+      <label class="ch-tongue-check done">
+        <input type="checkbox" checked onchange="chUndoTongueDone()"> <span>✓ Logged ${chTongueLastPrompt()} — next check ${chNextTongueDate()}</span>
+      </label>
+      `}
     </div>
   `;
 }
