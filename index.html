@@ -422,6 +422,16 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .ch-tracker-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin-top:10px; }
 .ch-tracker-grid label { font-size:0.6rem; color:var(--text-light); display:block; margin-bottom:3px; text-transform:uppercase; letter-spacing:0.05em; }
 .ch-tracker-grid input, .ch-tracker-grid select { width:100%; border:1px solid var(--border); border-radius:6px; padding:4px 5px; font-size:0.72rem; background:var(--surface); color:var(--text); }
+.ch-cycle-bar { display:flex; gap:2px; margin-bottom:12px; border-radius:6px; overflow:hidden; }
+.ch-bar-seg { flex:1; height:14px; transition:transform 0.15s; }
+.ch-bar-seg.current { transform:scaleY(1.4); box-shadow:0 0 4px rgba(0,0,0,0.25); border-radius:2px; }
+.ch-phase-pills { display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
+.ch-phase-pill { flex:1; min-width:80px; text-align:center; padding:7px 8px; border-radius:20px; border:1.5px solid var(--border); font-size:0.68rem; color:var(--text-dim); cursor:pointer; transition:all 0.15s; background:var(--card); }
+.ch-phase-pill.active { color:#fff; font-weight:600; }
+.ch-phase-pill.active[style*="7060a8"] { background:#7060a8; }
+.ch-phase-pill.active[style*="3da8c8"] { background:#3da8c8; }
+.ch-phase-pill.active[style*="d07028"] { background:#d07028; }
+.ch-phase-pill.active[style*="066664"] { background:#066664; }
 .tongue-card { background:var(--gold-bg); border-radius:12px; padding:14px 16px; margin-top:16px; border-left:3px solid var(--gold); font-size:0.78rem; color:var(--text-dim); line-height:1.75; }
 .tongue-card strong { color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:0.95rem; display:block; margin-bottom:6px; }
 
@@ -2343,18 +2353,34 @@ function buildHDHTML(){
 // CYCLE + HORMONES
 // ═══════════════════════════════════════════════════════════════════════════
 const CH_PHASES = {
-  menstrual:  { name:'Menstrual', season:'Inner Winter', color:'#7060a8',
-    desc:'Energy is lowest here — and that\'s the design, not a malfunction. Your Emotional Authority already asks you to slow down before deciding; menstrual phase is your body asking the same thing physically. Rest is the productive choice.',
-    do:['Rest without guilt','Journal / reflect','Gentle movement only','Say no to new commitments'] },
-  follicular: { name:'Follicular', season:'Inner Spring', color:'#3da8c8',
-    desc:'Rising energy, rising optimism. Estrogen climbs and your Sacral response tends to feel clearer and more available. Good window for new ideas — just remember Strategy is still Respond, not initiate cold.',
-    do:['Start new projects','Brainstorm','Social plans','Try something new'] },
-  ovulatory:  { name:'Ovulatory', season:'Inner Summer', color:'#d07028',
-    desc:'Peak energy, peak communication. This is often when your Sun/Mercury 10th house gifts (aesthetic precision, sharp communication) feel most naturally accessible. Good window for the professional, visible work.',
-    do:['Big conversations','Pitch / present','Collaborate','Be seen'] },
-  luteal:     { name:'Luteal', season:'Inner Autumn', color:'#066664',
-    desc:'Energy tapers, discernment sharpens. Your emotional wave (Solar Plexus Authority) can run stronger here — treat any strong "no" or "yes" that shows up now as data to revisit after your period starts, not a final answer.',
-    do:['Finish existing projects','Edit / refine','Set boundaries','Slow down deliberately'] },
+  menstrual:  { name:'Menstrual', season:'Inner Winter', color:'#7060a8', days:'Days 1–5',
+    desc:'Energy is lowest here — and that\'s the design, not a malfunction. Estrogen and progesterone are both at their lowest point of the whole cycle. Your Emotional Authority already asks you to slow down before deciding; menstrual phase is your body asking the same thing physically. Rest is the productive choice.',
+    hd:'Your Root Center is the hub connecting three of your four defined channels (32-54 to Spleen, 42-53 to Sacral, 41-30 to Solar Plexus). When systemic energy is this low, all three quiet down together — less pressure to produce, less raw sacral drive, less urgency in what you want. That\'s not you being "off." That\'s your whole defined circuitry legitimately resting at once.',
+    chart:'Saturn — your chart ruler, sitting retrograde in your 5th house — governs what "earned rest" looks like for you. Rest during this phase isn\'t a break from your Saturn work. It IS the Saturn work: the discipline of actually stopping instead of pushing through.',
+    do:['Rest without guilt','Journal / reflect','Gentle movement only','Say no to new commitments'],
+    ease:['Big decisions or hard conversations','New commitments','Comparing your output to other weeks'],
+    body:'Iron-rich, warming foods (bone broth, dark leafy greens, red meat if you eat it) — you\'re actively losing iron. Gentle heat on the lower abdomen if cramping. This is the week to under-schedule, not push through.' },
+  follicular: { name:'Follicular', season:'Inner Spring', color:'#3da8c8', days:'Days 6–13',
+    desc:'Rising energy, rising optimism. Estrogen climbs steadily as FSH stimulates new follicle growth — your body is quite literally building toward something. Your Sacral response tends to feel clearer and more available here. Good window for new ideas — just remember Strategy is still Respond, not initiate cold.',
+    hd:'As energy returns, your Root-driven channels (32-54, 42-53, 41-30) start reactivating — this is a genuinely good window to re-test ideas that surfaced during menstrual reflection. Ask your Sacral again now that energy is back: does this still feel like a real yes?',
+    chart:'This phase echoes New Moon energy — plant, don\'t harvest yet. Jupiter retrograde in your 5th house (your creative wisdom, turned inward) becomes more externally available as your energy climbs — good window to actually start the creative thing you\'ve been quietly turning over.',
+    do:['Start new projects','Brainstorm','Social plans','Try something new'],
+    ease:['Overcommitting just because it feels easy right now','Skipping the response step because ideas come fast'],
+    body:'Lighter, fresher foods as digestion tends to run more efficiently here. Good window to build back up movement intensity if you eased off during menstrual.' },
+  ovulatory:  { name:'Ovulatory', season:'Inner Summer', color:'#d07028', days:'Days 14–16',
+    desc:'Peak energy, peak communication. Estrogen peaks, an LH surge triggers ovulation, and testosterone peaks too — which is the biological driver behind the extra confidence and magnetism a lot of people feel right here.',
+    hd:'Your 1-8 channel (G Center to Throat — the identity-to-expression highway that makes you a natural creative role model) tends to feel most "on" during this window. Being seen, speaking up, showing your actual self isn\'t extra effort right now — it\'s the path of least resistance.',
+    chart:'This is when your Sun + Mercury in Libra, 10th house (Budha-Aditya Yoga — your career and public-presence signature) is most naturally supported by your body chemistry. If you have a pitch, a launch, or a visible moment to choose, this 2–3 day window is genuinely your best shot at it landing effortlessly.',
+    do:['Big conversations','Pitch / present','Collaborate','Be seen'],
+    ease:['Assuming the confidence here means every decision is automatically right — still let the wave settle on anything major'],
+    body:'Whatever movement feels good tends to feel best here — most people\'s physical performance peaks around ovulation. Stay well hydrated; this is often the most fertile-mucus, highest-basal-temperature window of the month.' },
+  luteal:     { name:'Luteal', season:'Inner Autumn', color:'#066664', days:'Days 17–28',
+    desc:'Energy tapers, discernment sharpens. Progesterone rises through the first half of this phase, then both progesterone and estrogen drop sharply in the final days before your period — that hormonal drop is the biological driver of PMS, and it directly intensifies emotional sensitivity.',
+    hd:'Your Solar Plexus — your actual seat of Emotional Authority — runs hotter here almost by hormonal default. Your 41-30 channel (Root to Solar Plexus, "the Dream Engine") can make wanting something feel more urgent than usual in the back half of this phase. Urgency is not the same as clarity. Let the wave pass regardless of how loud it feels.',
+    chart:'This phase parallels a waning moon — editing, completing, releasing rather than starting. Treat any strong "no" or "yes" that shows up now as data to revisit after your period starts, not a final answer; your own body chemistry is working against same-day clarity here.',
+    do:['Finish existing projects','Edit / refine','Set boundaries','Slow down deliberately'],
+    ease:['Starting anything you\'re not willing to revisit after your period begins','Treating a luteal-phase feeling as the final verdict'],
+    body:'Magnesium and B6 can genuinely take the edge off PMS symptoms for a lot of people — worth trying in the final week. Warming foods again as you head back toward menstrual. Reduce caffeine/sugar in the last few days if you notice mood swings track with them.' },
 };
 function getCyclePhase(day){
   if(day<=5) return 'menstrual';
@@ -2377,19 +2403,93 @@ function chCycleDay(){
 function chTrackerKey(field){ return `ch-track-${todayStr}-${field}`; }
 function chSaveTrack(field, val){ localStorage.setItem(chTrackerKey(field), val); }
 function chGetTrack(field){ return localStorage.getItem(chTrackerKey(field))||''; }
-function chTongueLastPrompt(){ return localStorage.getItem('ch-tongue-last')||''; }
+function chTongueLastPrompt(){
+  let last = localStorage.getItem('ch-tongue-last');
+  if(!last){
+    // first-ever visit: seed to today so it doesn't read as "due" immediately — genuinely weekly from here
+    last = todayStr;
+    localStorage.setItem('ch-tongue-last', last);
+  }
+  return last;
+}
 function chMarkTongueDone(){ localStorage.setItem('ch-tongue-last', todayStr); buildCycleHarmony(); }
 function chTongueDue(){
   const last = chTongueLastPrompt();
-  if(!last) return true;
   const days = Math.floor((new Date(todayStr+'T12:00:00') - new Date(last+'T12:00:00'))/86400000);
   return days >= 7;
+}
+function chNextTongueDate(){
+  const last = new Date(chTongueLastPrompt()+'T12:00:00');
+  last.setDate(last.getDate()+7);
+  return last.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+}
+function chCycleBarHTML(currentDay){
+  const segs = [];
+  for(let d=1; d<=28; d++){
+    const key = getCyclePhase(d);
+    const isCurrent = d === currentDay;
+    segs.push(`<div class="ch-bar-seg${isCurrent?' current':''}" style="background:${CH_PHASES[key].color}${isCurrent?'':'66'}" title="Day ${d} — ${CH_PHASES[key].name}"></div>`);
+  }
+  return `<div class="ch-cycle-bar">${segs.join('')}</div>`;
+}
+function renderPhaseDetailHTML(key, currentDay){
+  const phase = CH_PHASES[key];
+  const isCurrent = currentDay && getCyclePhase(currentDay) === key;
+  return `
+    <div class="ch-phase-banner" style="background:linear-gradient(135deg, ${phase.color}, ${phase.color}cc);">
+      <div class="ch-phase-name">${isCurrent?`Day ${currentDay} — `:''}${phase.name} <span style="font-size:0.6rem;opacity:0.8;font-weight:400">(${phase.days})</span></div>
+      <div class="ch-phase-season">${phase.season}</div>
+      <div class="ch-phase-desc">${phase.desc}</div>
+    </div>
+    <div class="ch-recs">
+      <div class="ch-rec-card"><div class="ch-rec-label">Lean Into</div>${phase.do.map(d=>`<div class="ch-rec-item">✦ ${d}</div>`).join('')}</div>
+      <div class="ch-rec-card"><div class="ch-rec-label">Ease Off</div>${phase.ease.map(d=>`<div class="ch-rec-item">✦ ${d}</div>`).join('')}</div>
+    </div>
+    <div class="astro-card open" style="cursor:default;border-left-color:${phase.color};margin-bottom:10px;">
+      <div class="astro-card-body" style="display:block;margin-top:0;padding-top:0;border-top:none;">
+        <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:${phase.color};margin-bottom:4px;">Your Human Design, This Phase</div>
+        <p style="margin-bottom:12px;">${phase.hd}</p>
+        <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:${phase.color};margin-bottom:4px;">Your Chart, This Phase</div>
+        <p style="margin-bottom:12px;">${phase.chart}</p>
+        <div style="font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:${phase.color};margin-bottom:4px;">Body + Nutrition</div>
+        <p>${phase.body}</p>
+      </div>
+    </div>`;
+}
+function chExplorePhase(key, currentDay){
+  const el = document.getElementById('ch-phase-detail');
+  if(el) el.innerHTML = renderPhaseDetailHTML(key, currentDay);
+  document.querySelectorAll('.ch-phase-pill').forEach(p=>p.classList.toggle('active', p.dataset.key===key));
+}
+function chPatternRecap(){
+  const fields = ['headache','sleep','stress','hydration','meals'];
+  const entries = [];
+  for(let i=0;i<40;i++){
+    const d = new Date(todayStr+'T12:00:00'); d.setDate(d.getDate()-i);
+    const ds = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const row = {}; let any=false;
+    fields.forEach(f=>{ const v=localStorage.getItem(`ch-track-${ds}-${f}`); if(v){row[f]=v; any=true;} });
+    if(any) entries.push({date:ds, ...row});
+  }
+  if(entries.length < 3) return `<div class="astro-maddie">Log at least 3 days to start seeing patterns here — you're ${entries.length} in so far.</div>`;
+  const headacheVals = entries.filter(e=>e.headache).map(e=>+e.headache);
+  const avgHeadache = headacheVals.length ? (headacheVals.reduce((a,b)=>a+b,0)/headacheVals.length).toFixed(1) : null;
+  const sleepVals = entries.filter(e=>e.sleep).map(e=>+e.sleep);
+  const avgSleep = sleepVals.length ? (sleepVals.reduce((a,b)=>a+b,0)/sleepVals.length).toFixed(1) : null;
+  const highStressDays = entries.filter(e=>e.stress==='high').length;
+  const noHydrationDays = entries.filter(e=>e.hydration==='no').length;
+  return `<div class="ch-recs" style="grid-template-columns:1fr 1fr;">
+    ${avgHeadache?`<div class="ch-rec-card"><div class="ch-rec-label">Avg Headache</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text)">${avgHeadache}/10</div></div>`:''}
+    ${avgSleep?`<div class="ch-rec-card"><div class="ch-rec-label">Avg Sleep</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text)">${avgSleep} hrs</div></div>`:''}
+    <div class="ch-rec-card"><div class="ch-rec-label">High-Stress Days</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text)">${highStressDays} of ${entries.length}</div></div>
+    <div class="ch-rec-card"><div class="ch-rec-label">Under-Hydrated Days</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text)">${noHydrationDays} of ${entries.length}</div></div>
+  </div>
+  <div style="font-size:0.7rem;color:var(--text-light);margin-top:8px;">Based on your last ${entries.length} logged day${entries.length===1?'':'s'}. Keep logging daily — patterns by cycle phase get clearer the longer this runs.</div>`;
 }
 function buildCycleHarmonyHTML(){
   const start = chGetStartDate();
   const day = chCycleDay();
   const phaseKey = day ? getCyclePhase(day) : null;
-  const phase = phaseKey ? CH_PHASES[phaseKey] : null;
   const tongueDue = chTongueDue();
   return `
     <div class="section-heading">Cycle + Hormones</div>
@@ -2404,18 +2504,23 @@ function buildCycleHarmonyHTML(){
       </div>
     </div>
 
-    ${phase ? `
-    <div class="ch-phase-banner" style="background:linear-gradient(135deg, ${phase.color}, ${phase.color}cc);">
-      <div class="ch-phase-name">Day ${day} — ${phase.name}</div>
-      <div class="ch-phase-season">${phase.season}</div>
-      <div class="ch-phase-desc">${phase.desc}</div>
+    ${day ? `
+    <div style="margin-bottom:6px;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light);">Day ${day} of ~28</div>
+    ${chCycleBarHTML(day)}
+    <div class="ch-phase-pills">
+      ${Object.keys(CH_PHASES).map(k=>`<div class="ch-phase-pill${k===phaseKey?' active':''}" data-key="${k}" onclick="chExplorePhase('${k}',${day})" style="border-color:${CH_PHASES[k].color}">${CH_PHASES[k].name}</div>`).join('')}
     </div>
-    <div class="ch-recs">
-      <div class="ch-rec-card"><div class="ch-rec-label">Lean Into</div>${phase.do.map(d=>`<div class="ch-rec-item">✦ ${d}</div>`).join('')}</div>
-      <div class="ch-rec-card"><div class="ch-rec-label">Today's Chart Blend</div>
-        <div class="ch-rec-item">${phase.name} phase + Emotional Authority: ${phaseKey==='luteal'||phaseKey==='menstrual' ? 'extra reason to let any strong feeling settle before you act on it — both your hormones and your Authority are asking for the same patience right now.' : 'a naturally clearer window to trust your Sacral response — energy and decision-clarity are working together today.'}</div>
-      </div>
-    </div>` : `<div class="astro-maddie" style="margin-bottom:18px;">Enter your last period start date above to see your current phase and personalized recommendations.</div>`}
+    <div id="ch-phase-detail">${renderPhaseDetailHTML(phaseKey, day)}</div>
+    ` : `<div class="astro-maddie" style="margin-bottom:18px;">Enter your last period start date above to see your current phase, and tap any phase below to explore it.</div>
+    <div class="ch-phase-pills">
+      ${Object.keys(CH_PHASES).map((k,i)=>`<div class="ch-phase-pill${i===0?' active':''}" data-key="${k}" onclick="chExplorePhase('${k}',null)" style="border-color:${CH_PHASES[k].color}">${CH_PHASES[k].name}</div>`).join('')}
+    </div>
+    <div id="ch-phase-detail">${renderPhaseDetailHTML(Object.keys(CH_PHASES)[0], null)}</div>`}
+
+    <div class="glyph-divider">✦ · ✦ · ✦</div>
+
+    <div class="section-heading" style="font-size:1.15rem;">Your Patterns So Far</div>
+    ${chPatternRecap()}
 
     <div class="glyph-divider">✦ · ✦ · ✦</div>
 
@@ -2437,7 +2542,7 @@ function buildCycleHarmonyHTML(){
 
     <div class="tongue-card">
       <strong>✦ Weekly Tongue Check — Traditional Chinese Medicine</strong>
-      ${tongueDue ? `It's been a week (or this is your first time) — take a quick photo of your tongue today, first thing, before eating or drinking anything.` : `Last logged ${chTongueLastPrompt()}. Next check due 7 days after that.`}
+      ${tongueDue ? `It's been a week — take a quick photo of your tongue today, first thing, before eating or drinking anything.` : `✓ Last logged ${chTongueLastPrompt()}. Next check due ${chNextTongueDate()}.`}
       <div style="margin-top:10px;font-size:0.75rem;">
         <strong style="color:var(--text);display:block;margin-bottom:4px;">What to look for:</strong>
         <div style="margin-bottom:3px;">• <strong>Coating</strong> — thick/white can point to digestive sluggishness; yellow can point to heat/inflammation; little to no coating can point to depleted fluids.</div>
