@@ -475,6 +475,52 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .today-stat-chip .val { font-family:'Cormorant Garamond',serif; font-size:0.92rem; color:var(--text); }
 .today-planet-day-footer { font-size:0.7rem; color:var(--text-light); line-height:1.6; margin-top:10px; padding-top:10px; border-top:1px solid var(--border-light); }
 .today-planet-day-footer strong { color:var(--gold); }
+
+/* ── Nakshatras page ── */
+.nk-info{background:var(--card);border-radius:12px;padding:18px 20px;margin-bottom:16px;box-shadow:0 1px 6px var(--shadow);}
+.nk-info h4{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--green);font-weight:400;margin-bottom:8px;}
+.nk-info p{font-size:0.8rem;color:var(--text-dim);line-height:1.8;margin-bottom:8px;}
+.nk-hint{font-size:0.7rem !important;color:var(--text-light) !important;}
+.nk-pada-link{color:var(--text);font-weight:700;border-bottom:1px dashed var(--green-light);cursor:pointer;}
+.nk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;}
+.nk-card{background:var(--card);border-radius:10px;padding:13px 15px;box-shadow:0 1px 5px var(--shadow);border-left:3px solid var(--border);cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;}
+.nk-card:hover,.nk-card:focus-visible{transform:translateY(-1px);box-shadow:0 3px 12px var(--shadow);outline:none;}
+.nk-card.yours{border-left-color:var(--gold);background:var(--gold-bg);}
+.nk-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);}
+.nk-meta{font-size:0.62rem;color:var(--text-light);letter-spacing:0.03em;margin:2px 0 5px;}
+.nk-def{font-size:0.76rem;color:var(--text-dim);line-height:1.6;}
+.nk-more{font-size:0.62rem;color:var(--green);letter-spacing:0.04em;margin-top:6px;}
+.nk-card.yours .nk-more{color:var(--gold);}
+.nk-tag{display:inline-block;background:var(--gold);color:#fff;font-size:0.58rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:8px;padding:2px 8px;margin-bottom:5px;}
+.nk-tag.sm{font-size:0.52rem;padding:1px 7px;margin:0;vertical-align:middle;}
+#nakModal .pex-card{border-top-color:var(--gold);}
+.nkm-facts{display:grid;gap:6px;background:var(--green-bg);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:0.76rem;color:var(--text-dim);line-height:1.5;}
+.nkm-facts span{display:inline-block;min-width:62px;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);}
+.nkm-essence{font-size:0.82rem;color:var(--text-dim);line-height:1.8;margin-bottom:12px;}
+.nkm-label{font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:4px;}
+.nkm-row{margin-bottom:10px;}
+.nkm-row p,.nkm-placement p,.nkm-padanote p,.nkm-yours-p{font-size:0.78rem;color:var(--text-dim);line-height:1.7;}
+.nkm-yours{background:var(--gold-bg);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;padding:12px 14px;margin-bottom:12px;}
+.nkm-yours>.nkm-label{color:var(--gold);}
+.nkm-placement{margin-top:8px;}
+.nkm-placement+.nkm-placement{border-top:1px solid var(--border-light);padding-top:10px;}
+.nkm-placement b{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);font-weight:500;}
+.nkm-sub{font-size:0.66rem;color:var(--text-light);margin:2px 0 6px;line-height:1.5;}
+.nkm-padanote{background:var(--card);border-radius:8px;padding:10px 12px;margin:8px 0;}
+.nkm-full{font-size:0.7rem;font-weight:400;color:var(--green);}
+.nkm-drop{border-top:1px solid var(--border-light);padding-top:12px;margin-top:12px;}
+.nkm-toggle{display:flex;justify-content:space-between;cursor:pointer;font-size:0.76rem;color:var(--green);}
+.nkm-toggle .arrow{transition:transform 0.2s;}
+.nkm-toggle.open .arrow{transform:rotate(90deg);}
+.nkm-toggle-body{display:none;margin-top:8px;}
+.nkm-toggle-body.open{display:block;}
+.nkm-pada{padding:8px 0;border-bottom:1px solid var(--border-light);font-size:0.76rem;color:var(--text);}
+.nkm-pada:last-child{border-bottom:none;}
+.nkm-pada i{color:var(--green);font-style:normal;}
+.nkm-pada div{color:var(--text-dim);margin-top:2px;line-height:1.6;}
+.nkm-pada.mine{background:var(--card);border-radius:8px;padding:8px 10px;border-bottom:none;margin:3px 0;}
+.nkm-toggle-body .nkm-pada.mine{background:var(--gold-bg);}
+.nkm-invite{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.02rem;color:var(--text);border-top:1px solid var(--border-light);padding-top:12px;margin-top:12px;line-height:1.6;}
 </style>
 </head>
 <body>
@@ -579,6 +625,15 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
     <div class="pex-you" id="pex-you"></div>
     <div class="pex-nakshatra" id="pex-nakshatra" style="display:none"></div>
     <div class="pex-now" id="pex-now" style="display:none"></div>
+  </div>
+</div>
+
+<div class="pex-overlay" id="nakModal" onclick="if(event.target===this)closeNak()">
+  <div class="pex-card">
+    <button class="pex-close" onclick="closeNak()" aria-label="Close">✕</button>
+    <div class="pex-title" id="nkm-title"></div>
+    <div class="pex-coords" id="nkm-coords"></div>
+    <div id="nkm-body"></div>
   </div>
 </div>
 
@@ -1573,7 +1628,7 @@ function buildNav() {
     btn.onclick = () => showMonth(m.id);
     nav.appendChild(btn);
   });
-  [['index','✦ Index'],['living','✦ Living Chart'],['hd','✦ Human Design'],['cycle','✦ Cycle + Hormones']].forEach(([id,label])=>{
+  [['index','✦ Index'],['living','✦ Living Chart'],['nakshatras','☾ Nakshatras'],['hd','✦ Human Design'],['cycle','✦ Cycle + Hormones']].forEach(([id,label])=>{
     const b = document.createElement('button');
     b.textContent = label;
     b.dataset.id = id;
@@ -2596,6 +2651,318 @@ function buildCycleHarmony(){
   if(!div){ div = document.createElement('div'); div.className='month-section'; div.id='m-cycle'; container.appendChild(div); }
   div.innerHTML = buildCycleHarmonyHTML();
 }
+// ── NAKSHATRA REFERENCE (all 27) ──
+const NAKSHATRA_REF=[
+  {name:'Ashwini',range:'Aries 0°–13°20\'',lord:'Ketu',def:'"The Horse-Headed." Swift, pioneering, the divine physicians. Fast starts and instinctive healing ability.'},
+  {name:'Bharani',range:'Aries 13°20\'–26°40\'',lord:'Venus',def:'"The Bearer." Intensity, transformation, the courage to carry something difficult through to completion.'},
+  {name:'Krittika',range:'Aries 26°40\'–Taurus 10°',lord:'Sun',def:'"The Cutter." Sharp, purifying, discerning. Cuts away what doesn\'t serve, sometimes bluntly.'},
+  {name:'Rohini',range:'Taurus 10°–23°20\'',lord:'Moon',def:'"The Red One." Sensual, growth-oriented, magnetic. Considered the Moon\'s most beloved nakshatra — fertility, beauty, creative growth.'},
+  {name:'Mrigashirsha',range:'Taurus 23°20\'–Gemini 6°40\'',lord:'Mars',def:'"The Deer\'s Head." Searching, gentle curiosity, always seeking the next thing just out of reach.'},
+  {name:'Ardra',range:'Gemini 6°40\'–20°',lord:'Rahu',def:'"The Moist One." Storms, intensity, transformation through emotional upheaval. Where growth follows destruction.'},
+  {name:'Punarvasu',range:'Gemini 20°–Cancer 3°20\'',lord:'Jupiter',def:'"The Return of the Light." Renewal, safety after struggle, the capacity to go home again.'},
+  {name:'Pushya',range:'Cancer 3°20\'–16°40\'',lord:'Saturn',def:'"The Nourisher." Considered one of the most auspicious nakshatras — caring, protective, spiritually nourishing.'},
+  {name:'Ashlesha',range:'Cancer 16°40\'–30°',lord:'Mercury',def:'"The Entwiner," the serpent. Deep psychological insight, penetrating, sees beneath the surface of things.'},
+  {name:'Magha',range:'Leo 0°–13°20\'',lord:'Ketu',def:'"The Mighty One." Royal, ancestral, connected to lineage and legacy — power that\'s inherited, not chased.'},
+  {name:'Purva Phalguni',range:'Leo 13°20\'–26°40\'',lord:'Venus',def:'"The Former Reddish One." Pleasure, rest, creative and romantic ease.'},
+  {name:'Uttara Phalguni',range:'Leo 26°40\'–Virgo 10°',lord:'Sun',def:'"The Latter Reddish One." Generous, sustaining warmth — the friend who shows up.'},
+  {name:'Hasta',range:'Virgo 10°–23°20\'',lord:'Moon',def:'"The Hand." The healing hand, skilled and precise. Presence that restores through direct, practical service.'},
+  {name:'Chitra',range:'Virgo 23°20\'–Libra 6°40\'',lord:'Mars',def:'"The Brilliant One." A gifted, singular creative or aesthetic spark — the jewel.'},
+  {name:'Swati',range:'Libra 6°40\'–20°',lord:'Rahu',def:'"The Independent One." A young sprout bending in the wind — adaptable, self-directed, needs room to move.'},
+  {name:'Vishakha',range:'Libra 20°–Scorpio 3°20\'',lord:'Jupiter',def:'"The Forked Branch." Two ruling deities, patient AND intensely goal-driven — remarkable persistence.'},
+  {name:'Anuradha',range:'Scorpio 3°20\'–16°40\'',lord:'Saturn',def:'"The Follower of Radha." Devotion, loyalty, friendship that deepens over real time.'},
+  {name:'Jyeshtha',range:'Scorpio 16°40\'–30°',lord:'Mercury',def:'"The Eldest." Protective seniority, responsibility for others, sometimes a heavy mantle to carry.'},
+  {name:'Mula',range:'Sagittarius 0°–13°20\'',lord:'Ketu',def:'"The Root." Goes to the very bottom of things — destruction that clears space for something truer.'},
+  {name:'Purva Ashadha',range:'Sagittarius 13°20\'–26°40\'',lord:'Venus',def:'"The Invincible." Early, unshakeable conviction — the wave that can\'t be turned back.'},
+  {name:'Uttara Ashadha',range:'Sagittarius 26°40\'–Capricorn 10°',lord:'Sun',def:'"The Later Invincible." Universal, lasting achievement — victory that holds up over time.'},
+  {name:'Shravana',range:'Capricorn 10°–23°20\'',lord:'Moon',def:'"The Ear." Deep listening, learning through hearing and connection, the ability to truly take in others.'},
+  {name:'Dhanishta',range:'Capricorn 23°20\'–Aquarius 6°40\'',lord:'Mars',def:'"The Drum." Rhythm, wealth, generosity, music — a beat-driven quality that others feel drawn to.'},
+  {name:'Shatabhisha',range:'Aquarius 6°40\'–20°',lord:'Rahu',def:'"The 100 Healers." Unconventional healing, working outside the mainstream, seeing what others miss.'},
+  {name:'Purva Bhadrapada',range:'Aquarius 20°–Pisces 3°20\'',lord:'Jupiter',def:'"The Former Blessed Feet." Intense, transformative, fiery spirituality — passion that burns clean.'},
+  {name:'Uttara Bhadrapada',range:'Pisces 3°20\'–16°40\'',lord:'Saturn',def:'"The Latter Blessed Feet." Deep stillness, patient wisdom, spiritual depth earned through time.'},
+  {name:'Revati',range:'Pisces 16°40\'–30°',lord:'Mercury',def:'"The Wealthy One." The final nakshatra — arrival, completion, nourishing homecoming after a long journey.'},
+];
+// ── NAKSHATRA DEEP DIVES (tap a card to open) ──
+const NAK_DEEP={
+  'Ashwini':{symbol:'A horse\'s head',deity:'The Ashwini Kumaras, twin healers of the gods',gana:'Deva (gentle, divine)',
+    essence:'Ashwini is the very first breath of the zodiac — the moment something starts. The twin horsemen arrive fast, heal fast, and leave before anyone thinks to thank them. There\'s a youthful, instinctive quality here: act first, understand later, and somehow it works.',
+    gifts:'Quick recovery, a natural knack for healing, courage to go first when no one else will.',
+    shadow:'Impatience. Starting ten things and finishing two. Mistaking speed for readiness.',
+    invite:'Let your fast instinct lead — then give it one breath before you commit.'},
+  'Bharani':{symbol:'The yoni — the womb',deity:'Yama, keeper of endings and moral order',gana:'Manushya (human)',
+    essence:'Bharani is the one that carries. Birth and death both pass through this nakshatra, so it knows how to hold intense things without dropping them. It\'s not light energy, but it\'s honest — Bharani doesn\'t pretend hard seasons aren\'t hard.',
+    gifts:'Staying power, emotional honesty, the ability to carry something heavy all the way through.',
+    shadow:'Holding on past the point of growth. Swinging between restraint and excess.',
+    invite:'Ask what you\'re carrying that\'s actually ready to be set down.'},
+  'Krittika':{symbol:'A razor, or a flame',deity:'Agni, the sacred fire',gana:'Rakshasa (fierce, protective)',
+    essence:'Krittika is fire that cooks and purifies. It separates what\'s real from what\'s not — sometimes gently, sometimes like a blade. People with Krittika energy often can\'t un-see the truth of a situation, and they tend to say it.',
+    gifts:'Clarity, discernment, the courage to cut what doesn\'t belong, a fierce protectiveness of people they love.',
+    shadow:'Sharpness that lands harder than intended. Burning bridges to stay warm.',
+    invite:'Let your fire refine things, not scorch them. Precision, not force.'},
+  'Rohini':{symbol:'An ox cart, or a chariot',deity:'Brahma (Prajapati), the creator',gana:'Manushya (human)',
+    essence:'Rohini is lush. It\'s the fertile field, the full Moon in her favorite home. Things grow here — relationships, beauty, wealth, creative work. There\'s a magnetic quality that pulls people and resources toward it without needing to chase.',
+    gifts:'Magnetism, creative abundance, sensual intelligence, the ability to make things grow.',
+    shadow:'Attachment to comfort. Wanting the beautiful thing so much it\'s hard to let it change.',
+    invite:'Tend what you love like a garden — consistently, and with open hands.'},
+  'Mrigashirsha':{symbol:'A deer\'s head',deity:'Soma, the Moon\'s nectar',gana:'Deva (gentle, divine)',
+    essence:'Mrigashirsha is the deer in the forest, ears up, following a scent. It\'s curious, gentle, a little restless — always sensing there\'s something just beyond the next tree. That searching is the point. It\'s how this nakshatra learns.',
+    gifts:'Curiosity, a gentle mind, research and exploration, sensitivity to subtle things.',
+    shadow:'Never landing. The feeling that the real answer is always somewhere else.',
+    invite:'Enjoy the search — and notice when you\'ve actually already found it.'},
+  'Ardra':{symbol:'A teardrop, or a diamond',deity:'Rudra, the storm',gana:'Manushya (human)',
+    essence:'Ardra is the storm that clears the air. It\'s emotional, intense, sometimes destructive — but what\'s left after the rain is cleaner and more alive. Ardra knows growth through breaking open.',
+    gifts:'Emotional depth, sharp intellect, the ability to transform through hard things.',
+    shadow:'Getting stuck in the storm. Using intensity to avoid stillness.',
+    invite:'Let the tears come. Then notice how much greener everything is after.'},
+  'Punarvasu':{symbol:'A quiver of arrows',deity:'Aditi, the boundless mother',gana:'Deva (gentle, divine)',
+    essence:'Punarvasu is the light coming back after the storm. It\'s the arrow returned to the quiver, the person who comes home. There\'s deep resilience and a kind of everyday optimism here — not naive, just trusting that things renew.',
+    gifts:'Resilience, generosity, the ability to begin again, a sense of home wherever they are.',
+    shadow:'Over-giving. Settling for "fine" because it feels safe.',
+    invite:'Trust the return. You\'ve come back before — you will again.'},
+  'Pushya':{symbol:'A cow\'s udder, or a lotus',deity:'Brihaspati, teacher of the gods',gana:'Deva (gentle, divine)',
+    essence:'Pushya is nourishment in its purest form — the one that feeds, protects, and teaches. Considered one of the most auspicious nakshatras in the whole system, it carries a quiet, steady generosity. Its care isn\'t loud. It\'s just always there.',
+    gifts:'Nurturing, wisdom, devotion, building things that genuinely sustain people.',
+    shadow:'Caring for everyone but yourself. Rigidity about "the right way" to help.',
+    invite:'Let yourself be nourished too. You can\'t feed people from an empty bowl.'},
+  'Ashlesha':{symbol:'A coiled serpent',deity:'The Nagas, serpent beings',gana:'Rakshasa (fierce, protective)',
+    essence:'Ashlesha is the serpent — hypnotic, perceptive, wrapped around hidden knowledge. It sees beneath surfaces instantly. This is psychological insight, kundalini energy, the ability to read what\'s actually going on in a room.',
+    gifts:'Penetrating insight, intuition, healing through understanding what others hide.',
+    shadow:'Guardedness. Holding on too tightly — to people, to secrets, to control.',
+    invite:'Use what you see to heal, not to hold. Loosen the coil.'},
+  'Magha':{symbol:'A royal throne',deity:'The Pitris, the ancestors',gana:'Rakshasa (fierce, protective)',
+    essence:'Magha is the throne room of the ancestors. It carries lineage, legacy, and a natural dignity — power that\'s inherited rather than chased. People feel it. There\'s a sense of honoring where you come from.',
+    gifts:'Natural leadership, respect for tradition, generosity, a strong sense of legacy.',
+    shadow:'Pride. Carrying ancestral weight that was never yours to hold.',
+    invite:'Honor your roots — and choose which inheritances you actually want to keep.'},
+  'Purva Phalguni':{symbol:'The front legs of a bed, or a hammock',deity:'Bhaga, god of delight and good fortune',gana:'Manushya (human)',
+    essence:'Purva Phalguni is the exhale. Rest, pleasure, romance, play — this nakshatra knows that joy isn\'t a reward for work, it\'s part of the point. It\'s creative, warm, and charming.',
+    gifts:'Creativity, charm, warmth in relationships, a genuine capacity for joy.',
+    shadow:'Indulgence. Avoiding effort when things stop being easy.',
+    invite:'Rest without guilt. Pleasure is information about what\'s right for you.'},
+  'Uttara Phalguni':{symbol:'The back legs of a bed',deity:'Aryaman, god of contracts and friendship',gana:'Manushya (human)',
+    essence:'Where Purva Phalguni plays, Uttara Phalguni commits. It\'s the friend who shows up, the partner who keeps their word. Warm, generous, steady — this is love expressed as reliability.',
+    gifts:'Loyalty, generosity, keeping promises, building lasting partnerships.',
+    shadow:'Over-responsibility. Staying in agreements that have outlived their purpose.',
+    invite:'Keep your word — including the promises you\'ve made to yourself.'},
+  'Hasta':{symbol:'An open hand',deity:'Savitar, the Sun as creative power',gana:'Deva (gentle, divine)',
+    essence:'Hasta is the hand — skilled, precise, healing. It\'s the craftsperson, the one who fixes what\'s actually broken. Hasta energy creates through direct, practical action and tends to have a light, clever touch with almost anything it handles.',
+    gifts:'Skill with the hands, practical healing, wit, the ability to manifest ideas into real things.',
+    shadow:'Over-controlling outcomes. Restlessness when the hands aren\'t busy.',
+    invite:'Trust your hands. What you make and fix is a form of care.'},
+  'Chitra':{symbol:'A bright jewel, or pearl',deity:'Tvashtar (Vishvakarma), the celestial architect',gana:'Rakshasa (fierce, protective)',
+    essence:'Chitra is the jewel — brilliant, crafted, beautiful by design. This is the architect\'s nakshatra: it wants to build something that sparkles and holds structure at the same time. A singular aesthetic eye.',
+    gifts:'Design sense, creativity, charisma, the ability to make the ordinary beautiful.',
+    shadow:'Perfectionism. Caring how it looks more than how it feels.',
+    invite:'Build the beautiful thing — and let it be lived in.'},
+  'Swati':{symbol:'A young sprout swaying in the wind',deity:'Vayu, god of wind',gana:'Deva (gentle, divine)',
+    essence:'Swati is the sprout bending in the wind without breaking. Independent, adaptable, self-directed — it needs room to move and finds its own way. Often gifted in trade, diplomacy, and getting along with many kinds of people.',
+    gifts:'Independence, flexibility, diplomacy, a light touch with change.',
+    shadow:'Restlessness. Scattering energy in too many directions.',
+    invite:'Bend with what comes, but stay rooted in what you value.'},
+  'Vishakha':{symbol:'A triumphal arch, or a potter\'s wheel',deity:'Indra and Agni together',gana:'Rakshasa (fierce, protective)',
+    essence:'Vishakha is the forked branch — two forces, one goal. It\'s patient AND intensely driven, which makes it remarkably persistent. It will wait years for the right moment, then go all in.',
+    gifts:'Focus, determination, persistence, the ability to reach big goals over long stretches.',
+    shadow:'Tunnel vision. Feeling never quite satisfied, even after arriving.',
+    invite:'Celebrate the arches you\'ve already walked through.'},
+  'Anuradha':{symbol:'A lotus, or a staff',deity:'Mitra, god of friendship',gana:'Deva (gentle, divine)',
+    essence:'Anuradha is the lotus blooming out of the mud. It\'s devotion, friendship, and loyalty that deepen over real time. It can thrive in difficult conditions because it has people — and faith — to lean on.',
+    gifts:'Loyalty, devotion, collaboration, blooming in places others couldn\'t.',
+    shadow:'Over-attachment to the group. Hiding hurt to keep the peace.',
+    invite:'Let your friendships be places you can be fully honest.'},
+  'Jyeshtha':{symbol:'A circular amulet, or an umbrella',deity:'Indra, king of the gods',gana:'Rakshasa (fierce, protective)',
+    essence:'Jyeshtha is the eldest — the one who protects, takes responsibility, holds the umbrella over everyone else. There\'s real power and capability here, and often a sense of carrying more than is fair.',
+    gifts:'Protective strength, resourcefulness, leadership in hard situations.',
+    shadow:'Carrying it alone. Control as a substitute for trust.',
+    invite:'You can still be strong while letting someone hold the umbrella for you.'},
+  'Mula':{symbol:'A bundle of roots tied together',deity:'Nirriti, goddess of dissolution',gana:'Rakshasa (fierce, protective)',
+    essence:'Mula is the root — it goes all the way down. It\'s the nakshatra of getting to the bottom of things, sometimes by pulling everything up. What gets destroyed here clears space for something truer.',
+    gifts:'Depth, investigation, spiritual seeking, the courage to start over from the root.',
+    shadow:'Uprooting things that just needed patience. Feeling unmoored.',
+    invite:'Before you pull it up, check whether it\'s ready to bloom.'},
+  'Purva Ashadha':{symbol:'An elephant tusk, or a winnowing fan',deity:'Apas, the cosmic waters',gana:'Manushya (human)',
+    essence:'Purva Ashadha is the early, unstoppable wave. It carries conviction — the kind that can\'t be talked out of what it believes. Water-ruled, it also purifies and refreshes whatever it moves through.',
+    gifts:'Conviction, inspiration, persuasiveness, emotional renewal.',
+    shadow:'Stubbornness. Winning the argument and losing the connection.',
+    invite:'Let your conviction flow like water — strong, but able to move around things.'},
+  'Uttara Ashadha':{symbol:'An elephant tusk, or the planks of a bed',deity:'The Vishvadevas, the universal gods',gana:'Manushya (human)',
+    essence:'Uttara Ashadha is the later victory — the one that lasts. It wins slowly, ethically, and permanently. There\'s maturity here, a sense of responsibility to the bigger picture, and an earned quality to everything it builds.',
+    gifts:'Integrity, endurance, lasting achievement, leadership that people trust.',
+    shadow:'Seriousness. Feeling that rest has to be earned first.',
+    invite:'Your victory doesn\'t need to be rushed. It\'s already being built.'},
+  'Shravana':{symbol:'An ear, or three footprints',deity:'Vishnu, the preserver',gana:'Deva (gentle, divine)',
+    essence:'Shravana is the ear — the listener. It learns by hearing, connects by truly taking in others, and carries wisdom passed down through words and stories. Quiet, receptive, deeply connected.',
+    gifts:'Listening, learning, teaching, connecting people through shared knowledge.',
+    shadow:'Over-sensitivity to what others say. Hearing criticism louder than praise.',
+    invite:'Listen to yourself with the same care you give everyone else.'},
+  'Dhanishta':{symbol:'A drum',deity:'The Eight Vasus, gods of abundance',gana:'Rakshasa (fierce, protective)',
+    essence:'Dhanishta is the drum — rhythm, music, wealth, and generosity. It has a beat-driven quality that others feel drawn into. It\'s at its best when it\'s part of something shared: the band, the team, the circle.',
+    gifts:'Rhythm, generosity, abundance, bringing people together around a shared beat.',
+    shadow:'Feeling empty when the rhythm stops. Giving to be valued.',
+    invite:'Keep a rhythm that\'s yours — your steadiness lives there.'},
+  'Shatabhisha':{symbol:'An empty circle',deity:'Varuna, god of the cosmic waters',gana:'Rakshasa (fierce, protective)',
+    essence:'Shatabhisha is the hundred healers — unconventional, mysterious, working outside the mainstream. It sees what others miss and often heals in ways that don\'t fit the textbook. There\'s a solitary, secretive streak.',
+    gifts:'Unconventional healing, research, independence, seeing the hidden pattern.',
+    shadow:'Isolation. Keeping too much locked away.',
+    invite:'Your different way of seeing is medicine. Let someone in on it.'},
+  'Purva Bhadrapada':{symbol:'The front legs of a funeral cot, or a sword',deity:'Aja Ekapada, the one-footed goat',gana:'Manushya (human)',
+    essence:'Purva Bhadrapada is fire in the water — intense, transformative, spiritual passion that burns clean. It\'s willing to sacrifice what\'s comfortable for what it believes in.',
+    gifts:'Spiritual intensity, idealism, courage, transformation.',
+    shadow:'Extremes. All-or-nothing thinking.',
+    invite:'Let your passion burn steady rather than bright and brief.'},
+  'Uttara Bhadrapada':{symbol:'The back legs of a funeral cot, or twins',deity:'Ahir Budhnya, the serpent of the deep',gana:'Manushya (human)',
+    essence:'Uttara Bhadrapada is the deep, still water after the fire. Patient, wise, contained — it holds enormous depth without needing to show it. Wisdom here is earned through time.',
+    gifts:'Patience, wisdom, emotional steadiness, quiet strength.',
+    shadow:'Withdrawal. Staying so contained that no one sees what\'s really there.',
+    invite:'Your stillness is strength. Let it be seen sometimes.'},
+  'Revati':{symbol:'A fish, or a drum',deity:'Pushan, protector of travelers',gana:'Deva (gentle, divine)',
+    essence:'Revati is the last nakshatra — the arrival. It\'s the safe passage home after a long journey, gentle and nourishing. It guides others, protects the vulnerable, and carries a soft, compassionate wisdom.',
+    gifts:'Compassion, guidance, creativity, a protective kindness.',
+    shadow:'Absorbing others\' pain. Drifting rather than choosing.',
+    invite:'You\'ve arrived more than you realize. Let yourself rest there.'},
+};
+// Each pada falls in a zodiac sign (its navamsa) — that sign colors how the quarter expresses.
+const NAK_SIGNS=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const PADA_AIM={1:'Dharma',2:'Artha',3:'Kama',4:'Moksha'};
+const SIGN_FLAVOR={
+  Aries:'bold and self-starting — this quarter wants to go first.',
+  Taurus:'steady and sensory — this quarter builds slowly and keeps what it builds.',
+  Gemini:'curious and talkative — this quarter learns by connecting ideas and people.',
+  Cancer:'nurturing and protective — this quarter leads with emotional care.',
+  Leo:'warm and radiant — this quarter leads with heart and wants to be seen.',
+  Virgo:'precise and practical — this quarter refines things until they actually work.',
+  Libra:'relational and balancing — this quarter finds itself through other people.',
+  Scorpio:'deep and intense — this quarter wants truth, not surface.',
+  Sagittarius:'expansive and seeking — this quarter always wants the bigger why.',
+  Capricorn:'disciplined and long-game — this quarter builds things to last.',
+  Aquarius:'visionary and community-minded — this quarter works for the collective.',
+  Pisces:'intuitive and devotional — this quarter softens, surrenders, and trusts.',
+};
+function padaSign(nakIdx,pada){ return NAK_SIGNS[(nakIdx*4+pada-1)%12]; }
+
+// ══ NAKSHATRAS PAGE ══
+const PADA_MEANING={1:'Dharma — purpose and right action. The most direct, initiating quarter.',2:'Artha — resources and means. Turning purpose into something you can actually hold.',3:'Kama — desire, pleasure, connection. Where the energy reaches outward toward people.',4:'Moksha — release and integration. The most settled, wisest expression before it hands off.'};
+// Computed with Swiss Ephemeris (Lahiri) from Oct 17 2000, 3:12 PM, Afton WY
+const MY_NAK=[
+  {key:'rising', label:'Rising',  sign:'Capricorn',  nak:'Uttara Ashadha', pada:4},
+  {key:'sun',    label:'Sun',     sign:'Libra',      nak:'Chitra',         pada:3},
+  {key:'moon',   label:'Moon',    sign:'Taurus',     nak:'Mrigashirsha',   pada:2},
+  {key:'mercury',label:'Mercury', sign:'Libra',      nak:'Vishakha',       pada:1},
+  {key:'venus',  label:'Venus',   sign:'Scorpio',    nak:'Anuradha',       pada:1},
+  {key:'mars',   label:'Mars',    sign:'Leo',        nak:'Purva Phalguni', pada:4},
+  {key:'jupiter',label:'Jupiter', sign:'Taurus',     nak:'Rohini',         pada:3},
+  {key:'saturn', label:'Saturn',  sign:'Taurus',     nak:'Krittika',       pada:3},
+  {key:'rahu',   label:'Rahu',    sign:'Gemini',     nak:'Punarvasu',      pada:2},
+  {key:'ketu',   label:'Ketu',    sign:'Sagittarius',nak:'Purva Ashadha',  pada:4},
+];
+const MY_PADA_NOTE={
+  rising:'Uttara Ashadha Pada 4 falls in Pisces. The invincible star in its most inward, devotional quarter: your staying power isn\'t grit for its own sake — it\'s faith. You outlast things because you trust something bigger is moving through the work.',
+  sun:'Chitra Pada 3 falls in Libra — the same sign your Sun is already in, which makes it vargottama: doubly strong, consistent inside and out. The jewel-maker in its most relational quarter: your brilliance shows up through beauty, balance, and creating with and for other people. What you are on the surface is what you are underneath.',
+  moon:'Mrigashirsha Pada 2 falls in Virgo. Your exalted Taurus Moon gets a practical, discerning streak: you feel safe when you understand something well enough to use it. Your curiosity is a form of self-care — and it settles when it lands in something real.',
+  mercury:'Vishakha Pada 1 falls in Aries. The forked branch with an Aries spark: your 10th-house voice is direct and initiating — you\'re the one who names the goal first. Patience and fire in the same mind. You\'ll aim for years, then say it in one clean line.',
+  venus:'Anuradha Pada 1 falls in Leo. Anuradha\'s devotion with Leo\'s warmth: your love and loyalty want to be expressed openly and generously. In your 11th house, you\'re the friend who gathers everyone and makes them feel chosen.',
+  mars:'Purva Phalguni Pada 4 falls in Scorpio. Pleasure and creativity, taken all the way down: your 8th-house Mars doesn\'t create just for fun — it creates to transform. Joy, intimacy, and intensity are tangled together for you, and your most powerful work comes from the places you\'ve actually felt.',
+  jupiter:'Rohini Pada 3 falls in Gemini. Rohini\'s lush growth through a Gemini lens: your 5th-house Jupiter expands through ideas, words, and connection — teaching, writing, sharing what\'s beautiful. Abundance multiplies for you when you talk about it and pass it on.',
+  saturn:'Krittika Pada 3 falls in Aquarius — a sign Saturn rules, so your chart ruler is steady here. Krittika\'s purifying fire in service of the collective: you hold high standards not to be right, but because people deserve something real.',
+  rahu:'Punarvasu Pada 2 falls in Taurus. The return of the light, grounded: your 6th-house evolutionary pull is toward renewal you can actually hold — daily rhythms, the body, tangible healing. You\'re growing toward making "coming home to yourself" a practical, repeatable thing.',
+  ketu:'Purva Ashadha Pada 4 falls in Scorpio. Unshakeable conviction in Scorpio\'s depths: in your 12th house, Ketu shows old mastery in emotional truth — you already know how to go to the bottom of a feeling. The work now isn\'t more depth. It\'s letting that depth rest.',
+};
+const MY_PADA_YOURS={
+  1:'Two placements — Mercury and Venus. Your voice and your love both start from purpose: you speak and care most powerfully when there\'s a real why underneath.',
+  2:'Two placements — your Moon and Rahu. Your emotional safety and your evolutionary pull both want something tangible: rhythms, the body, things you can hold. Feeling good is a practical practice for you, not just an idea.',
+  3:'Three placements — Sun, Jupiter, and Saturn. Your identity, your growth, and your chart ruler all reach outward. You\'re built to create with and for people — your gifts multiply in connection.',
+  4:'Three placements — your Rising, Mars, and Ketu. How you show up, how you act, and what you\'ve already mastered all run through the deepest, most inward quarter. Paired with your Pada 3 cluster, your chart moves between reaching out and going all the way in.',
+};
+function myInNak(name){ return MY_NAK.filter(x=>x.nak===name); }
+// ── PADA DEEP DIVES (tap Pada 1–4 on the nakshatra page) ──
+const PADA_DEEP={
+  1:{aim:'Dharma',element:'Fire',signs:'Aries, Leo, or Sagittarius',
+    essence:'Dharma is purpose — the thing that feels right to do, even when it\'s hard. Pada 1 is where a nakshatra\'s energy first catches fire: direct, initiating, a little impatient to get going. It always falls in a fire sign, which is why this quarter has that spark.',
+    flowing:'You feel clear on your why. Motivated, aligned, ready to move.',
+    off:'Pushing just to keep momentum, or chasing what\'s "right" by someone else\'s standard instead of your own.',},
+  2:{aim:'Artha',element:'Earth',signs:'Taurus, Virgo, or Capricorn',
+    essence:'Artha is resources and means — money, skill, structure, anything that makes life tangible. Pada 2 takes the spark of Pada 1 and asks: okay, how do we actually build this? It always falls in an earth sign, so it\'s grounded and practical by nature.',
+    flowing:'Steady progress. Things you can point to and say "I made that real."',
+    off:'Measuring your worth by your output, or getting so practical you forget why you started.',},
+  3:{aim:'Kama',element:'Air',signs:'Gemini, Libra, or Aquarius',
+    essence:'Kama is desire — pleasure, relationship, connection, everything that makes life sweet. Pada 3 is where the nakshatra\'s energy reaches outward toward other people. It always falls in an air sign: social, curious, connective.',
+    flowing:'Creative, collaborative, genuinely enjoying the people and the process.',
+    off:'Scattering in too many directions, or needing others around to feel whole.',},
+  4:{aim:'Moksha',element:'Water',signs:'Cancer, Scorpio, or Pisces',
+    essence:'Moksha is liberation — letting go, integrating, coming home to yourself. Pada 4 is the deepest, most inward quarter, where a nakshatra matures before it hands off to the next one. It always falls in a water sign: emotional, intuitive, deep.',
+    flowing:'Wise, intuitive, at peace with what is. You feel things fully and let them move through.',
+    off:'Withdrawing, or holding emotion you haven\'t had space to process yet.',},
+};
+
+function buildNakshatrasHTML(){
+  const padaRow=(n,aim,txt)=>`<p class="nk-pada-p"><span class="nk-pada-link" role="button" tabindex="0" onclick="openPada(${n})" onkeydown="if(event.key==='Enter')openPada(${n})">Pada ${n}</span> — ${aim}. ${txt}</p>`;
+  const cards=NAKSHATRA_REF.map(n=>{
+    const mine=myInNak(n.name);
+    const tag=mine.length?`<div class="nk-tag">Yours — ${mine.map(y=>`${y.label} (Pada ${y.pada})`).join(', ')}</div>`:'';
+    return `<div class="nk-card ${mine.length?'yours':''}" role="button" tabindex="0" onclick="openNakshatra('${n.name}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openNakshatra('${n.name}')}">
+      ${tag}<div class="nk-name">${n.name}</div>
+      <div class="nk-meta">${n.range} · ruled by ${n.lord}</div>
+      <div class="nk-def">${n.def}</div>
+      <div class="nk-more">Tap to go deeper →</div></div>`;
+  }).join('');
+  return `<div class="index-header"><h2>☾ The 27 Nakshatras</h2>
+    <p>Nakshatras are 27 little "zoom-in" slices of the zodiac — way more specific than just knowing your sign. Every one of your planets lands in one, not just your Moon and Rising, and they're all highlighted below with the exact pada (quarter) each one falls in.</p></div>
+    <div class="nk-info">
+      <h4>Wait, what's a pada?</h4>
+      <p>Each nakshatra splits into 4 mini-quarters called padas. Think of them as the "which chapter of this story am I in" marker — traditionally each one is tied to one of the four big aims of life:</p>
+      <p class="nk-hint">Tap any pada to go deeper ↓</p>
+      ${padaRow(1,'Dharma','Purpose, doing the right thing. The most straight-up, get-going quarter.')}
+      ${padaRow(2,'Artha','Resources, making it real. Turning purpose into something you can actually hold.')}
+      ${padaRow(3,'Kama','Desire, pleasure, connection. Where this energy starts reaching out toward other people.')}
+      ${padaRow(4,'Moksha','Letting go, integrating. The most settled, wisest version of this nakshatra before it hands things off to the next one.')}
+    </div>
+    <div class="nk-grid">${cards}</div>`;
+}
+function buildNakshatras(){
+  const container=document.getElementById('monthSections');
+  const div=document.createElement('div'); div.className='month-section'; div.id='m-nakshatras';
+  div.innerHTML=buildNakshatrasHTML();
+  container.appendChild(div);
+}
+function nkToggle(el){ el.classList.toggle('open'); const b=el.nextElementSibling; if(b) b.classList.toggle('open'); }
+function openNakshatra(name){
+  const n=NAKSHATRA_REF.find(x=>x.name===name); const d=NAK_DEEP[name]; if(!n||!d) return;
+  const idx=NAKSHATRA_REF.indexOf(n), mine=myInNak(name), myPadas=new Set(mine.map(y=>y.pada));
+  const yoursHtml=mine.length?`<div class="nkm-yours"><div class="nkm-label">✦ In your chart</div>`+mine.map(y=>{
+    const ex=MADDIE_CHART_EXPLAINER[y.key];
+    const first=ex&&ex.nakshatra?ex.nakshatra.split('\n\n').slice(2,3).join(''):'';
+    return `<div class="nkm-placement"><b>${y.label} in ${y.sign} · ${name}, Pada ${y.pada}</b>
+      <div class="nkm-sub">Pada ${y.pada} in ${padaSign(idx,y.pada)} — ${PADA_MEANING[y.pada]}</div>
+      ${first?`<p>${first}</p>`:''}
+      <div class="nkm-padanote"><div class="nkm-label">Your pada, specifically</div><p>${MY_PADA_NOTE[y.key]}</p></div>
+      ${ex?`<span class="nk-pada-link nkm-full" onclick="closeNak();showExplainer('${y.key}')">Open your full ${y.label} reading →</span>`:''}</div>`;
+  }).join('')+`</div>`:'';
+  const padasHtml=[1,2,3,4].map(p=>{const sg=padaSign(idx,p),f=SIGN_FLAVOR[sg];
+    return `<div class="nkm-pada ${myPadas.has(p)?'mine':''}"><b>Pada ${p}</b> · ${PADA_AIM[p]} · <i>${sg}</i>${myPadas.has(p)?' <span class="nk-tag sm">yours</span>':''}<div>${f.charAt(0).toUpperCase()+f.slice(1)}</div></div>`;}).join('');
+  document.getElementById('nkm-title').textContent=n.name;
+  document.getElementById('nkm-coords').textContent=`${n.range} · ruled by ${n.lord}`;
+  document.getElementById('nkm-body').innerHTML=`
+    <div class="nkm-facts"><div><span>Symbol</span>${d.symbol}</div><div><span>Deity</span>${d.deity}</div><div><span>Nature</span>${d.gana}</div></div>
+    <p class="nkm-essence">${d.essence}</p>${yoursHtml}
+    <div class="nkm-row"><div class="nkm-label">Gifts</div><p>${d.gifts}</p></div>
+    <div class="nkm-row"><div class="nkm-label">Growth edge</div><p>${d.shadow}</p></div>
+    <div class="nkm-drop"><div class="nkm-toggle" onclick="nkToggle(this)"><span>The 4 padas of ${n.name}</span><span class="arrow">▸</span></div><div class="nkm-toggle-body">${padasHtml}</div></div>
+    <div class="nkm-invite">${d.invite}</div>`;
+  document.getElementById('nakModal').classList.add('open');
+}
+function openPada(n){
+  const d=PADA_DEEP[n]; if(!d) return;
+  const list=MY_NAK.filter(x=>x.pada===n).map(m=>{const idx=NAKSHATRA_REF.findIndex(x=>x.name===m.nak);
+    return `<div class="nkm-pada mine"><span class="nk-pada-link" onclick="openNakshatra('${m.nak}')"><b>${m.label}</b> · ${m.nak} in <i>${padaSign(idx,n)}</i> →</span></div>`;}).join('');
+  document.getElementById('nkm-title').textContent=`Pada ${n} · ${d.aim}`;
+  document.getElementById('nkm-coords').textContent=`${d.element} · always ${d.signs}`;
+  document.getElementById('nkm-body').innerHTML=`<p class="nkm-essence">${d.essence}</p>
+    <div class="nkm-row"><div class="nkm-label">When it's flowing</div><p>${d.flowing}</p></div>
+    <div class="nkm-row"><div class="nkm-label">When it's off</div><p>${d.off}</p></div>
+    <div class="nkm-yours"><div class="nkm-label">✦ In your chart</div><p class="nkm-yours-p">${MY_PADA_YOURS[n]}</p>${list}</div>`;
+  document.getElementById('nakModal').classList.add('open');
+}
+function closeNak(){ document.getElementById('nakModal').classList.remove('open'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeNak(); });
+
 function buildLivingChart(){
   const container = document.getElementById('monthSections');
   const div = document.createElement('div'); div.className='month-section'; div.id='m-living';
@@ -2614,6 +2981,7 @@ function init(){
   buildMonths();
   buildIndex();
   buildLivingChart();
+  buildNakshatras();
   buildHD();
   buildCycleHarmony();
   buildTodayCard();
