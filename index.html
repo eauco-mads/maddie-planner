@@ -473,7 +473,8 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .today-stat-chip.open .today-stat-explain { display:block; }
 .today-stat-chip .lbl { font-size:0.55rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:2px; }
 .today-stat-chip .val { font-family:'Cormorant Garamond',serif; font-size:0.92rem; color:var(--text); }
-.today-planet-day-footer { font-size:0.7rem; color:var(--text-light); line-height:1.6; margin-top:10px; padding-top:10px; border-top:1px solid var(--border-light); }
+.today-planet-day-footer { font-size:0.78rem; color:var(--text-dim); line-height:1.7; background:var(--card); border-radius:10px; padding:12px 14px; box-shadow:0 1px 5px var(--shadow); }
+.today-planet-day-footer strong { display:block; font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:400; margin-bottom:3px; }
 .today-planet-day-footer strong { color:var(--gold); }
 
 /* ── Nakshatras page ── */
@@ -521,6 +522,42 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .nkm-pada.mine{background:var(--card);border-radius:8px;padding:8px 10px;border-bottom:none;margin:3px 0;}
 .nkm-toggle-body .nkm-pada.mine{background:var(--gold-bg);}
 .nkm-invite{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.02rem;color:var(--text);border-top:1px solid var(--border-light);padding-top:12px;margin-top:12px;line-height:1.6;}
+
+/* ── Home page breathing room ── */
+.today-card { padding:22px 20px !important; }
+.tc-top { margin-bottom:12px; }
+.tc-kicker { font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--pink); }
+.tc-date { font-family:'Cormorant Garamond',serif; font-size:1.75rem; font-weight:400; color:var(--text); line-height:1.15; }
+.tc-label { font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-light); margin:20px 0 8px; }
+.tc-label span { letter-spacing:0.04em; text-transform:none; color:var(--gold-light); margin-left:4px; }
+.today-card .today-stat-strip { margin-bottom:4px; }
+.tn-card { background:var(--card); border-radius:12px; padding:14px 16px; box-shadow:0 1px 6px var(--shadow); border-left:3px solid var(--gold); }
+.tn-head { cursor:pointer; }
+.tn-name { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--text); }
+.tn-sub { font-size:0.66rem; color:var(--text-light); margin:2px 0 8px; }
+.tn-pada { color:var(--green); border-bottom:1px dashed var(--green-light); cursor:pointer; }
+.tn-head p { font-size:0.8rem; color:var(--text-dim); line-height:1.7; }
+.tn-echo { background:var(--gold-bg); border-radius:8px; padding:9px 12px; margin-top:8px; font-size:0.76rem; color:var(--text-dim); line-height:1.6; cursor:pointer; }
+.tn-echo b { color:var(--text); font-weight:700; }
+.tn-echo span { color:var(--gold); }
+.tn-invite { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:var(--text); line-height:1.55; margin-top:12px; padding-top:10px; border-top:1px solid var(--border-light); }
+.tn-invite span { display:block; font-family:'Lato',sans-serif; font-style:normal; font-size:0.56rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); margin-bottom:3px; }
+.tn-more { font-size:0.66rem; color:var(--green); margin-top:8px; cursor:pointer; letter-spacing:0.03em; }
+.today-tip { padding:13px 16px !important; font-size:0.82rem !important; line-height:1.75 !important; background:var(--green-bg) !important; }
+.mg-h { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; color:var(--text); margin:34px 0 4px; padding-top:18px; border-top:1px solid var(--border-light); }
+.mg-sub { font-size:0.72rem; color:var(--text-light); font-style:italic; margin-bottom:12px; }
+.mg-h + .overview-grid, .mg-h + .week-card { margin-top:12px; }
+.ov-card { padding:18px !important; }
+.ov-card p { font-size:0.82rem !important; line-height:1.8 !important; }
+.opp-box, .caut-box { padding:16px !important; }
+.opp-box li, .caut-box li { font-size:0.8rem !important; line-height:1.65; margin-bottom:7px !important; }
+.week-card { padding:15px 18px !important; margin-bottom:10px !important; position:relative; }
+.week-card p { font-size:0.8rem !important; line-height:1.7 !important; }
+.week-card.now { border-left-color:var(--pink) !important; background:var(--pink-bg); }
+.week-now { display:inline-block; background:var(--pink); color:#fff; font-size:0.55rem; letter-spacing:0.08em; text-transform:uppercase; border-radius:8px; padding:2px 8px; margin-bottom:6px; }
+.daily-msg-section { margin-top:0 !important; }
+.dmsg-card.today { box-shadow:0 0 0 2px var(--pink-light), 0 1px 5px var(--shadow); }
+.daily-msg-section .go-deeper-toggle { margin-top:8px; }
 </style>
 </head>
 <body>
@@ -1585,6 +1622,30 @@ function buildMoodHtml(ds){
 }
 
 // ── BUILD TODAY CARD ─────────────────────────────────────────────────────────
+// ── TODAY IN THE NAKSHATRAS (real ephemeris, tied to your natal nakshatras) ──
+function todayNakshatraHTML(ds){
+  const day=EPHEMERIS.daily[ds]; if(!day||typeof NAK_DEEP==='undefined') return '';
+  const m=day.moon, idx=NAKSHATRA_REF.findIndex(n=>n.name===m.nakshatra); if(idx<0) return '';
+  const d=NAK_DEEP[m.nakshatra], sign=padaSign(idx,m.pada);
+  const PL={moon:'The Moon',sun:'The Sun',mercury:'Mercury',venus:'Venus',mars:'Mars',jupiter:'Jupiter',saturn:'Saturn',rahu:'Rahu',ketu:'Ketu'};
+  const echoes=[];
+  for(const p of Object.keys(PL)){
+    const t=day[p]; if(!t) continue;
+    MY_NAK.filter(x=>x.nak===t.nakshatra).forEach(x=>echoes.push(
+      `<div class="tn-echo" onclick="openNakshatra('${t.nakshatra}')">✦ <b>${PL[p]}</b> is moving through <b>${t.nakshatra}</b> — the same nakshatra as your natal ${x.label}${t.pada===x.pada?', in the exact same pada':''}. That part of you is a little more lit up${['jupiter','saturn','rahu','ketu'].includes(p)?' this season':' today'}. <span>→</span></div>`));
+  }
+  return `<div class="tc-label">Today in the nakshatras</div>
+  <div class="tn-card">
+    <div class="tn-head" onclick="openNakshatra('${m.nakshatra}')">
+      <div class="tn-name">Moon in ${m.nakshatra}</div>
+      <div class="tn-sub"><span class="tn-pada" onclick="event.stopPropagation();openPada(${m.pada})">Pada ${m.pada} · ${PADA_AIM[m.pada]}</span> · in ${sign} · ruled by ${NAKSHATRA_REF[idx].lord}</div>
+      <p>${d.essence.split('. ').slice(0,2).join('. ').replace(/\.?$/,'.')}</p>
+    </div>
+    ${echoes.join('')}
+    <div class="tn-invite"><span>Today's invitation</span>${d.invite}</div>
+    <div class="tn-more" onclick="openNakshatra('${m.nakshatra}')">Read about ${m.nakshatra} →</div>
+  </div>`;
+}
 function buildTodayCard() {
   const card = document.getElementById('todayCard');
   const pd = planetDayFor(todayStr);
@@ -1596,25 +1657,31 @@ function buildTodayCard() {
   const dasha = dashaContextFor(todayStr);
 
   card.innerHTML = `
-    <div class="today-card-header">
-      <h3>✦ Today</h3>
-      <span class="today-date">${dateFormatted}</span>
+    <div class="tc-top">
+      <div class="tc-kicker">✦ Today</div>
+      <div class="tc-date">${dateFormatted.replace(/, \d{4}$/,'')}</div>
     </div>
     ${(()=>{const pr=plainDailyReading(todayStr); if(!pr) return ''; return renderMoonTeaserHTML(pr,'todayDeeperToggle');})()}
     ${guide ? `<div style="background:var(--gold-bg);border-radius:9px;padding:11px 14px;margin-bottom:10px;border-left:3px solid var(--gold);font-size:0.79rem;color:var(--text-dim);line-height:1.65"><strong style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:0.95rem;display:block;margin-bottom:4px">✦ ${guide.title}</strong>${guide.guidance}<div style="margin-top:8px;font-size:0.76rem;color:var(--green);border-left:2px solid var(--green);padding-left:9px"><strong style="display:block;margin-bottom:2px;font-family:'Cormorant Garamond',serif">Today's Action</strong>${guide.action}</div></div>` : ''}
     ${event && !guide ? `<div style="background:var(--gold-bg);border-radius:9px;padding:11px 14px;margin-bottom:10px;border-left:3px solid var(--gold);font-size:0.79rem;color:var(--text-dim);line-height:1.65"><strong style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:0.95rem;display:block;margin-bottom:4px">✦ ${event.title}</strong>${event.guidance}</div>` : ''}
+    ${todayNakshatraHTML(todayStr)}
+    <div class="tc-label">Your anchors <span>tap to learn</span></div>
     <div class="today-stat-strip">
       <div class="today-stat-chip" onclick="toggleStatChip(this)"><div class="lbl">Rising ▾</div><div class="val">Capricorn</div><div class="today-stat-explain">Your Rising sign is the zodiac sign on the horizon the moment you were born — it shapes your body, presence, and how you meet the world more than any other single placement. Yours is Capricorn: dignified, enduring, built to outlast trends rather than chase them.</div></div>
       <div class="today-stat-chip" onclick="toggleStatChip(this)"><div class="lbl">HD Type ▾</div><div class="val">Generator</div><div class="today-stat-explain">In Human Design, your Type describes your energy strategy. As a Generator, you have the most sustainable life-force in the system — but only when you respond to what's in front of you instead of initiating cold from your head. See ✦ Human Design for the full picture.</div></div>
       <div class="today-stat-chip" onclick="toggleStatChip(this)"><div class="lbl">Dasha Now ▾</div><div class="val">${dasha?dasha.mahadasha+' / '+dasha.antardasha:'—'}</div><div class="today-stat-explain">Vimshottari Dasha is Vedic astrology's timing system — a planet runs the "background music" of your life for years at a time (Mahadasha), with a shorter sub-period layered on top (Antardasha). This doesn't change day to day; it's the multi-year chapter you're in right now.</div></div>
     </div>
     ${(()=>{const day=chCycleDay(); if(!day) return ''; const phase=CH_PHASES[getCyclePhase(day)]; return `<div style="background:${phase.color}18;border-radius:9px;padding:9px 13px;margin-bottom:10px;border-left:3px solid ${phase.color};font-size:0.74rem;color:var(--text-dim);display:flex;justify-content:space-between;align-items:center;gap:8px"><span><strong style="color:${phase.color}">Cycle Day ${day} · ${phase.name}</strong> — ${phase.season}</span><span style="font-size:0.62rem;color:var(--text-light);white-space:nowrap;cursor:pointer" onclick="showMonth('cycle')">details →</span></div>`;})()}
+    <div class="tc-label">Today's reflection</div>
     <div class="today-tip">
       <strong>${tip.planet}</strong>
       ${tip.tip}
     </div>
+    <div class="tc-label">Planet of the day</div>
+    <div class="today-planet-day-footer"><strong>${pd.name}</strong>${pd.msg}</div>
+    <div style="margin-top:14px">
     ${(()=>{const s=getContentStreak();return `<div class="streak-display"><span class="streak-num" id="streak-num">${s}</span><div class="streak-text"><strong style="color:var(--green);font-size:0.76rem">${s===0?'Start your streak today':'day content streak'}</strong><br><span style="font-size:0.62rem;opacity:0.75">${s>=7?'✦ 7+ days — momentum is real':'Post daily to build your abundance'}</span></div></div>`;})()}
-    <div class="today-planet-day-footer"><strong>${pd.name}</strong> — ${pd.msg}</div>
+    </div>
   `;
 }
 
@@ -1722,7 +1789,12 @@ function buildMonthHTML(m) {
   const vTags = m.vedic.transits.map(t => `<span class="ttag">${t}</span>`).join('');
   const opps = m.opportunities.map(o=>`<li>${o}</li>`).join('');
   const cauts = m.cautions.map(c=>`<li>${c}</li>`).join('');
-  const weeks = m.weeks.map(w=>`<div class="week-card"><h4>${w.label}</h4><p>${w.focus}</p></div>`).join('');
+  const curMo = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+  const weeks = m.weeks.map(w=>{
+    const r=(w.label.match(/(\d{1,2})\s*[–-]\s*(\d{1,2})\s*$/)||[]);
+    const now = m.id===curMo && r.length && today.getDate()>=+r[1] && today.getDate()<=+r[2];
+    return `<div class="week-card ${now?'now':''}">${now?'<span class="week-now">This week</span>':''}<h4>${w.label}</h4><p>${w.focus}</p></div>`;
+  }).join('');
   const cal = buildCal(y,mo);
   const dayMsgs = buildDayMessages(y,mo);
   const checks = buildChecklist(m.id);
@@ -1738,24 +1810,26 @@ function buildMonthHTML(m) {
 </div>
 <div class="go-deeper-toggle" onclick="toggleDeeper(this)"><span class="arrow">▸</span> This month's key transits, at a glance</div>
 <div class="go-deeper-body"><div class="month-glance">${glanceItems}</div></div>
-<div class="section-label">Calendar — Tap Any Day for Your Reading, Prompt + Notes</div>
+<div class="mg-h">✦ Your Calendar</div>
+<div class="mg-sub">tap any day for your reading, prompt + notes</div>
 ${cal}
-<div class="section-label">The Full Energy This Month</div>
+<div class="mg-h">✦ The Energy This Month</div>
 <div class="overview-grid">
-  <div class="ov-card"><h4>Vedic (Jyotish) Overview</h4><p>${m.vedic.overview}</p><div class="transit-tags">${vTags}</div></div>
+  <div class="ov-card"><h4>Vedic (Jyotish) Overview</h4><p>${m.vedic.overview}</p>
+    <div class="go-deeper-toggle" onclick="toggleDeeper(this)"><span class="arrow">▸</span> See all ${m.vedic.transits.length} transits</div>
+    <div class="go-deeper-body"><div class="transit-tags">${vTags}</div></div></div>
   <div class="ov-card western"><h4>Western Astrology Note</h4><p>${m.western.note}</p><div class="transit-tags"><span class="ttag w">Tropical · Aquarius Rising · Placidus</span></div></div>
 </div>
 <div class="opp-caut">
   <div class="opp-box"><h4>Opportunities This Month</h4><ul>${opps}</ul></div>
   <div class="caut-box"><h4>Approach With Care</h4><ul>${cauts}</ul></div>
 </div>
-<div class="section-label">Weekly Breakdown</div>
+<div class="mg-h">✦ Week by Week</div>
 ${weeks}
-<div class="daily-msg-section">
-  <h4>Daily Energy by Day of Week</h4>
-  <div class="daily-msg-grid">${dayMsgs}</div>
-</div>
-<div class="section-label">Daily Practices</div>
+<div class="mg-h">✦ Daily Energy</div>
+<div class="mg-sub">each day of the week carries its own planet — tap any card to read the full message</div>
+<div class="daily-msg-section">${dayMsgs}</div>
+<div class="mg-h">✦ Practices + Reflection</div>
 <div class="checklist-wrap">${checks}</div>
 <div class="journal-section">
   <h4>Monthly Journal Prompt</h4>
@@ -1823,13 +1897,21 @@ function buildDayMessages(y,mo){
     const dow=new Date(ds+'T12:00:00').getDay();
     if(!shown[dow]) shown[dow]={day:PLANET_DAYS[dow],tip:tipForDate(ds),ds,dow};
   }
-  return Object.values(shown).slice(0,6).map(s=>`
-    <div class="dmsg-card" style="cursor:pointer" onclick="openDayTypeModal(${s.dow},'${s.ds}')">
+  const todayDow = today.getDay();
+  const card = s=>`
+    <div class="dmsg-card ${s.dow===todayDow?'today':''}" style="cursor:pointer" onclick="openDayTypeModal(${s.dow},'${s.ds}')">
+      ${s.dow===todayDow?'<span class="week-now">Today</span>':''}
       <div class="dmsg-day">${s.day.name}</div>
       <div class="dmsg-planet" style="color:${s.day.color}">${s.tip.planet}</div>
       <div class="dmsg-text">${s.tip.tip.substring(0,180)}…</div>
       <div style="font-size:0.6rem;color:var(--gold);margin-top:6px;font-family:'Lato';letter-spacing:0.05em">tap to read full ↓</div>
-    </div>`).join('');
+    </div>`;
+  const all=[0,1,2,3,4,5,6].map(d=>shown[d]).filter(Boolean);
+  const first=all.find(x=>x.dow===todayDow)||all[0];
+  const rest=all.filter(x=>x!==first);
+  return `<div class="daily-msg-grid">${card(first)}</div>
+    <div class="go-deeper-toggle" onclick="toggleDeeper(this)"><span class="arrow">▸</span> See the other ${rest.length} days</div>
+    <div class="go-deeper-body"><div class="daily-msg-grid">${rest.map(card).join('')}</div></div>`;
 }
 
 function buildChecklist(mid){
