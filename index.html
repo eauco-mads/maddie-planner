@@ -537,9 +537,11 @@ main { flex: 1; padding: 22px 24px; max-width: 880px; overflow-y: auto; }
 .tn-sub { font-size:0.66rem; color:var(--text-light); margin:2px 0 8px; }
 .tn-pada { color:var(--green); border-bottom:1px dashed var(--green-light); cursor:pointer; }
 .tn-head p { font-size:0.8rem; color:var(--text-dim); line-height:1.7; }
-.tn-echo { background:var(--gold-bg); border-radius:8px; padding:9px 12px; margin-top:8px; font-size:0.76rem; color:var(--text-dim); line-height:1.6; cursor:pointer; }
+.tn-echo { background:var(--gold-bg); border-radius:8px; padding:9px 12px; margin-top:8px; font-size:0.76rem; color:var(--text-dim); line-height:1.6; }
+.nk-auto { border-bottom:1px dotted var(--green-light); cursor:pointer; }
+.nk-auto:hover { color:var(--green); border-bottom-style:solid; }
 .tn-echo b { color:var(--text); font-weight:700; }
-.tn-echo span { color:var(--gold); }
+.tn-echo .nk-auto { color:var(--text); font-weight:700; }
 .tn-invite { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:var(--text); line-height:1.55; margin-top:12px; padding-top:10px; border-top:1px solid var(--border-light); }
 .tn-invite span { display:block; font-family:'Lato',sans-serif; font-style:normal; font-size:0.56rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--green); margin-bottom:3px; }
 .tn-more { font-size:0.66rem; color:var(--green); margin-top:8px; cursor:pointer; letter-spacing:0.03em; }
@@ -2168,7 +2170,7 @@ function todayNakshatraHTML(ds){
   for(const p of Object.keys(PL)){
     const t=day[p]; if(!t) continue;
     MY_NAK.filter(x=>x.nak===t.nakshatra).forEach(x=>echoes.push(
-      `<div class="tn-echo" onclick="openNakshatra('${t.nakshatra}')">✦ <b>${PL[p]}</b> is moving through <b>${t.nakshatra}</b> — the same nakshatra as your natal ${x.label}${t.pada===x.pada?', in the exact same pada':''}. That part of you is a little more lit up${['jupiter','saturn','rahu','ketu'].includes(p)?' this season':' today'}. <span>→</span></div>`));
+      `<div class="tn-echo">✦ <b>${PL[p]}</b> is moving through <span class="nk-auto" onclick="openNakshatra('${t.nakshatra}')">${t.nakshatra}</span>, <span class="nk-auto" onclick="openPada(${t.pada})">Pada ${t.pada}</span> — the same nakshatra as your natal <span class="nk-auto" onclick="showExplainer('${x.key}')">${x.label}</span>${t.pada===x.pada?', in the exact same pada':` (yours is <span class="nk-auto" onclick="openPada(${x.pada})">Pada ${x.pada}</span>)`}. That part of you is a little more lit up${['jupiter','saturn','rahu','ketu'].includes(p)?' this season':' today'}.</div>`));
   }
   return `<div class="tc-label">Today in the nakshatras</div>
   <div class="tn-card">
@@ -2181,6 +2183,37 @@ function todayNakshatraHTML(ds){
     <div class="tn-invite"><span>Today's invitation</span>${d.invite}</div>
     <div class="tn-more" onclick="openNakshatra('${m.nakshatra}')">Read about ${m.nakshatra} →</div>
   </div>`;
+}
+// ── AUTO-LINK nakshatra names + "Pada N" anywhere they appear (opens the pop-ups) ──
+let NAK_LINK_RE=null;
+function linkifyNak(root){
+  if(!root||typeof NAKSHATRA_REF==='undefined') return;
+  if(!NAK_LINK_RE) NAK_LINK_RE=new RegExp('\\b('+NAKSHATRA_REF.map(n=>n.name).concat(['Krithika']).join('|')+')\\b|\\b([Pp]ada) ([1-4])\\b','g');
+  const skip='.nk-card,.nk-info,.tn-card,.nk-auto,#nakModal,script,style,textarea,input,button,select,.pex-title,.pex-coords';
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){
+    const p=n.parentElement; if(!p||p.closest(skip)) return NodeFilter.FILTER_REJECT;
+    NAK_LINK_RE.lastIndex=0; return NAK_LINK_RE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT; }});
+  const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(n=>{
+    const t=n.nodeValue, frag=document.createDocumentFragment(); let last=0, m; NAK_LINK_RE.lastIndex=0;
+    while((m=NAK_LINK_RE.exec(t))){
+      frag.append(t.slice(last,m.index));
+      const sp=document.createElement('span'); sp.className='nk-auto'; sp.textContent=m[0];
+      if(m[1]){ const name=m[1]==='Krithika'?'Krittika':m[1]; sp.onclick=e=>{e.stopPropagation();openNakshatra(name);}; }
+      else { const pd=+m[3]; sp.onclick=e=>{e.stopPropagation();openPada(pd);}; }
+      frag.append(sp); last=m.index+m[0].length;
+    }
+    frag.append(t.slice(last)); n.replaceWith(frag);
+  });
+}
+function watchNakLinks(){
+  ['todayCard','monthSections','modalContent','pexModal'].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    let queued=false;
+    linkifyNak(el);
+    new MutationObserver(()=>{ if(queued) return; queued=true; requestAnimationFrame(()=>{ queued=false; linkifyNak(el); }); })
+      .observe(el,{childList:true,subtree:true,characterData:true});
+  });
 }
 function buildTodayCard() {
   const card = document.getElementById('todayCard');
@@ -3603,6 +3636,7 @@ function init(){
   buildHD();
   buildCycleHarmony();
   buildTodayCard();
+  setTimeout(watchNakLinks,0);
 
   // Show current month or first
   const curId=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
