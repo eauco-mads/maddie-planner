@@ -1977,79 +1977,133 @@ function daysToExactReturn(dateStr, planet){
   }
   return null;
 }
+// ── DAILY READING v2 — built from signals that genuinely change every day ──
+// Moon nakshatra (~daily), tithi/lunar day (~daily), Tara Bala from her natal Moon (daily),
+// Moon contacts to natal + transiting planets (daily), sign-change timing. Slow transits are
+// only featured on the day they begin; returns only on their exact day.
+const NATAL_MOON_NAK_IDX = 4; // Mrigashirsha
+const NATAL_RISING_LON = 9*30 + 8.34; // Capricorn 8°20' (computed)
+const NAK_ONE_LINE={
+  'Ashwini':'swift, fresh-start energy','Bharani':'intense, carry-it-through energy','Krittika':'sharp, clarifying energy',
+  'Rohini':'lush, magnetic, growing energy','Mrigashirsha':'curious, searching energy — your own Moon\'s nakshatra','Ardra':'stormy, clearing energy',
+  'Punarvasu':'renewing, come-home-to-yourself energy','Pushya':'nourishing, protective energy','Ashlesha':'deep, see-beneath-the-surface energy',
+  'Magha':'regal, ancestral energy','Purva Phalguni':'restful, pleasure-and-play energy','Uttara Phalguni':'warm, show-up-for-people energy',
+  'Hasta':'skilled, hands-on energy','Chitra':'brilliant, make-it-beautiful energy','Swati':'independent, bend-don\'t-break energy',
+  'Vishakha':'focused, goal-driven energy','Anuradha':'devoted, friendship energy','Jyeshtha':'protective, responsible energy',
+  'Mula':'get-to-the-root energy','Purva Ashadha':'confident, can\'t-be-stopped energy','Uttara Ashadha':'steady, long-victory energy',
+  'Shravana':'listening, learning energy','Dhanishta':'rhythmic, generous energy','Shatabhisha':'healing, solitary energy',
+  'Purva Bhadrapada':'fiery, transformative energy','Uttara Bhadrapada':'deep, still, patient energy','Revati':'gentle, homecoming energy'};
+const TITHI_NAMES=['Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami','Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi'];
+const TITHI_MEANING=[
+  'a day of beginnings — the first step of a new stretch','a building day — good for laying foundations','a creative, beauty-loving day',
+  'a clear-the-obstacles day','a learning and healing day','a day for courage and steady effort','a day for movement, travel and the body',
+  'an intense, inward day — better for inner work than new starts','a fierce, finish-the-battle day — wrap things up rather than begin',
+  'a day that favors action and getting things done','a light, devotional day — traditionally good for fasting, prayer or simplifying',
+  'a generous, nourishing day — give and receive','a day for love, pleasure and celebration','a release-and-cleanse day'];
+const TARA={
+  1:{name:'Janma',plain:'your own birth-star day — sensitive and personal',close:['Keep today gentle and personal — check in with your body before you say yes to anything.','A tender day: protect your energy and let your wave move without explaining it to anyone.']},
+  2:{name:'Sampat',plain:'a supportive day for money, resources and growth',close:['If something you\'ve been waiting on shows up today, notice your gut\'s first "uh-huh" — resources are supported.','Good day to respond to an opportunity that\'s already in front of you, especially around money or your work.']},
+  3:{name:'Vipat',plain:'a slow-down day — small snags are more likely',close:['Expect a few small snags and don\'t push through them. Respond to what\'s here; decide nothing big until your wave settles.','Go slower than you think you need to. A "not today" is information, not failure.']},
+  4:{name:'Kshema',plain:'a well-being day — good for care and comfort',close:['Make care the priority: food, water, sleep, home. Whatever nourishes you today will hold up.','A good day to tend your body and space — your Sacral will tell you what it actually needs.']},
+  5:{name:'Pratyari',plain:'a friction day — not the day to prove a point',close:['Friction is more likely today, so don\'t force it. Notice your gut, then wait before you answer.','Skip the debate. Let other people\'s urgency be theirs — respond only to what your body says yes to.']},
+  6:{name:'Sadhaka',plain:'an achievement day — effort pays off',close:['Effort pays off today. Pick one thing you already said yes to and give it real, focused time.','A strong day to make progress on something you\'ve committed to — let your Sacral energy carry it.']},
+  7:{name:'Naidhana',plain:'a heavy, low-energy day for many people',close:['Keep plans simple and decide nothing big — more rest, less output, and that\'s okay.','A lighter-schedule day if you can manage it. Rest isn\'t falling behind; it\'s how you stay steady.']},
+  8:{name:'Mitra',plain:'a friendly day — good for connection',close:['A friendly, easy day — good for collaborating, reaching out, or asking for help.','Lean on your people today. Connection comes easier, and conversations go further.']},
+  9:{name:'Parama Mitra',plain:'one of the best days of the cycle for you',close:['One of your most supportive days — if something important needs a yes or a start, today backs it (still let your wave settle).','A great day to do the thing that matters. Respond to it fully — today is on your side.']},
+};
+const PHASE_CHANGE_LINE={'New Moon':'It\'s a New Moon — a natural fresh start, so set one small intention.','First Quarter':'The Moon hits its first quarter today — a decision point, when something may need a push.','Full Moon':'It\'s a Full Moon — emotions can run high and things come to light.','Last Quarter':'The Moon reaches its last quarter today — a good day to let something go.'};
+function ordN(n){ const s=['th','st','nd','rd'], v=n%100; return n+(s[(v-20)%10]||s[v]||s[0]); }
+function absLon(sign,deg){ return ZODIAC_SIGNS_V.indexOf(sign)*30+deg; }
+function angDist(a,b){ const d=Math.abs(((a-b)%360+360)%360); return d>180?360-d:d; }
+function dateShift(ds,n){ const d=new Date(ds+'T12:00:00'); d.setDate(d.getDate()+n); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function tithiFor(day){ const t=Math.floor(day.moon_elongation/12)+1; const waxing=t<=15;
+  if(t===15) return {n:15,waxing:true,name:'Purnima',meaning:'the full-moon day — fullness, gratitude and seeing clearly'};
+  if(t===30) return {n:30,waxing:false,name:'Amavasya',meaning:'the dark-moon day — rest, turning inward and honoring what came before'};
+  const i=(t-1)%15; return {n:t,waxing,name:TITHI_NAMES[i],meaning:TITHI_MEANING[i]}; }
+function taraFor(day){ const t=NAKSHATRA_REF.findIndex(n=>n.name===day.moon.nakshatra); if(t<0) return null; const count=((t-NATAL_MOON_NAK_IDX+27)%27)+1; return {count, ...TARA[((count-1)%9)+1]}; }
+// the single date in a ±4 day window where a planet is closest to its natal spot
+function exactReturnDay(dateStr,planet){
+  const natal=absLon(NATAL[planet].sign,NATAL[planet].deg); let best=null,bd=99;
+  for(let i=-4;i<=4;i++){ const ds=dateShift(dateStr,i), d=EPHEMERIS.daily[ds]; if(!d) continue;
+    const dist=angDist(d[planet].lon,natal); if(dist<bd){bd=dist;best=ds;} }
+  return bd<=3?best:null;
+}
+function moonContacts(day){
+  const out=[], m=day.moon.lon;
+  const natalPts=Object.keys(NATAL).filter(p=>p!=='moon').map(p=>({p,lon:absLon(NATAL[p].sign,NATAL[p].deg)})).concat([{p:'rising',lon:NATAL_RISING_LON}]);
+  natalPts.forEach(n=>{ const d=angDist(m,n.lon); if(d<=6) out.push({kind:'natal',type:'on',p:n.p,d}); else if(Math.abs(d-180)<=6) out.push({kind:'natal',type:'opposite',p:n.p,d:Math.abs(d-180)}); });
+  ['mercury','venus','mars','jupiter','saturn','rahu','ketu'].forEach(p=>{ const d=angDist(m,day[p].lon); if(d<=6) out.push({kind:'sky',type:'meets',p,d}); });
+  return out.sort((a,b)=>a.d-b.d);
+}
+const NATAL_TOUCH={sun:'your sense of self and purpose',mercury:'your thinking and how you speak',venus:'love, pleasure and what feels good',mars:'your drive (and your fuse)',jupiter:'hope, generosity and creative growth',saturn:'responsibility and your inner critic',rahu:'restlessness and wanting more',ketu:'old patterns and the urge to withdraw',rising:'how you show up and how you\'re seen'};
+const SKY_MEET={mercury:'thoughts and feelings blend — good for heartfelt conversations',venus:'a softer, more affectionate mood',mars:'emotions run hotter and quicker',jupiter:'a hopeful, generous, things-will-work-out mood',saturn:'a more serious, sober mood — good for responsibility',rahu:'a restless, wanting-more mood',ketu:'a detached, let-it-go mood'};
 function plainDailyReading(dateStr){
-  const day = EPHEMERIS.daily[dateStr];
-  if(!day) return null;
-  const dasha = dashaContextFor(dateStr);
-  const teaser = moonDayReading(dateStr);
-  const moonSign = day.moon.sign, moonHouse = day.moon.house;
-  const returns = findReturns(day);
-  const conjunctions = findConjunctions(day);
+  const day=EPHEMERIS.daily[dateStr]; if(!day) return null;
+  const prev=EPHEMERIS.daily[dateShift(dateStr,-1)];
+  const dasha=dashaContextFor(dateStr), teaser=moonDayReading(dateStr);
+  const moonSign=day.moon.sign, moonHouse=day.moon.house, nak=day.moon.nakshatra;
+  const sentences=[], deeper=[];
 
-  const sentences = [];
-  sentences.push(`The Moon is in ${moonSign} today, moving through your ${ordinal(moonHouse)} house — ${MOON_HOUSE_WHY[moonHouse]}.`);
-  if(PHASE_VIBE[teaser.phaseName]) sentences.push(`It's also ${PHASE_VIBE[teaser.phaseName]}.`);
+  // 1. Where the Moon is — nakshatra-level, plus sign-change timing
+  let s1=`The Moon is in ${nak} today — ${NAK_ONE_LINE[nak]||''} — in ${moonSign}, your ${ordinal(moonHouse)} house, so ${MOON_HOUSE_WHY[moonHouse]}.`;
+  if(prev && prev.moon.sign!==moonSign) s1+=` It just moved here, so expect a noticeable shift in mood from yesterday.`;
+  else if(day.moon.deg>=26){ const nextSign=ZODIAC_SIGNS_V[(ZODIAC_SIGNS_V.indexOf(moonSign)+1)%12]; s1+=` It moves into ${nextSign} (your ${ordinal(moonHouse%12+1)} house) by tomorrow, so the mood will turn quickly.`; }
+  sentences.push(s1);
 
-  const shadow = getActiveShadow(dateStr);
-  const shadowIsExactEnd = shadow && shadow.phase === 'post' && dateStr === shadow.post_shadow_end.slice(0,10);
+  // 2. Today's quality for YOU (Tara Bala from your natal Moon)
+  const tara=taraFor(day);
+  if(tara) sentences.push(`For you specifically, it's a <b>${tara.name}</b> day — ${tara.plain}.`);
 
-  // Priority for "what's the story of today": exact return > shadow fully clearing > top conjunction > quiet day
-  let featuredTarget = null, storyType = 'quiet';
-  if(returns.includes('moon')){
-    sentences.push(RETURN_EXPLANATION.moon(moonSign, moonHouse));
-    storyType = 'return';
-  } else if(returns.length){
-    const p = returns[0];
-    sentences.push(RETURN_EXPLANATION[p] ? RETURN_EXPLANATION[p](day[p].sign, day[p].house) : `Your ${cap(p)} Return is exact today — ${cap(p)} is back where it sat at your birth.`);
-    storyType = 'return';
-  } else if(shadowIsExactEnd){
-    sentences.push(shadowDeeperItem(shadow, dateStr).body);
-    storyType = 'shadow-end';
-  } else {
-    const priority = ['sun','moon','saturn','jupiter','mars','mercury','venus','rahu','ketu'];
-    const targets = Object.keys(conjunctions).sort((a,b)=>priority.indexOf(a)-priority.indexOf(b));
-    if(targets.length){
-      featuredTarget = targets[0];
-      const sign = day[conjunctions[featuredTarget][0]].sign;
-      sentences.push(cap(plainConjunctionClause(conjunctions[featuredTarget], featuredTarget, sign)) + '.');
-      storyType = 'conjunction';
+  // 3. Lunar day (tithi) — or the phase milestone if it changed today
+  const ti=tithiFor(day), ptithi=prev?tithiFor(prev):null;
+  const phaseChanged=prev && teaser && moonDayReading(dateShift(dateStr,-1)).phaseName!==teaser.phaseName;
+  if(phaseChanged && PHASE_CHANGE_LINE[teaser.phaseName]) sentences.push(PHASE_CHANGE_LINE[teaser.phaseName]);
+  else sentences.push(`It's ${ti.name}, the ${ordN(((ti.n-1)%15)+1)} day of the ${ti.waxing?'waxing':'waning'} Moon — ${ti.meaning}.`);
+
+  // 4. The day's standout event: exact return > shadow clearing > a slow contact beginning > Moon contact
+  const returns=findReturns(day), conjunctions=findConjunctions(day);
+  const shadow=getActiveShadow(dateStr);
+  const shadowIsExactEnd=shadow && shadow.phase==='post' && dateStr===shadow.post_shadow_end.slice(0,10);
+  let storyType='quiet';
+  const exactRet=returns.find(p=>exactReturnDay(dateStr,p)===dateStr);
+  if(exactRet){ sentences.push(RETURN_EXPLANATION[exactRet]?RETURN_EXPLANATION[exactRet](day[exactRet].sign,day[exactRet].house):`Your ${cap(exactRet)} Return is exact today.`); storyType='return'; }
+  else if(shadowIsExactEnd){ sentences.push(shadowDeeperItem(shadow,dateStr).body); storyType='shadow-end'; }
+  else {
+    const prevConj=prev?findConjunctions(prev):{};
+    const slow=['saturn','jupiter','rahu','ketu','mars','sun','mercury','venus'];
+    let started=null;
+    for(const np of Object.keys(conjunctions)) for(const tp of conjunctions[np]) if(tp!=='moon' && slow.includes(tp) && !(prevConj[np]||[]).includes(tp)) started={tp,np};
+    const mc=moonContacts(day);
+    if(started){ sentences.push(`Starting today, ${cap(started.tp)} begins crossing your natal ${cap(started.np)} — so ${PLANET_VIBE[started.np]} will feel more direct and immediate for a while.`); storyType='conjunction'; }
+    else if(mc.length){ const c=mc[0];
+      if(c.kind==='natal') sentences.push(c.type==='on'?`The Moon passes right over your natal ${c.p==='rising'?'Rising point':cap(c.p)} today, so ${NATAL_TOUCH[c.p]} sits closer to the surface.`:`The Moon sits opposite your natal ${c.p==='rising'?'Rising point':cap(c.p)} today, so ${NATAL_TOUCH[c.p]} may get stirred up by other people.`);
+      else sentences.push(`The Moon meets ${cap(c.p)} in the sky today — ${SKY_MEET[c.p]}.`);
+      storyType='contact';
     }
-    // heads-up if the lunar return is landing in the next couple days
-    const upcoming = daysToExactReturn(dateStr, 'moon');
-    if(upcoming){
-      const when = upcoming.days === 1 ? 'tomorrow' : `in ${upcoming.days} days`;
-      sentences.push(`Heads up: your exact ${termLink('Lunar Return','planetary-return')} lands ${when} — worth watching for.`);
-    }
+    const retSoon=returns.length?null:daysToExactReturn(dateStr,'moon');
+    if(retSoon && retSoon.days===1) sentences.push(`Heads up: your ${termLink('Lunar Return','planetary-return')} is tomorrow.`);
   }
 
-  // Closing: how to actually use this, tied to her HD design — "here is what it is" -> "here's how to work with it"
-  if(storyType === 'return'){
-    sentences.push(`How to honor it: since you're a Generator with Emotional Authority, use today to notice how you feel rather than deciding anything big — let today's clarity be information, not a verdict.`);
-  } else if(storyType === 'shadow-end'){
-    sentences.push(`How to use it: as a Generator, this is a good day to actually respond to whatever clear "yes" showed up during that retrograde — the waiting period is genuinely over now.`);
-  } else if(storyType === 'conjunction'){
-    sentences.push(`How to work with it: let this settle before you act on it — respond to what's actually in front of you today rather than pushing from your head.`);
-  } else {
-    sentences.push(`A good day to simply notice what your body already knows, and let your Sacral do the deciding.`);
-  }
+  // 5. Closing — how to work with it, tuned to the day's quality (Generator + Emotional Authority)
+  if(storyType==='return') sentences.push(`How to honor it: notice how you feel rather than deciding anything big — let today's clarity be information, not a verdict.`);
+  else if(storyType==='shadow-end') sentences.push(`How to use it: respond to whatever clear "yes" showed up during that retrograde — the waiting period is over.`);
+  else if(tara){ const k=parseInt(dateStr.slice(8),10)%2; sentences.push(tara.close[k]); }
 
-  // "go deeper" — genuinely new detail, not a restatement: nakshatra, dasha, any OTHER conjunctions not already featured
-  const deeper = [];
-  deeper.push({ label:'Moon detail', body:`The Moon is moving through ${day.moon.nakshatra} ${termLink('nakshatra','nakshatra')} right now — a more precise, 27-part reading of the sky than sign alone.` });
-  for(const np of Object.keys(conjunctions)){
-    if(np === featuredTarget) continue;
-    const sign = day[conjunctions[np][0]].sign;
-    deeper.push({ label:`${conjunctions[np].map(cap).join(' + ')} ↔ natal ${cap(np)}`, body: plainConjunctionClause(conjunctions[np], np, sign) + '.' });
-  }
-  if(shadow && !shadowIsExactEnd){
-    deeper.push(shadowDeeperItem(shadow, dateStr));
-  }
-  if(dasha){
-    deeper.push({ label:'The bigger chapter you\'re in', body:`You're in a multi-year life chapter ruled by ${dasha.mahadasha} (your ${termLink('Mahadasha','mahadasha')}), currently flavored by a shorter ${dasha.antardasha} sub-chapter (your ${termLink('Antardasha','antardasha')}). Think of it as the "background music" for this whole season, not something that changes day to day.` });
-  }
+  // "A bit more" — new detail each day, not a restatement
+  deeper.push({label:`Today's nakshatra · ${nak}`,body:`${nak} is one of 27 nakshatras — a more precise slice of the sky than sign alone. Tap the name anywhere to read about it.`});
+  if(tara) deeper.push({label:`Why "${tara.name}"`,body:`Counted from your birth Moon (Mrigashirsha), today's Moon is the ${ordN(tara.count)} nakshatra along — a ${tara.name} day in the traditional 9-day rhythm (Tara Bala) that repeats three times a month.`});
+  deeper.push({label:`Lunar day · ${ti.name}`,body:`${cap(ti.meaning)}. Lunar days (tithis) follow the Moon's distance from the Sun, so they shift a little each day. ${teaser?`The Moon is ${teaser.illum}% lit (${teaser.phaseName.toLowerCase()}).`:''}`});
+  const mc2=moonContacts(day).slice(1,3);
+  mc2.forEach(c=>deeper.push({label:c.kind==='natal'?`Moon ${c.type==='on'?'on':'opposite'} your natal ${c.p==='rising'?'Rising':cap(c.p)}`:`Moon meets ${cap(c.p)}`,body:c.kind==='natal'?`${cap(NATAL_TOUCH[c.p])} may be more noticeable today.`:`${cap(SKY_MEET[c.p])}.`}));
+  for(const np of Object.keys(conjunctions)){ const ts=conjunctions[np].filter(t=>t!=='moon'); if(!ts.length) continue;
+    deeper.push({label:`Ongoing: ${ts.map(cap).join(' + ')} on your natal ${cap(np)}`,body:`A longer stretch (weeks, not a day) where ${PLANET_VIBE[np]} keeps getting turned up.`}); }
+  if(returns.length && !exactRet) returns.forEach(p=>{ const ex=exactReturnDay(dateStr,p); if(ex) deeper.push({label:`${cap(p)} Return window`,body:`Your ${cap(p)} Return is exact on ${new Date(ex+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric'})} — you're inside its few-day window now.`}); });
+  if(shadow && !shadowIsExactEnd) deeper.push(shadowDeeperItem(shadow,dateStr));
+  if(dasha) deeper.push({label:'The bigger chapter you\'re in',body:`You're in a multi-year life chapter ruled by ${dasha.mahadasha} (your ${termLink('Mahadasha','mahadasha')}), currently flavored by a shorter ${dasha.antardasha} sub-chapter (your ${termLink('Antardasha','mahadasha')}).`});
 
   return { teaser, sentences, deeper, dasha, moonSign, moonHouse };
 }
+
 function dashaContextFor(dateStr){
   for(const maha of (EPHEMERIS.dasha||[])){
     if(maha.start.slice(0,10) <= dateStr && dateStr <= maha.end.slice(0,10)){
